@@ -1,0 +1,7 @@
+C:\MeStudy\DSED\T3_W2\GameAppV2\GameAppV2\bin\Debug\GameAppV2.exe.config
+C:\MeStudy\DSED\T3_W2\GameAppV2\GameAppV2\bin\Debug\GameAppV2.exe
+C:\MeStudy\DSED\T3_W2\GameAppV2\GameAppV2\bin\Debug\GameAppV2.pdb
+C:\MeStudy\DSED\T3_W2\GameAppV2\GameAppV2\obj\Debug\GameAppV2.csprojResolveAssemblyReference.cache
+C:\MeStudy\DSED\T3_W2\GameAppV2\GameAppV2\obj\Debug\GameAppV2.exe
+C:\MeStudy\DSED\T3_W2\GameAppV2\GameAppV2\obj\Debug\GameAppV2.pdb
+C:\MeStudy\DSED\T3_W2\GameAppV2\GameAppV2\bin\Debug\5letters.txt
