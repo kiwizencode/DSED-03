@@ -1,0 +1,4 @@
+GameAppV3.MainActivity, GameAppV3;md545f7218cf0cc8354f95e9cdccf75ca7f.MainActivity
+GameAppV3.MainActivity, GameAppV3, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md545f7218cf0cc8354f95e9cdccf75ca7f.MainActivity
+GameAppV3.MainActivity;md545f7218cf0cc8354f95e9cdccf75ca7f.MainActivity
+gameappv3.MainActivity;md545f7218cf0cc8354f95e9cdccf75ca7f.MainActivity
