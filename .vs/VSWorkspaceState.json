@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\CODE",
-    "\\CODE\\GameApp"
+    "\\CODE\\GameApp",
+    "\\CODE\\GameApp\\GameAppV3"
   ],
-  "SelectedNode": "\\CODE\\GameApp\\GameAppV1",
+  "SelectedNode": "\\CODE\\GameApp\\GameAppV3\\GameAppV3.sln",
   "PreviewInSolutionExplorer": false
 }
