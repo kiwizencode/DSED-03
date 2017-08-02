@@ -110,3 +110,8 @@ C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAp
 C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAppV1\obj\Debug\uploadflags.txt
 C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAppV1\obj\Debug\android\assets\GameAppV1.dll.mdb
 C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAppV1\bin\Debug\GameAppV1.dll.mdb
+C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAppV1\obj\Debug\res\drawable\hangman_tile_02_b.png
+C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAppV1\obj\Debug\res\drawable\hangman_tile_03_b.png
+C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAppV1\obj\Debug\res\drawable\hangman_tile_04_b.png
+C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAppV1\obj\Debug\res\drawable\hangman_tile_05_b.png
+C:\Users\kiwizen\Desktop\kiwizen.code DSED\DSED-03\CODE\GameApp\GameAppV1\GameAppV1\obj\Debug\res\drawable\hangman_tile_06_b.png
