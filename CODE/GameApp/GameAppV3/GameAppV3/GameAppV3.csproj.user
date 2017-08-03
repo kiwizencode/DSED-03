@@ -3,5 +3,6 @@
   <PropertyGroup>
     <SelectedDevice>Genymotion Google Nexus 4 - 4.1.1 - API 16 - 768x1280</SelectedDevice>
     <AndroidDesignerPreferredDevice>Nexus 4</AndroidDesignerPreferredDevice>
+    <DefaultDevice>VisualStudio_android-23_arm_phone</DefaultDevice>
   </PropertyGroup>
 </Project>
