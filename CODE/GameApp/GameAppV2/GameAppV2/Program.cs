@@ -56,7 +56,6 @@ namespace GameAppV2
             int [] result = range.OrderBy(x => random.Next()).ToArray();
             return result;
             //return array[random.Next(array.Length)];
-
         }
 
         public static string RandomWord(string [] array)
