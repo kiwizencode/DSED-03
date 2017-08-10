@@ -13,9 +13,9 @@ namespace UnitTest
         [TestMethod]
         public void ReadFile_Method()
         {
-            GuessWords words = new GuessWords();
+            //GuessWords words = new GuessWords();
 
-            var list = words.ReadFile();
+            var list = GuessWords.ReadFile();
             list.Count.Should().Be(5757);
 
         }
