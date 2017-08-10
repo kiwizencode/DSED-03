@@ -4,7 +4,7 @@ using Android.OS;
 
 namespace XamarinAppV1.Droid
 {
-    [Activity(Label = "XamarinAppV1.Droid", MainLauncher = true, Icon = "@drawable/icon")]
+    [Activity(Label = "XamarinAppV1.Droid")]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle bundle)
@@ -12,7 +12,7 @@ namespace XamarinAppV1.Droid
             base.OnCreate(bundle);
 
             // Set our view from the "main" layout resource
-            // SetContentView (Resource.Layout.Main);
+            SetContentView (Resource.Layout.Main);
         }
     }
 }
