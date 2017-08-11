@@ -51,37 +51,39 @@ namespace GameAppV1
             index = 0;
             char ch = 'B';
             btnPressMe.Click += (send, e) =>
-            //{
-            //    string resource = "word_" + Letter_List[index];
-
-            //    ImageWordSlot01.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
-
-            //    if (++index == Letter_List.Length)
-            //        index = 0;
-            //};
             {
-                if(index == 6)
-                {
-                    index = 0;
-                    ch = (ch == 'B' ? 'A' : 'B');
-                }
+                string resource = "word_" + Letter_List[index];
 
-                ImageView image;
+                ImageWordSlot01.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
 
-                switch(index + 1)
-                {
-                    case 1: image = ImageTile01;  break;
-                    case 2: image = ImageTile02; break;
-                    case 3: image = ImageTile03; break;
-                    case 4: image = ImageTile04; break;
-                    case 5: image = ImageTile05; break;
-                    case 6: image = ImageTile06; break;
-                    default: throw new InvalidOperationException("ImageView not defined !!!");
-                }
+                //if (++index == Letter_List.Length)
+                //    index = 0;
 
-                string resource = "hangman_tile_0"+ ++index + "_" + ch;
-                image.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
+                index = ++index % 26;
             };
+            //{
+            //    if(index == 6)
+            //    {
+            //        index = 0;
+            //        ch = (ch == 'B' ? 'A' : 'B');
+            //    }
+
+            //    ImageView image;
+
+            //    switch(index + 1)
+            //    {
+            //        case 1: image = ImageTile01;  break;
+            //        case 2: image = ImageTile02; break;
+            //        case 3: image = ImageTile03; break;
+            //        case 4: image = ImageTile04; break;
+            //        case 5: image = ImageTile05; break;
+            //        case 6: image = ImageTile06; break;
+            //        default: throw new InvalidOperationException("ImageView not defined !!!");
+            //    }
+
+            //    string resource = "hangman_tile_0"+ ++index + "_" + ch;
+            //    image.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
+            //};
         }
     }
 }
