@@ -86,5 +86,11 @@ namespace XamarinAppV1.Models
             }
             return new string(array);
         }
+
+        public static int GetAlphbetIndex(char ch)
+        {
+            const string chars = "abcdefghijklmnopqrstuvwxyz";
+            return chars.Contains(ch.ToString()) ? chars.IndexOf(ch) : -1;
+        }
     }
 }

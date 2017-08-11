@@ -4,16 +4,17 @@ using System.IO;
 using System.Reflection;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace XamarinAppV1.Models
 {
     public class GuessWords
     {
-        private const string _file_name = "XamarinAppV1.5letters.text";
+        private const string _file_name = "5letters.txt";
 
-        public static IList ReadFile()
+        public static string [] ReadFile()
         {
-            var list = new System.Collections.Generic.List<string>();
+            var list = new List<string>();
 
             var assembly = typeof(GuessWords).GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream("XamarinAppV1."+_file_name);

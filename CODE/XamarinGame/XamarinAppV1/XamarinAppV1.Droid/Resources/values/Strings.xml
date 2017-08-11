@@ -2,4 +2,5 @@
 <resources>
     <string name="Hello">Hello World, Click Me!</string>
     <string name="ApplicationName">XamarinAppV1.Droid</string>
+  <string name="App_Name">DSED03 Game Prototyping</string>
 </resources>
