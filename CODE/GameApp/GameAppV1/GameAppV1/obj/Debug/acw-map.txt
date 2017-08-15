@@ -1,4 +1,0 @@
-GameAppV1.MainActivity, GameAppV1;md5fefc0f0b1aa4a10c56b941a7ef71be94.MainActivity
-GameAppV1.MainActivity, GameAppV1, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null;md5fefc0f0b1aa4a10c56b941a7ef71be94.MainActivity
-GameAppV1.MainActivity;md5fefc0f0b1aa4a10c56b941a7ef71be94.MainActivity
-gameappv1.MainActivity;md5fefc0f0b1aa4a10c56b941a7ef71be94.MainActivity
