@@ -4,7 +4,7 @@ using Android.OS;
 
 namespace HangmanApp.Droid
 {
-    [Activity(Label = "HangmanApp.Droid", MainLauncher = true)]
+    [Activity(Label = "Hangman App", MainLauncher = true)]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -12,7 +12,7 @@ namespace HangmanApp.Droid
             base.OnCreate(savedInstanceState);
 
             // Set our view from the "main" layout resource
-            SetContentView(Resource.Layout.Main);
+            SetContentView(Resource.Layout.profile_layout_test);
         }
     }
 }
