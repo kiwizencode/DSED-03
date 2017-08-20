@@ -5,7 +5,13 @@ VisualStudioVersion = 15.0.26730.8
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangmanApp.Droid", "HangmanApp.Droid\HangmanApp.Droid.csproj", "{F5244A12-1697-461E-87F0-8BBCED8446C0}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HangmanApp.Shared", "HangmanApp.Shared\HangmanApp.Shared.shproj", "{C547C016-6974-4CAC-A019-F243887BE20B}"
+EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HangmanApp.Shared\HangmanApp.Shared.projitems*{c547c016-6974-4cac-a019-f243887be20b}*SharedItemsImports = 13
+		HangmanApp.Shared\HangmanApp.Shared.projitems*{f5244a12-1697-461e-87f0-8bbced8446c0}*SharedItemsImports = 4
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU

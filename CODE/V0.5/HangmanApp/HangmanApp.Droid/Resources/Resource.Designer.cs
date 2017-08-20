@@ -1735,19 +1735,19 @@ namespace HangmanApp.Droid
 			public const int abc_textfield_search_material = 2130837572;
 			
 			// aapt resource value: 0x7f020045
-			public const int border_style = 2130837573;
+			public const int button_background = 2130837573;
 			
 			// aapt resource value: 0x7f020046
-			public const int button_background = 2130837574;
+			public const int design_fab_background = 2130837574;
 			
 			// aapt resource value: 0x7f020047
-			public const int design_fab_background = 2130837575;
+			public const int design_snackbar_background = 2130837575;
 			
 			// aapt resource value: 0x7f020048
-			public const int design_snackbar_background = 2130837576;
+			public const int hangman_blank = 2130837576;
 			
 			// aapt resource value: 0x7f020049
-			public const int hangman_blank = 2130837577;
+			public const int listview_border = 2130837577;
 			
 			// aapt resource value: 0x7f02004b
 			public const int notification_template_icon_bg = 2130837579;
