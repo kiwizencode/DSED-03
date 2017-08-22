@@ -33,12 +33,12 @@
         android:layout_width="match_parent"
         android:layout_height="75dp" />
     <Button
+        android:id="@+id/btnStartGame"
         android:text="Start a New Game"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnStartGame" />
+        android:layout_height="wrap_content" />
     <Button
-        android:text="highest scores"
+        android:text="Highest Scores"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/btnScores" />

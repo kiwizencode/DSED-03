@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 using Android.App;
 using Android.Content;
@@ -12,27 +13,30 @@ using Android.Widget;
 
 using ReactiveUI;
 using HangmanApp.Droid.ViewModel;
+using System.Reactive.Linq;
 
 namespace HangmanApp.Droid.Activities
 {
     [Activity(Label = "HangmanApp", MainLauncher = true)]
-    public class Activity_MainScreen : ReactiveActivity // , IViewFor<ViewModel_MainScreen>
+    public class Activity_MainScreen : ReactiveActivity , IViewFor<ViewModel_MainScreen>
     {
-        /*
+        
 #region Implementation of IViewFor<> Interface
         private ViewModel_MainScreen _model;
         public ViewModel_MainScreen ViewModel {
             get => _model ;
-            set => this.RaiseAndSetIfChanged(ref _model, value); 
+            set { this.RaiseAndSetIfChanged(ref _model, value); } 
         }
         object IViewFor.ViewModel {
-            get => _model;
-            set =>  ViewModel = (ViewModel_MainScreen) value; 
+            get => ViewModel;
+            set { ViewModel = (ViewModel_MainScreen)value; }
         }
         #endregion
-        */
+        
         Button btnStartGame;
-
+        Button btnScores;
+        Button btnProfile;
+        Button btnCredits;
 
         private TextView textViewMessage;
 
@@ -43,83 +47,43 @@ namespace HangmanApp.Droid.Activities
             // Create your application here
             SetContentView(Resource.Layout.Layout_MainScreen);
 
-            //Initializer();
+            Initializer();
         }
-        /*
+        
         private void Initializer()
         {
+            /*
+             * Create the Main Screen View Model
+             */
+            ViewModel = new ViewModel_MainScreen();
+
             btnStartGame = FindViewById<Button>(Resource.Id.btnStartGame);
+            btnScores = FindViewById<Button>(Resource.Id.btnScores);
+            btnProfile = FindViewById<Button>(Resource.Id.btnProfile);
+            btnCredits = FindViewById<Button>(Resource.Id.btnCredits);
 
-            //btnStartGame.SetOnHoverListener(new ButtonHoverOverEvent(btnStartGame, this.ViewModel));
+            /*
+             * https://reactiveui.net/docs/handbook/commands/binding-commands
+            */
+            this.BindCommand(ViewModel, x => x.cmdStartGame, c => c.btnStartGame);
+            ViewModel.txtStartGame = btnStartGame.Text ;
 
+            this.BindCommand(ViewModel, x => x.cmdScores, c => c.btnScores);
+            ViewModel.txtScores = btnScores.Text;
+
+            this.BindCommand(ViewModel, x => x.cmdProfile, c => c.btnProfile);
+            ViewModel.txtProfile = btnProfile.Text;
+
+            this.BindCommand(ViewModel, x => x.cmdCredits, c => c.btnCredits);
+            ViewModel.txtCredits = btnCredits.Text;
 
             textViewMessage = FindViewById<TextView>(Resource.Id.textViewMessage);
-
 
             this.Bind(this.ViewModel, x => x.Toast, x => x.textViewMessage.Text);
         }
 
-        class ButtonHoverOverEvent : View.IOnHoverListener
-        {
-            private Button _btnptr;
-            private ViewModel_MainScreen _vm;
 
-            public ButtonHoverOverEvent(Button btn, ViewModel_MainScreen vm)
-            {
-                _btnptr = btn;
-                _vm = vm;
-            }
 
-            public IntPtr Handle => throw new NotImplementedException();
-
-            public bool OnHover(View v, MotionEvent e)
-            {
-                switch(e.Action)
-                {
-                    case MotionEventActions.HoverEnter:
-                        _vm.Toast = _btnptr.Text;
-                        break;
-                    case MotionEventActions.HoverExit: break;
-                }
-                return false;
-            }
-
-            #region IDisposable Support
-            private bool disposedValue = false; // To detect redundant calls
-
-            protected virtual void Dispose(bool disposing)
-            {
-                if (!disposedValue)
-                {
-                    if (disposing)
-                    {
-                        // TODO: dispose managed state (managed objects).
-                    }
-
-                    // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                    // TODO: set large fields to null.
-
-                    disposedValue = true;
-                }
-            }
-
-            // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-            // ~ButtonHoverOverEvent() {
-            //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            //   Dispose(false);
-            // }
-
-            // This code added to correctly implement the disposable pattern.
-            public void Dispose()
-            {
-                // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-                Dispose(true);
-                // TODO: uncomment the following line if the finalizer is overridden above.
-                // GC.SuppressFinalize(this);
-            }
-            #endregion
-        }
-
-    */
+    
     }
 }
