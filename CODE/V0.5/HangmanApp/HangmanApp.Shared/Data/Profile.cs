@@ -12,8 +12,8 @@ namespace HangmanApp.Shared.Data
         [PrimaryKey, AutoIncrement]
         public int ID { get ; set ; }
         public string Name { get; set; }
+        public int Scores { get; set; }
         public DateTime Timestamp { get; set; }
-
         public override string ToString()
         {
             return Name + " " + Timestamp.ToUniversalTime();

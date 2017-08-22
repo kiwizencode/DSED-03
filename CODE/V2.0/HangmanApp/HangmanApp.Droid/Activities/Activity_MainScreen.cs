@@ -40,6 +40,18 @@ namespace HangmanApp.Droid.Activities
 
         private TextView textViewMessage;
 
+        private string _activity;
+        public string SetActivity
+        {
+            get => _activity;
+            set
+            {
+                textViewMessage.Text = value;
+                this.RaiseAndSetIfChanged(ref _activity, value);
+            }
+        }
+
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -65,25 +77,28 @@ namespace HangmanApp.Droid.Activities
             /*
              * https://reactiveui.net/docs/handbook/commands/binding-commands
             */
+
+
             this.BindCommand(ViewModel, x => x.cmdStartGame, c => c.btnStartGame);
-            ViewModel.txtStartGame = btnStartGame.Text ;
-
             this.BindCommand(ViewModel, x => x.cmdScores, c => c.btnScores);
-            ViewModel.txtScores = btnScores.Text;
-
             this.BindCommand(ViewModel, x => x.cmdProfile, c => c.btnProfile);
-            ViewModel.txtProfile = btnProfile.Text;
-
             this.BindCommand(ViewModel, x => x.cmdCredits, c => c.btnCredits);
+
+#region Need to refactor in the future
+            /*
+             * The following code may not be the best solution
+             * But that will do now. NOT proper MVVM coding
+             */
+            ViewModel.txtStartGame = btnStartGame.Text;
+            ViewModel.txtScores = btnScores.Text;
+            ViewModel.txtProfile = btnProfile.Text;
             ViewModel.txtCredits = btnCredits.Text;
+#endregion
 
             textViewMessage = FindViewById<TextView>(Resource.Id.textViewMessage);
+            textViewMessage.Text = string.Empty;
+            this.Bind(this.ViewModel, x => x.Toast, x => x.SetActivity);
 
-            this.Bind(this.ViewModel, x => x.Toast, x => x.textViewMessage.Text);
         }
-
-
-
-    
     }
 }

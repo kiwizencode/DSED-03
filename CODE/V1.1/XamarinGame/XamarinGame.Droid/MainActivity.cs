@@ -5,7 +5,7 @@ using Android.Content;
 
 namespace XamarinGame.Droid
 {
-    [Activity(Label = "XamarinGame.Droid", MainLauncher = true)]
+    [Activity(Label = "HangmanApp", MainLauncher = true)]
     public class MainActivity : Activity
     {
         Button btnStartGame;

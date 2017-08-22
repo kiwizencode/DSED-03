@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.8
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "HangmanApp.Shared", "HangmanApp.Shared\HangmanApp.Shared.shproj", "{72598A0C-05A3-43EF-B716-D311AAB556BB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangmanApp.Droid", "HangmanApp.Droid\HangmanApp.Droid.csproj", "{DC5B6E9E-44DD-4913-82B6-7D2801DB913F}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HangmanApp.Shared\HangmanApp.Shared.projitems*{72598a0c-05a3-43ef-b716-d311aab556bb}*SharedItemsImports = 13
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC5B6E9E-44DD-4913-82B6-7D2801DB913F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC5B6E9E-44DD-4913-82B6-7D2801DB913F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC5B6E9E-44DD-4913-82B6-7D2801DB913F}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DC5B6E9E-44DD-4913-82B6-7D2801DB913F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC5B6E9E-44DD-4913-82B6-7D2801DB913F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC5B6E9E-44DD-4913-82B6-7D2801DB913F}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1855864-6AC4-4959-AE2D-7937E9643B99}
+	EndGlobalSection
+EndGlobal

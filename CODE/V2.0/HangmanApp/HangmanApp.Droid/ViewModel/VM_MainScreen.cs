@@ -31,7 +31,7 @@ namespace HangmanApp.Droid.ViewModel
         public string txtCredits;
         public ReactiveCommand cmdCredits;
 
-        //public ReactiveCommand cmdActivity { get; }        
+        public ReactiveCommand cmdActivity { get; }        
 
         private string _msg;
         public string Toast {
@@ -40,7 +40,7 @@ namespace HangmanApp.Droid.ViewModel
         }
         public ViewModel_MainScreen()
         {
-            //cmdActivity = ReactiveCommand.Create<string>(StartActivity);
+            cmdActivity = ReactiveCommand.Create<string>(StartActivity);
 
             cmdStartGame = ReactiveCommand.Create(() => Toast = txtStartGame);
             cmdScores = ReactiveCommand.Create(() => Toast = txtScores);
@@ -48,11 +48,11 @@ namespace HangmanApp.Droid.ViewModel
             cmdCredits = ReactiveCommand.Create(() => Toast = txtCredits);
         }
 
-        //private void StartActivity()
-        //{
-        //    //ActivityName = text;
-        //    Toast = text;
-        //}
+        private void StartActivity(string text)
+        {
+            //ActivityName = text;
+            Toast = text;
+        }
 
     }
 }
