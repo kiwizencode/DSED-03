@@ -9,5 +9,9 @@
     <Import_RootNamespace>HangmanApp.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\ProfileDatabase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\ProfileRepository.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\IModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Model\M_Profile.cs" />
   </ItemGroup>
 </Project>

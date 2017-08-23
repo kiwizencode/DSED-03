@@ -38,15 +38,47 @@ namespace HangmanApp.Droid.Activities
         Button btnProfile;
         Button btnCredits;
 
-        private TextView textViewMessage;
+        TextView textViewMessage;
 
-        private string _activity;
+        private string _activity=string.Empty;
         public string SetActivity
         {
             get => _activity;
             set
             {
-                textViewMessage.Text = value;
+                /*
+                 * This is where all activity is triggered
+                 */
+                string text = string.Empty;
+                Intent activity = null;
+                if (value == btnStartGame.Text)
+                {
+                    text = "Start Game Activity";
+                    activity = new Intent(this, typeof(Activity_Game));
+                }
+                else if (value == btnScores.Text)
+                {
+                    text = "Start Scores Activity";
+                    activity = new Intent(this, typeof(Activity_Scores));
+                }
+                else if (value == btnProfile.Text)
+                {
+                    text = "Start Profile Activity";
+                    activity = new Intent(this, typeof(Activity_Profile));
+                }
+                else if (value == btnCredits.Text)
+                {
+                    text = "Start Credits Activity";
+                }
+                else
+                {
+                    text = "Error !!! No Activity started !!!";
+                }
+
+                if(activity != null)
+                    StartActivity(activity);
+                
+                //textViewMessage.Text = text;  // Debug Code
                 this.RaiseAndSetIfChanged(ref _activity, value);
             }
         }
@@ -78,13 +110,12 @@ namespace HangmanApp.Droid.Activities
              * https://reactiveui.net/docs/handbook/commands/binding-commands
             */
 
-
             this.BindCommand(ViewModel, x => x.cmdStartGame, c => c.btnStartGame);
             this.BindCommand(ViewModel, x => x.cmdScores, c => c.btnScores);
             this.BindCommand(ViewModel, x => x.cmdProfile, c => c.btnProfile);
             this.BindCommand(ViewModel, x => x.cmdCredits, c => c.btnCredits);
 
-#region Need to refactor in the future
+            #region Need to refactor in the future
             /*
              * The following code may not be the best solution
              * But that will do now. NOT proper MVVM coding
@@ -93,12 +124,13 @@ namespace HangmanApp.Droid.Activities
             ViewModel.txtScores = btnScores.Text;
             ViewModel.txtProfile = btnProfile.Text;
             ViewModel.txtCredits = btnCredits.Text;
-#endregion
+            #endregion
+            this.Bind(this.ViewModel, x => x.Toast, x => x.SetActivity);
 
             textViewMessage = FindViewById<TextView>(Resource.Id.textViewMessage);
             textViewMessage.Text = string.Empty;
-            this.Bind(this.ViewModel, x => x.Toast, x => x.SetActivity);
 
         }
+
     }
 }

@@ -1,12 +1,14 @@
 ﻿using ReactiveUI;
 //using ReactiveUI.Legacy;
-
+using System;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive;
 
 using Xamarin.Forms;
-using System;
+
+using HangmanApp.Shared.Data;
+using HangmanApp.Shared.DataAccessObject;
 
 namespace HangmanApp.Droid.ViewModel
 {
@@ -33,11 +35,49 @@ namespace HangmanApp.Droid.ViewModel
 
         public ReactiveCommand cmdActivity { get; }        
 
-        private string _msg;
+        private string _msg = string.Empty;
         public string Toast {
             get => _msg;
             set { this.RaiseAndSetIfChanged(ref _msg, value); }
         }
+
+        /*
+         * The Model_Profile object store user profile information
+         */
+        Model_Profile _profile;
+        private Model_Profile Profile  {
+            get => _profile;
+            set { this.RaiseAndSetIfChanged(ref _profile, value); }
+        }
+
+        public string Profile_ID
+        {
+            get => _profile.ID.ToString();
+            set
+            {
+                /*
+                 * Whether profile is a new and old profile by checking the ID
+                 */
+                if(value=="0")
+                {
+                    _profile = new Model_Profile();
+                }
+                else
+                {
+                    int id;
+                    if(int.TryParse(value,out id))
+                    {
+                        Model_Profile temp = ProfileRepository.GetProfile(id);
+                        if( temp != null)
+                            this.RaiseAndSetIfChanged(ref _profile, temp);
+                    }
+                    
+                }
+            }
+        }
+
+        public string Profile_Name { get => _profile.Name; }
+
         public ViewModel_MainScreen()
         {
             cmdActivity = ReactiveCommand.Create<string>(StartActivity);
