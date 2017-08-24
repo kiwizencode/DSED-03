@@ -80,18 +80,12 @@ namespace HangmanApp.Droid.ViewModel
 
         public ViewModel_MainScreen()
         {
-            cmdActivity = ReactiveCommand.Create<string>(StartActivity);
+            cmdActivity = ReactiveCommand.Create<string>((x) => Toast = x );
 
             cmdStartGame = ReactiveCommand.Create(() => Toast = txtStartGame);
             cmdScores = ReactiveCommand.Create(() => Toast = txtScores);
             cmdProfile = ReactiveCommand.Create(() => Toast = txtProfile);
             cmdCredits = ReactiveCommand.Create(() => Toast = txtCredits);
-        }
-
-        private void StartActivity(string text)
-        {
-            //ActivityName = text;
-            Toast = text;
         }
 
     }

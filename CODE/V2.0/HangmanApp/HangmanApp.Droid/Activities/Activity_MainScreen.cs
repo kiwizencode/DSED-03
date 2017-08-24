@@ -21,7 +21,7 @@ namespace HangmanApp.Droid.Activities
     public class Activity_MainScreen : ReactiveActivity , IViewFor<ViewModel_MainScreen>
     {
         
-#region Implementation of IViewFor<> Interface
+        #region Implementation of IViewFor<> Interface
         private ViewModel_MainScreen _model;
         public ViewModel_MainScreen ViewModel {
             get => _model ;
@@ -110,7 +110,7 @@ namespace HangmanApp.Droid.Activities
              * https://reactiveui.net/docs/handbook/commands/binding-commands
             */
 
-            this.BindCommand(ViewModel, x => x.cmdStartGame, c => c.btnStartGame);
+            this.BindCommand(ViewModel, x => x.cmdActivity, c => c.btnStartGame);
             this.BindCommand(ViewModel, x => x.cmdScores, c => c.btnScores);
             this.BindCommand(ViewModel, x => x.cmdProfile, c => c.btnProfile);
             this.BindCommand(ViewModel, x => x.cmdCredits, c => c.btnCredits);
@@ -124,6 +124,7 @@ namespace HangmanApp.Droid.Activities
             ViewModel.txtScores = btnScores.Text;
             ViewModel.txtProfile = btnProfile.Text;
             ViewModel.txtCredits = btnCredits.Text;
+
             #endregion
             this.Bind(this.ViewModel, x => x.Toast, x => x.SetActivity);
 

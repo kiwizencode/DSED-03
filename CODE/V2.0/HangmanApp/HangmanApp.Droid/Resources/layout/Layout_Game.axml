@@ -54,43 +54,43 @@
             android:background="#80000000" />
     <!-- The following 5 ImageViews will store the letter (in sequnce) of the hidden word -->
         <ImageView
-            android:id="@+id/ImageLetter01"
+            android:id="@+id/ImageSlot01"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/word_question"
+            android:src="@drawable/question_mark"
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
         <ImageView
-            android:id="@+id/ImageLetter02"
+            android:id="@+id/ImageSlot02"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/word_question"
+            android:src="@drawable/question_mark"
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
         <ImageView
-            android:id="@+id/ImageLetter03"
+            android:id="@+id/ImageSlot03"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/word_question"
+            android:src="@drawable/question_mark"
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
         <ImageView
-            android:id="@+id/ImageLetter04"
+            android:id="@+id/ImageSlot04"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/word_question"
+            android:src="@drawable/question_mark"
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
         <ImageView
-            android:id="@+id/ImageLetter05"
+            android:id="@+id/ImageSlot05"
             android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:src="@drawable/word_question"
+            android:src="@drawable/question_mark"
             android:scaleType="fitXY"
             android:adjustViewBounds="true" />
     <!-- End of the 5 ImageView -->
