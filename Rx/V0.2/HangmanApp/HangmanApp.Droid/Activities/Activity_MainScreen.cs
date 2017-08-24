@@ -17,7 +17,7 @@ using System.Reactive.Linq;
 
 namespace HangmanApp.Droid.Activities
 {
-    [Activity(Label = "HangmanApp", MainLauncher = true)]
+    [Activity(Label = "HangmanApp")] //, MainLauncher = true)]
     public class Activity_MainScreen : Activity
     {
         
@@ -33,11 +33,15 @@ namespace HangmanApp.Droid.Activities
 
         private void Initializer()
         {
-            Activity act;
+            Intent activity;
 
+            /*
+             * bring up Start Game Activity when user click the button
+             */
             FindViewById<Button>(Resource.Id.btnStartGame).Click += delegate
             {
-                //act 
+                activity = new Intent(this, typeof(Activity_Game));
+                StartActivity(activity);
             };
         }
     }
