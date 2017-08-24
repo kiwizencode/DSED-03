@@ -9,5 +9,9 @@
     <Import_RootNamespace>HangmanApp.Shared</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Helper\WordsHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)5letters.txt" />
   </ItemGroup>
 </Project>

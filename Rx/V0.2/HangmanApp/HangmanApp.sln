@@ -9,6 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HangmanApp.Droid", "Hangman
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		HangmanApp.Shared\HangmanApp.Shared.projitems*{895589ff-2114-488a-9766-b6ee7c614ca9}*SharedItemsImports = 4
 		HangmanApp.Shared\HangmanApp.Shared.projitems*{f04d159f-a600-4767-8761-480268b2fcda}*SharedItemsImports = 13
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

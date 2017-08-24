@@ -113,31 +113,31 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="0dp">
-        <Button
+        <ImageButton
             android:id="@+id/btn01"
             android:tag="1"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="right" />
-        <Button
+            android:layout_gravity="right"/>
+        <ImageButton
             android:id="@+id/btn02"
             android:tag="2"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right" />
-        <Button
+        <ImageButton
             android:id="@+id/btn03"
             android:tag="3"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right" />
-        <Button
+        <ImageButton
             android:id="@+id/btn04"
             android:tag="4"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right" />
-        <Button
+        <ImageButton
             android:id="@+id/btn05"
             android:tag="5"
             android:layout_width="50dp"
@@ -150,9 +150,9 @@
         android:orientation="horizontal"
         android:layout_gravity="right"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginTop="0dp">
-        <Button
+        <ImageButton
             android:id="@+id/btn06"
             android:tag="6"
             android:layout_width="50dp"
