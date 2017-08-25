@@ -127,6 +127,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <AndroidAsset Include="Assets\fonts\FFF_Tusj.ttf" />
+    <AndroidAsset Include="Assets\fonts\Matiz.ttf" />
+    <AndroidAsset Include="Assets\fonts\Montserrat-Black.otf" />
     <None Include="GettingStarted.Xamarin" />
     <None Include="packages.config" />
     <None Include="Resources\AboutResources.txt" />
