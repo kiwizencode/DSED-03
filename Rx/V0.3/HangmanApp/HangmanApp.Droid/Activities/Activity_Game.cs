@@ -98,6 +98,7 @@ namespace HangmanApp.Droid.Activities
 
 
         private TextView textViewTitle;
+        private TextView textViewTimer;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -114,11 +115,35 @@ namespace HangmanApp.Droid.Activities
         {
             ViewModel = new ViewModel_Game();
 
-            /* */
+            /* Set the font for the activity title bar*/
             textViewTitle = FindViewById<TextView>(Resource.Id.textViewTitle);
             Typeface typeface = Typeface.CreateFromAsset(Assets, "fonts/FFF_Tusj.ttf");
             textViewTitle.Typeface = typeface;
 
+            /* Set the font for the count-down timer */
+            textViewTimer = FindViewById<TextView>(Resource.Id.textViewTimer);
+            typeface = Typeface.CreateFromAsset(Assets, "fonts/Digital-Dismay.otf");
+            textViewTimer.Typeface = typeface;
+
+            this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
+
+            /* ################################################ */
+            /* The following code may not be the correct way of doing things. But just get it working and resolve it when I have a better understanding of ReactiveUI */
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
+                int i = 0;
+                int max = 20;
+                while (true)
+                {
+                    Thread.Sleep(1000);
+                    RunOnUiThread(() =>
+                    {
+                        ViewModel.Timer = (max - i).ToString();
+                        i = ++i % max;
+                    });
+                }
+            });
+            /* ################################################  */
 
             /*
              * The following code bind the hidden wWord display slot to the View Model
@@ -133,14 +158,14 @@ namespace HangmanApp.Droid.Activities
              * The following code bind the keyboard to the View Model
              */
 
-
                 /*
-                 * 
+                 * Setup the font for the button
                  */
                 void SetupButton(out Button btn, int btn_id)
                 {
                     btn = FindViewById<Button>(btn_id);
                     Typeface tf = Typeface.CreateFromAsset(Assets, "fonts/FFF_Tusj.ttf");
+                    //typeface = Typeface.CreateFromAsset(Assets, "fonts/FFF_Tusj.ttf");
                     btn.Typeface = tf;
                 }
 

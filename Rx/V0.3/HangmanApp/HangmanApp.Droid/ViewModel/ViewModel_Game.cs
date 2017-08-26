@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Linq;
 
 using HangmanApp.Shared.Helper;
+using System.Reactive.Concurrency;
 
 namespace HangmanApp.Droid.ViewModel
 {
@@ -157,11 +158,39 @@ namespace HangmanApp.Droid.ViewModel
             get => _btn15;
             set => this.RaiseAndSetIfChanged(ref _btn15, value);
         }
+
+        private int _timer;
+        public string Timer
+        {
+            get => _timer.ToString();
+            set
+            {
+                int i;
+                if (int.TryParse(value, out i))
+                {
+                    this.RaiseAndSetIfChanged(ref _timer, i);
+                }
+            }
+        }
+
+
+        private void SetTimer()
+        {
+            /* http://www.introtorx.com/Content/v1.0.10621.0/04_CreatingObservableSequences.html#ObservableTimer  */
+            var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
+
+            interval.ObserveOn(Scheduler.TaskPool)
+                .Subscribe(i => Timer = (i % 10).ToString());
+        }
+
+
         public ViewModel_Game()
         {
             ShowHiddenWord();
 
             SetupKeyBoard();
+
+            //SetTimer();
         }
 
         private void SetupKeyBoard()

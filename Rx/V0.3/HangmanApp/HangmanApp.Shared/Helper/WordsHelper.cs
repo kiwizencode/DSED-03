@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reactive.Subjects;
+using System.Reactive.Linq;
 using System.Reflection;
 using System.Text;
 
@@ -118,19 +120,46 @@ namespace HangmanApp.Shared.Helper
 
                 ProcessLetterBuilder(ref builder, hiddenword);
 
-                    /* How can I generate random alphanumeric strings in C#? 
-                     * https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c */ 
-                    //string RandomString(int length = 26)
-                    //{
-                    //    // Random random = new Random();
-                    //    string chars = "abcdefghijklmnopqrstuvwxyz";
-                    //    return new string(Enumerable.Repeat(chars, length)
-                    //      .Select(s => s[random.Next(s.Length)]).ToArray());
-                    //}
+                /* Not happy with the code found in folowing URI
+                 *  How can I generate random alphanumeric strings in C#? 
+                 * https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c 
+                 * Problem does not generate unique letter in the string each time
+                 * 
+                 * Come up with a solution using reactive :
+                 * 
+                 * 1. create a temporary list of char.
+                 * 2. generate a sequence of unique letter using Random seed generator
+                 * 3. store into the temporary list.
+                 * 4. convert the list of char into string object
+                 * 
+                 */
+                    string GenerateRandomLetterSequence()
+                    {
+                        List<char> char_list = new List<char>();
 
-                string random_letters = new string(
-                            Enumerable.Repeat(chars, length)
-                            .Select(s => s[random.Next(s.Length)]).ToArray());
+                        /* http://introtorx.com/Content/v1.0.10621.0/05_Filtering.html#Distinct */
+                        var subject = new Subject<int>();
+                        var distinct = subject.Distinct();
+                        distinct.Subscribe(i => {
+
+                            /* How to convert integer to char in C?
+                             * https://stackoverflow.com/questions/2279379/how-to-convert-integer-to-char-in-c */
+
+                            char ch = ((char)i); // 
+                            char_list.Add(ch);
+                        });
+                        int start = 'a', end = 'z';
+                        for (int i = 0; char_list.Count <= num; i++)
+                        {
+                            int ch = random.Next(start, end + 1);
+                            subject.OnNext(ch);
+                        }
+
+                        return new string(char_list.ToArray());
+                    }
+
+
+                string random_letters = GenerateRandomLetterSequence();
 
                 for ( int i = 0; builder.Length < num; i++)
                 {
