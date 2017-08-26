@@ -17,7 +17,7 @@ namespace HangmanApp.Shared.Helper
         protected static int[] word_index;
 
         static int counter;
-        static readonly int length = 15;
+        static readonly int length = 26;
 
         /// <summary>
         /// The synchronization lock.
@@ -94,17 +94,18 @@ namespace HangmanApp.Shared.Helper
         {
             void ProcessLetterBuilder(ref StringBuilder builder, string word)
             {
-                bool flag = false;
-                for (int x = 0; x < word.Length; x++, flag = false)
+                for (int x = 0; x < word.Length; x++)
                 {
+                    char ch = word[x];
+                    bool flag = false;
                     for (int i = 0; i < builder.Length; i++)
-                        if (builder[i].Equals(word[x]))
+                        if (builder[i].Equals(ch))
                         {
                             flag = true;
                             break;
                         }
 
-                    if (!flag)  builder.Append(word[x]);
+                    if (!flag)  builder.Append(ch);
                 }
             }
 

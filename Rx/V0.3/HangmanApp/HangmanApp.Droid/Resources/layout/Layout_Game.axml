@@ -20,11 +20,11 @@
         android:background="@drawable/title_bar"
         android:minWidth="25px"
         android:minHeight="25px">
-      <TextView
-            android:id="@+id/textViewTitle"
+        <TextView
             android:text="Game Page"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:id="@+id/textViewTitle"
             android:textColor="@android:color/black"
             android:layout_gravity="center"
             android:textSize="30dp"
