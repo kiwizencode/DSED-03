@@ -95,97 +95,63 @@ namespace HangmanApp.Shared.Helper
         /// <returns></returns>
         public static string GenerateRandomLetter(string hiddenword, int num=15)
         {
-            void ProcessLetterBuilder(ref StringBuilder builder, string word)
-            {
-                for (int x = 0; x < word.Length; x++)
-                {
-                    char ch = word[x];
-                    bool flag = false;
-                    for (int i = 0; i < builder.Length; i++)
-                        if (builder[i].Equals(ch))
-                        {
-                            flag = true;
-                            break;
-                        }
-
-                    if (!flag)  builder.Append(ch);
-                }
-            }
-
             lock (_lock)
             {
                 string chars = "abcdefghijklmnopqrstuvwxyz";
-
+                List<char> char_list = new List<char>();
                 Random random = new Random();
                 var builder = new StringBuilder();
 
-                ProcessLetterBuilder(ref builder, hiddenword);
-
+                /* add code in v0.3 */
+                /* refactorize the code in v0.4 */
                 /* Not happy with the code found in folowing URI
                  *  How can I generate random alphanumeric strings in C#? 
                  * https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c 
-                 * Problem does not generate unique letter in the string each time
+                 * Problem is that it do not generate unique letter in the string each time
                  * 
-                 * Come up with a solution using reactive :
+                 * Come up with a solution using reactive (version 2 as in v0.4):
                  * 
-                 * 1. create a temporary list of char.
-                 * 2. generate a sequence of unique letter using Random seed generator
-                 * 3. store into the temporary list.
-                 * 4. convert the list of char into string object
-                 * 
+                 * 1. creat a empty list called builder.
+                 * 2. add the letter from hidden word into the list, remove any duplicate 
+                 * 3. randomize a list of alphbet and add it into the list called builder
+                 * 4. randomize the list called builder. 
                  */
-                    string GenerateRandomLetterSequence()
+
+                /* http://introtorx.com/Content/v1.0.10621.0/05_Filtering.html#Distinct */
+
+                /* v0.3 : Using the following to pick up unique letter in the stream. */
+
+                var subject = new Subject<int>();
+                var distinct = subject.Distinct();
+                distinct.Subscribe(i => {
+
+                    /* How to convert integer to char in C?
+                     * https://stackoverflow.com/questions/2279379/how-to-convert-integer-to-char-in-c */
+
+                    char ch = ((char)i); // 
+                    char_list.Add(ch);
+                });
+
+
+                    void GenerateUniqueLetter(string list)
                     {
-                        List<char> char_list = new List<char>();
-
-                        /* http://introtorx.com/Content/v1.0.10621.0/05_Filtering.html#Distinct */
-
-                        var subject = new Subject<int>();
-                        var distinct = subject.Distinct();
-                        distinct.Subscribe(i => {
-
-                            /* How to convert integer to char in C?
-                             * https://stackoverflow.com/questions/2279379/how-to-convert-integer-to-char-in-c */
-
-                            char ch = ((char)i); // 
-                            char_list.Add(ch);
-                        });
-                        int start = 'a', end = 'z';
-                        for (int i = 0; char_list.Count <= num; i++)
+                        for (int i = 0; i < list.Length; i++)
                         {
-                            int ch = random.Next(start, end + 1);
+                            char ch = list[i];
                             subject.OnNext(ch);
                         }
-
-                        return new string(char_list.ToArray());
                     }
 
+                GenerateUniqueLetter(hiddenword);
 
-                string random_letters = GenerateRandomLetterSequence();
+                /* Best way to randomize an array with .NET
+                 * https://stackoverflow.com/questions/108819/best-way-to-randomize-an-array-with-net */
+                //string temp = chars.OrderBy(x => random.Next()).ToArray();
+                GenerateUniqueLetter(new string(chars.OrderBy(x => random.Next()).ToArray()));
 
-                for ( int i = 0; builder.Length < num; i++)
-                {
-                    ProcessLetterBuilder(ref builder, random_letters[i].ToString());
-                }
+                string temp_list = new string(char_list.ToArray());
+                return new string(temp_list.Substring(0, 15).OrderBy(x => random.Next()).ToArray());
 
-                return Shuffle(builder.ToString());
-
-
-                    /* How to shuffle string
-                     * https://stackoverflow.com/questions/4739903/shuffle-string-c-sharp */
-                    string Shuffle(string str)
-                    {
-                        char[] array = str.ToCharArray();
-                        //Random rng = new Random();
-                        for( int n = array.Length; n-- > 1;)
-                        {
-                            int k = random.Next(n + 1);
-                            var value = array[k];
-                            array[k] = array[n];
-                            array[n] = value;
-                        }
-                        return new string(array);
-                    }
             }
 
         }

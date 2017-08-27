@@ -120,6 +120,7 @@ namespace HangmanApp.Shared.Helper
 
                 ProcessLetterBuilder(ref builder, hiddenword);
 
+                /* change in v0.3*/
                 /* Not happy with the code found in folowing URI
                  *  How can I generate random alphanumeric strings in C#? 
                  * https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c 

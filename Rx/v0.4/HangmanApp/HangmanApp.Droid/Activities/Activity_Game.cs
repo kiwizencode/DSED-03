@@ -75,7 +75,7 @@ namespace HangmanApp.Droid.Activities
 
 
         /* */
-        private bool run_flag = false;
+        private bool run_flag = true;
 
         private int SelectButton { get; set; }
         public string Button_Text { get; set; }
@@ -85,6 +85,7 @@ namespace HangmanApp.Droid.Activities
 
         /* v0.4 change all the following controls variable into property */
         /* https://reactiveui.net/docs/handbook/data-binding/xamarin-android */
+
         public Button btn01 { get; private set; }
         public Button btn02 { get; private set; }
         public Button btn03 { get; private set; }
@@ -232,7 +233,7 @@ namespace HangmanApp.Droid.Activities
                     Button_Text = btn.Text ; this.RaisePropertyChanged("Button_Text");
                     Button_Tag = btn.Tag.ToString(); this.RaisePropertyChanged("Button_Tag");
                     //btn.Enabled = false;
-                    btn.Visibility = ViewStates.Invisible;
+                    //btn.Visibility = ViewStates.Invisible;
                 }
 
             /* btn01.Click += (sender, e) => SetButtonID(btn01); }; */
