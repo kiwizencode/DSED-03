@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="25dp" />
 <!-- Layout for Game Activity Header 
-	using a vertical linear layout with a TextView in the center of the layout -->
+  using a vertical linear layout with a TextView in the center of the layout -->
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -38,9 +38,9 @@
         android:layout_width="match_parent"
         android:layout_height="5dp" />
 <!-- Layout to display the following informations:
-		1. current score
-		2. count-down timer
-		3. current profile -->
+  1. current score
+  2. count-down timer
+  3. current profile -->
 <!-- Horizontal Linear Layout to hold 3 item containers -->
     <LinearLayout
         android:orientation="horizontal"
@@ -58,7 +58,7 @@
             android:background="@drawable/profile_border"
             android:layout_gravity="right">
         <!-- Using custom color profile for the TextView
-						https://material.io/guidelines/style/color.html#color-color-palette  -->
+  https://material.io/guidelines/style/color.html#color-color-palette  -->
             <TextView
                 android:text=" Score : "
                 android:textAppearance="?android:attr/textAppearanceSmall"
@@ -122,7 +122,7 @@
         android:layout_height="70dp"
         android:background="@drawable/hangman_word">
     <!-- How do I remove extra space above and below imageView?
-				https://stackoverflow.com/questions/15142780/how-do-i-remove-extra-space-above-and-below-imageview -->
+  https://stackoverflow.com/questions/15142780/how-do-i-remove-extra-space-above-and-below-imageview -->
         <ImageView
             android:layout_gravity="center"
             android:layout_width="wrap_content"
@@ -197,35 +197,40 @@
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#E65100"
-            android:textSize="28dp" />
+            android:textSize="28dp"
+            android:tag="01" />
         <Button
             android:id="@+id/btn02"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#E65100"
-            android:textSize="28dp" />
+            android:textSize="28dp"
+			android:tag="02" />
         <Button
             android:id="@+id/btn03"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#E65100"
-            android:textSize="28dp" />
+            android:textSize="28dp"
+			android:tag="03" />
         <Button
             android:id="@+id/btn04"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#E65100"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="04" />
         <Button
             android:id="@+id/btn05"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#E65100"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="05"/>
     </LinearLayout>
 <!-- 2nd row with 5 buttons-->
     <LinearLayout
@@ -241,35 +246,40 @@
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="06" />
         <Button
             android:id="@+id/btn07"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="07" />
         <Button
             android:id="@+id/btn08"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="08" />
         <Button
             android:id="@+id/btn09"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="09" />
         <Button
             android:id="@+id/btn10"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="10" />
     </LinearLayout>
 <!-- 3rd row with 5 buttons-->
     <LinearLayout
@@ -284,39 +294,61 @@
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="11" />
         <Button
             android:id="@+id/btn12"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="12" />
         <Button
             android:id="@+id/btn13"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="13" />
         <Button
             android:id="@+id/btn14"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="14" />
         <Button
             android:id="@+id/btn15"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" />
+            android:textSize="28dp" 
+			android:tag="15" />
     </LinearLayout>
-    <Button
-        android:text="Next Word"
-        android:layout_width="match_parent"
+    <LinearLayout
         android:layout_height="wrap_content"
-        android:id="@+id/btnNext" />
+        android:layout_width="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:text="Text"
+            android:id="@+id/textViewToast"
+            android:textColor="@android:color/holo_blue_dark"
+            android:typeface="monospace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:background="@drawable/profile_border" />
+        <Button
+            android:text="Next Word"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnNext"
+            android:layout_weight="1" />
+    </LinearLayout>
 </LinearLayout>

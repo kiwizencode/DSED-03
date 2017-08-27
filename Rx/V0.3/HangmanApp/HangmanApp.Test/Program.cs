@@ -7,13 +7,54 @@ using System.Threading.Tasks;
 
 using System.Reactive;
 using System.Reactive.Subjects;
+using System.Threading;
 
 namespace HangmanApp.Test
 {
     class Program
     {
+        public static event EventHandler SimpleEvent;
 
         static void Main(string[] args)
+        {
+            Console.WriteLine("Setup observable");
+            // To consume SimpleEvent as an IObservable:
+            var eventAsObservable = Observable.FromEventPattern(
+                    ev => SimpleEvent += ev,
+                    ev => SimpleEvent -= ev);
+
+            // SimpleEvent is null until we subscribe
+            Console.WriteLine(SimpleEvent == null ? "SimpleEvent == null" : "SimpleEvent != null");
+
+            Console.WriteLine("Subscribe");
+            //Create two event subscribers
+            var s = eventAsObservable.Subscribe(a => Console.WriteLine("Received event for s subscriber"));
+            var t = eventAsObservable.Subscribe(a => Console.WriteLine("Received event for t subscriber"));
+
+            // After subscribing the event handler has been added
+            Console.WriteLine(SimpleEvent == null ? "SimpleEvent == null" : "SimpleEvent != null");
+
+            Console.WriteLine("Raise event");
+            if (null != SimpleEvent)
+            {
+                SimpleEvent(null, EventArgs.Empty);
+            }
+
+            // Allow some time before unsubscribing or event may not happen
+            Thread.Sleep(100);
+
+            Console.WriteLine("Unsubscribe");
+            s.Dispose();
+            t.Dispose();
+
+            // After unsubscribing the event handler has been removed
+            Console.WriteLine(SimpleEvent == null ? "SimpleEvent == null" : "SimpleEvent != null");
+
+            Console.ReadKey();
+        }
+
+
+        static void Main3(string[] args)
         {
 
             /* http://www.introtorx.com/Content/v1.0.10621.0/04_CreatingObservableSequences.html#ObservableTimer  */

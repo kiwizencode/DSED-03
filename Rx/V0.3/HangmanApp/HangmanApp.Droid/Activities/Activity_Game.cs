@@ -15,6 +15,7 @@ using ReactiveUI;
 using System.Threading;
 using HangmanApp.Droid.ViewModel;
 using Android.Graphics;
+using System.Reactive.Linq;
 
 namespace HangmanApp.Droid.Activities
 {
@@ -80,6 +81,20 @@ namespace HangmanApp.Droid.Activities
         }
 
 
+        private int _selected_btn_id;
+        private int SelectButton
+        {
+            get => _selected_btn_id;
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _selected_btn_id, value);
+            }
+        }
+
+        public string Button_Text { get; set; }
+        public string Button_Tag { get; set; }
+
+
         private Button btn01;
         private Button btn02;
         private Button btn03;
@@ -99,6 +114,13 @@ namespace HangmanApp.Droid.Activities
 
         private TextView textViewTitle;
         private TextView textViewTimer;
+
+        /* For DEbugging */
+        private TextView textViewToast;
+
+
+        /* */
+        private bool run_flag = false;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -133,7 +155,7 @@ namespace HangmanApp.Droid.Activities
             {
                 int i = 0;
                 int max = 20;
-                while (true)
+                while (run_flag)
                 {
                     Thread.Sleep(1000);
                     RunOnUiThread(() =>
@@ -165,7 +187,6 @@ namespace HangmanApp.Droid.Activities
                 {
                     btn = FindViewById<Button>(btn_id);
                     Typeface tf = Typeface.CreateFromAsset(Assets, "fonts/FFF_Tusj.ttf");
-                    //typeface = Typeface.CreateFromAsset(Assets, "fonts/FFF_Tusj.ttf");
                     btn.Typeface = tf;
                 }
 
@@ -202,44 +223,87 @@ namespace HangmanApp.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Btn15, c => c.btn15.Text);
 
 
-                void ButtonTextUppercase(ref Button btn)
-                {
-                    var text = btn.Text;
-                    btn.Tag = text;
-                    btn.Text = text.ToUpper();
-                }
+            //    void SaveButtonText(ref Button btn)
+            //    {
+            //        var text = btn.Text;
+            //        btn.Tag = text;
+            //        btn.Text = text.ToUpper();
+            //    }
 
-            this.WhenAny(x => x.btn01.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn01); });
-            this.WhenAny(x => x.btn02.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn02); });
-            this.WhenAny(x => x.btn03.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn03); });
-            this.WhenAny(x => x.btn04.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn04); });
-            this.WhenAny(x => x.btn05.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn05); });
-            this.WhenAny(x => x.btn06.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn06); });
-            this.WhenAny(x => x.btn07.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn07); });
-            this.WhenAny(x => x.btn08.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn08); });
-            this.WhenAny(x => x.btn09.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn09); });
-            this.WhenAny(x => x.btn10.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn10); });
-            this.WhenAny(x => x.btn11.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn11); });
-            this.WhenAny(x => x.btn12.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn12); });
-            this.WhenAny(x => x.btn13.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn13); });
-            this.WhenAny(x => x.btn14.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn14); });
-            this.WhenAny(x => x.btn15.Text, _ => string.Empty).Subscribe(
-                func => { ButtonTextUppercase(ref this.btn15); });
 
+            ///* https://reactiveui.net/docs/handbook/when-any/ */
+
+            //this.WhenAny(x => x.btn01.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn01); });
+            //this.WhenAny(x => x.btn02.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn02); });
+            //this.WhenAny(x => x.btn03.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn03); });
+            //this.WhenAny(x => x.btn04.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn04); });
+            //this.WhenAny(x => x.btn05.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn05); });
+            //this.WhenAny(x => x.btn06.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn06); });
+            //this.WhenAny(x => x.btn07.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn07); });
+            //this.WhenAny(x => x.btn08.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn08); });
+            //this.WhenAny(x => x.btn09.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn09); });
+            //this.WhenAny(x => x.btn10.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn10); });
+            //this.WhenAny(x => x.btn11.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn11); });
+            //this.WhenAny(x => x.btn12.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn12); });
+            //this.WhenAny(x => x.btn13.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn13); });
+            //this.WhenAny(x => x.btn14.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn14); });
+            //this.WhenAny(x => x.btn15.Text, _ => string.Empty)
+            //    .Subscribe(func => { SaveButtonText(ref this.btn15); });
+
+
+            /* Following code is to capture button information when user click a button */
+
+            this.Bind(ViewModel, x => x.Btn_Text, c => c.Button_Text);
+            this.Bind(ViewModel, x => x.Btn_Tag, c => c.Button_Tag);
+
+
+            //var mouseClick = Observable.FromEventPattern<MotionEvent>(this, "ACTION_BUTTON_PRESS");
+
+
+
+            //this.BindCommand(ViewModel, x => x.cmdClickButton, c => c.btn01);
+
+            void SetButtonID(Button btn)
+            {
+                Button_Text = btn.Text ; this.RaisePropertyChanged("Button_Text");
+                Button_Tag = btn.Tag.ToString(); this.RaisePropertyChanged("Button_Tag");
+                ViewModel.Toast = Button_Text + " : " + Button_Tag;
+            }
+
+            btn01.Click += delegate { SetButtonID(btn01); };
+            btn02.Click += delegate { SetButtonID(btn02); };
+            btn03.Click += delegate { SetButtonID(btn03); };
+            btn04.Click += delegate { SetButtonID(btn04); };
+            btn05.Click += delegate { SetButtonID(btn05); };
+            btn06.Click += delegate { SetButtonID(btn06); };
+            btn07.Click += delegate { SetButtonID(btn07); };
+            btn08.Click += delegate { SetButtonID(btn08); };
+            btn09.Click += delegate { SetButtonID(btn09); };
+            btn10.Click += delegate { SetButtonID(btn10); };
+            btn11.Click += delegate { SetButtonID(btn11); };
+            btn12.Click += delegate { SetButtonID(btn12); };
+            btn13.Click += delegate { SetButtonID(btn13); };
+            btn14.Click += delegate { SetButtonID(btn14); };
+            btn15.Click += delegate { SetButtonID(btn15); };
+
+            /* for debuging */
+            textViewToast = FindViewById<TextView>(Resource.Id.textViewToast);
+            //textViewToast.Text = "Hello World";
+            this.OneWayBind(ViewModel, x => x.Toast, c => c.textViewToast.Text);
 
 
             //this.OneWayBind(ViewModel, x => x.Btn01, c => c.Btn01);
@@ -266,6 +330,8 @@ namespace HangmanApp.Droid.Activities
             //btn15 = FindViewById<Button>(Resource.Id.btn15);
 
         }
+
+
 
         //private void SetButton(int id, string text)
         //{

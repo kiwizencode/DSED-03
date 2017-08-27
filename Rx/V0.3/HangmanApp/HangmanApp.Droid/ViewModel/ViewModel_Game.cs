@@ -1,12 +1,12 @@
 ﻿using ReactiveUI;
 
 using System;
+using System.Reactive;
 using System.Reactive.Linq;
-//using System.Reactive.Linq;
 using System.Linq;
 
 using HangmanApp.Shared.Helper;
-using System.Reactive.Concurrency;
+using Android.Widget;
 
 namespace HangmanApp.Droid.ViewModel
 {
@@ -60,102 +60,102 @@ namespace HangmanApp.Droid.ViewModel
         private string _btn01 = string.Empty;
         public string Btn01
         {
-            get => _btn01;
+            get => _btn01.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn01, value);
         }
 
         private string _btn02 = string.Empty;
         public string Btn02
         {
-            get => _btn02;
+            get => _btn02.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn02, value);
         }
 
         private string _btn03 = string.Empty;
         public string Btn03
         {
-            get => _btn03;
+            get => _btn03.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn03, value);
         }
         private string _btn04 = string.Empty;
         public string Btn04
         {
-            get => _btn04;
+            get => _btn04.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn04, value);
         }
 
         private string _btn05 = string.Empty;
         public string Btn05
         {
-            get => _btn05;
+            get => _btn05.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn05, value);
         }
 
         private string _btn06 = string.Empty;
         public string Btn06
         {
-            get => _btn06;
+            get => _btn06.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn06, value);
         }
 
         private string _btn07 = string.Empty;
         public string Btn07
         {
-            get => _btn07;
+            get => _btn07.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn07, value);
         }
 
         private string _btn08 = string.Empty;
         public string Btn08
         {
-            get => _btn08;
+            get => _btn08.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn08, value);
         }
 
         private string _btn09 = string.Empty;
         public string Btn09
         {
-            get => _btn09;
+            get => _btn09.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn09, value);
         }
         private string _btn10 = string.Empty;
         public string Btn10
         {
-            get => _btn10;
+            get => _btn10.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn10, value);
         }
 
         private string _btn11 = string.Empty;
         public string Btn11
         {
-            get => _btn11;
+            get => _btn11.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn11, value);
         }
 
         private string _btn12 = string.Empty;
         public string Btn12
         {
-            get => _btn12;
+            get => _btn12.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn12, value);
         }
 
         private string _btn13 = string.Empty;
         public string Btn13
         {
-            get => _btn13;
+            get => _btn13.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn13, value);
         }
         private string _btn14 = string.Empty;
         public string Btn14
         {
-            get => _btn14;
+            get => _btn14.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn14, value);
         }
 
         private string _btn15 = string.Empty;
         public string Btn15
         {
-            get => _btn15;
+            get => _btn15.ToUpper();
             set => this.RaiseAndSetIfChanged(ref _btn15, value);
         }
 
@@ -173,27 +173,46 @@ namespace HangmanApp.Droid.ViewModel
             }
         }
 
+        public string Btn_Text { get; set; }
+        public string Btn_Tag { get; set; }
 
-        private void SetTimer()
+
+        public ReactiveCommand cmdClickButton;
+
+        //private string _toast;
+        //public string Toast {
+        //    get => _toast;
+        //    set => this.RaiseAndSetIfChanged(ref _toast, value)  ; 
+        //}
+
+        private string _toast;
+        public string Toast
         {
-            /* http://www.introtorx.com/Content/v1.0.10621.0/04_CreatingObservableSequences.html#ObservableTimer  */
-            var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
-
-            interval.ObserveOn(Scheduler.TaskPool)
-                .Subscribe(i => Timer = (i % 10).ToString());
+            get => _toast;
+            set => this.RaiseAndSetIfChanged(ref _toast, value);
         }
-
 
         public ViewModel_Game()
         {
+
+            cmdClickButton = ReactiveCommand.Create<object>(ProessClickButton);
+
             ShowHiddenWord();
 
-            SetupKeyBoard();
+            ButtonLetterInitializer();
 
             //SetTimer();
         }
 
-        private void SetupKeyBoard()
+        private void ProessClickButton(object arg)
+        {
+            //throw new NotImplementedException();
+            //dynamic obj = arg;
+            Toast = Btn_Text + " : " + Btn_Tag;
+            this.RaisePropertyChanged("Toast");
+        }
+
+        private void ButtonLetterInitializer()
         {
             string random_letter = WordsHelper.GenerateRandomLetter(hidden_word);
             for(int i=0; i < 15;i++)
@@ -234,5 +253,14 @@ namespace HangmanApp.Droid.ViewModel
             Slot04_Letter = getString(hidden_word[3]);
             Slot05_Letter = getString(hidden_word[4]);
         }
+
+        //private void SetTimer()
+        //{
+        //    /* http://www.introtorx.com/Content/v1.0.10621.0/04_CreatingObservableSequences.html#ObservableTimer  */
+        //    var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
+
+        //    interval.ObserveOn(Scheduler.TaskPool)
+        //        .Subscribe(i => Timer = (i % 10).ToString());
+        //}
     }
 }
