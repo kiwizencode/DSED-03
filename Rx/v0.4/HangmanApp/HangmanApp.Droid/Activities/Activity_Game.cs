@@ -55,6 +55,10 @@ namespace HangmanApp.Droid.Activities
             int image_id = Resources.GetIdentifier(resource, "drawable", PackageName);
             image.SetImageResource(image_id);
 
+            /* added in v0.4 */
+            /* set the ImageView to invisible intially */
+            //image.Visibility =  (image.Visibility == ViewStates.Visible) ?   ViewStates.Invisible : ViewStates.Visible;
+
             /* The following code will also work. */
             //image.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
         }
@@ -76,10 +80,11 @@ namespace HangmanApp.Droid.Activities
         /* v0.4 */
         /* load hangman image */
         private string Hangman_Image { get => string.Empty; set => SetImageView(Resource.Id.imageViewHangman, value); }
-
+        
 
         /* */
-        private bool run_flag = true;
+        //private bool run_flag = true;
+        public bool Run_Flag { get; set; }
 
         private int SelectButton { get; set; }
         public string Button_Text { get; set; }
@@ -117,7 +122,7 @@ namespace HangmanApp.Droid.Activities
         public ImageView imageViewHangman { get; private set; }
 
         /* For DEbugging */
-        public TextView textViewToast { get; private set; }
+        //public TextView textViewToast { get; private set; }
 
         /* ############################## */
 
@@ -137,7 +142,7 @@ namespace HangmanApp.Droid.Activities
         {
             ViewModel = new ViewModel_Game();
 
-
+            /* v0.4 */
             /* https://reactiveui.net/docs/handbook/data-binding/xamarin-android */
 
             // WireUpControls looks through your layout file, finds all controls 
@@ -147,9 +152,9 @@ namespace HangmanApp.Droid.Activities
             this.WireUpControls(); // v0.4 => added this code
 
 
+            this.OneWayBind(ViewModel, x => x.Run_Flag, c => c.Run_Flag );
             /* */
             this.OneWayBind(ViewModel, x => x.Score, c => c.textViewScore.Text);
-
 
 
             /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
@@ -158,21 +163,21 @@ namespace HangmanApp.Droid.Activities
 
             this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
 
-            ThreadPool.QueueUserWorkItem(_ =>
-            {
-                //int i = 0;
-                //int max = 20;
-                while (run_flag)
+            ThreadPool.QueueUserWorkItem( _ => 
                 {
-                    Thread.Sleep(1000);
-                    RunOnUiThread(() =>
+                    while (Run_Flag)
                     {
-                        //textViewTimer.Text = (max - i).ToString();
-                        //i = ++i % max;
-                        ViewModel.TimerTick();
-                    });
+                        Thread.Sleep(1000);
+                        RunOnUiThread(() => ViewModel.TimerTick());
+                    }
                 }
-            });
+            );
+
+            //var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
+
+            //ThreadPool.QueueUserWorkItem( _ => interval.Repeat().Subscribe
+            //    ( y => RunOnUiThread(() => ViewModel.TimerTick()))
+            //);
             /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
 
 
@@ -181,17 +186,13 @@ namespace HangmanApp.Droid.Activities
             textViewTitle.Typeface = Typeface.CreateFromAsset(Assets, Game_Font);
 
             /* Set the font for the count-down timer */
-            textViewTimer.Typeface = Typeface.CreateFromAsset(Assets, Digital_Font);
+            var digital_font = Typeface.CreateFromAsset(Assets, Digital_Font);
+            textViewTimer.Typeface = digital_font;
+            textViewHighest.Typeface = digital_font;
+            textViewScore.Typeface = digital_font;
 
-
-
-
-            //SetImageView(Resource.Id.imageViewHangman, "hangman00");
-
-
-
-                /* Setup the font for the button  */
-                void SetupButton(Button btn, int btn_id)
+            /* Setup the font for the button  */
+            void SetupButton(Button btn, int btn_id)
                 {
                     btn.Typeface = Typeface.CreateFromAsset(Assets, Game_Font);
                 }
@@ -245,19 +246,19 @@ namespace HangmanApp.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Btn14, c => c.btn14.Text);
             this.OneWayBind(ViewModel, x => x.Btn15, c => c.btn15.Text);
 
-
             /* Following code is to capture button information when user click a button */
 
             this.Bind(ViewModel, x => x.Btn_Text, c => c.Button_Text);
             this.Bind(ViewModel, x => x.Btn_Tag, c => c.Button_Tag);
-            this.OneWayBind(ViewModel, x => x.Toast, c => c.textViewToast.Text);
+            //this.OneWayBind(ViewModel, x => x.Toast, c => c.textViewToast.Text);
 
+                /* added in v0.3 */
                 void SetButtonID(Button btn)
                 {
                     Button_Text = btn.Text ; this.RaisePropertyChanged("Button_Text");
                     Button_Tag = btn.Tag.ToString(); this.RaisePropertyChanged("Button_Tag");
-                    //btn.Enabled = false;
-                    //btn.Visibility = ViewStates.Invisible;
+                    /* added in v0.4 => set button to invisible once button is clicked. */
+                    btn.Visibility = ViewStates.Invisible;
                 }
 
             /* btn01.Click += (sender, e) => SetButtonID(btn01); }; */
@@ -277,8 +278,6 @@ namespace HangmanApp.Droid.Activities
             btn14.Click += (sender, e) => SetButtonID(btn14);
             btn15.Click += (sender, e) => SetButtonID(btn15);
 
-
         }
-
     }
 }

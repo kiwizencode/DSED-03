@@ -1,12 +1,10 @@
 ﻿using ReactiveUI;
 
 using System;
-using System.Reactive;
+using System.Collections.Generic;
 using System.Reactive.Linq;
-using System.Linq;
 
 using HangmanApp.Shared.Helper;
-using Android.Widget;
 
 namespace HangmanApp.Droid.ViewModel
 {
@@ -168,7 +166,6 @@ namespace HangmanApp.Droid.ViewModel
             set => this.RaiseAndSetIfChanged(ref _btn15, value);
         }
 
-
         private string _button_letter = "?";
         public string Btn_Text
         {
@@ -195,6 +192,9 @@ namespace HangmanApp.Droid.ViewModel
             }
         }
         public string Btn_Tag { get; set; }
+
+        /* v0.4 */
+        public bool Run_Flag { get; set; } = true;
 
         private string _toast;
         public string Toast
@@ -230,69 +230,137 @@ namespace HangmanApp.Droid.ViewModel
         private int _hangman_count = 6;
         public void TimerTick()
         {
-            //if(_timer==0)
-            //{
-            //    _hangman_count = ++_hangman_count % 7;
-            //    Hangman_Image = _hangman_count.ToString();
-            //}
-
-
-            ////char ch = (_button_letter != string.Empty) ? _button_letter.ToLower()[0] : '?' ;
-            //char ch = _button_letter.ToLower()[0];
-
-            //if (hidden_word.LastIndexOf(ch) != -1)
-            //{
-            //    Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString() + " + " + _timer.ToString();
-            //    _score += _timer + WordsHelper.GetScore(ch);
-            //    _timer = MAX_TICK;
-            //}
-            //else
-            //{
-            //    if(ch != '?')
-            //        Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString();
-            //    _timer = (_timer == 0) ? MAX_TICK : _timer - 1;
-            //}
-
-            ///* Not a best way of doing */
-            //_button_letter = "?";
-
-            //this.RaisePropertyChanged("Score");
-            //
-            _timer = (_timer == 0) ? MAX_TICK : _timer - 1;
-            this.RaisePropertyChanged("Timer");
+            if(Run_Flag)
+            {
+                _timer = (_timer == 0) ? MAX_TICK : _timer - 1;
+                this.RaisePropertyChanged("Timer");
+            }
         }
 
+
+        //public ReactiveCommand cmdTimerTick { get; private set; }
+        /* Comment out the old code */
+        //public void TimerTick()
+        //{
+        //    if (_timer == 0)
+        //    {
+        //        _hangman_count = ++_hangman_count % 7;
+        //        Hangman_Image = _hangman_count.ToString();
+        //    }
+
+
+        //    //char ch = (_button_letter != string.Empty) ? _button_letter.ToLower()[0] : '?' ;
+        //    char ch = _button_letter.ToLower()[0];
+
+        //    if (hidden_word.LastIndexOf(ch) != -1)
+        //    {
+        //        Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString() + " + " + _timer.ToString();
+        //        _score += _timer + WordsHelper.GetScore(ch);
+        //        _timer = MAX_TICK;
+        //    }
+        //    else
+        //    {
+        //        if (ch != '?')
+        //            Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString();
+        //        _timer = (_timer == 0) ? MAX_TICK : _timer - 1;
+        //    }
+
+        //    /* Not a best way of doing */
+        //    _button_letter = "?";
+
+        //    this.RaisePropertyChanged("Score");
+
+        //    this.RaisePropertyChanged("Timer");
+        //}
         private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord(); }
 
+        private int _worng_guess = 0;
+        private int _correct_guess = 0;
         public ViewModel_Game()
         {
+            //cmdTimerTick = ReactiveCommand.Create(TimerTick);
+            
+
             GenerateHiddenWord();
 
-            ShowHiddenWord();
+            /* for debug purpose */
+            hidden_word = "heels";
+
+            //ShowHiddenWord();
 
             ButtonLetterInitializer();
 
             //SetTimer();
 
+
+
+
             this.WhenAny(x => x.Btn_Text, _ => string.Empty).Subscribe( Func =>
                 {
+                    int SetSlotImage(char letter)
+                    {
+                        int count = 0;
+                        //List<int> letter_index = new List<int>();
+                        for (int i = 0; i < hidden_word.Length; i++)
+                            if (hidden_word[i] == letter)
+                            {
+                                //letter_index.Add(i);
+                                ShowHiddenWord(i + 1);
+                                _correct_guess++;
+                                if(_correct_guess==5)
+                                {
+                                    Run_Flag = false;
+                                    this.RaisePropertyChanged("Run_Flag");
+                                }
+                                    
+                                count++;
+                            }
+
+                        return count;
+                    }
+
+
                     char ch = Btn_Text.ToLower()[0];
                     if (hidden_word.LastIndexOf(ch) != -1)
                     {
-                        _score += _timer + WordsHelper.GetScore(ch);
+                        int count = SetSlotImage(ch);
+
+                        _score += (_timer + WordsHelper.GetScore(ch)) * count;
                         _timer = MAX_TICK;
                         this.RaisePropertyChanged("Score");
-                        this.RaisePropertyChanged("Timer");
                     }
+                    else
+                    {
+                        //if (ch != '?')
+                        //    Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString();
+                        if (ch != '?')
+                            _worng_guess++;
+                        if(_worng_guess == 6)
+                        {
+                            Run_Flag = false;
+                            this.RaisePropertyChanged("Run_Flag");
+                        }
+                        SetHangmanImage();
+                        _timer = MAX_TICK;
+                        
+
+                    }
+                    this.RaisePropertyChanged("Timer");
+                    /* Not a best way of doing */
+                    _button_letter = "?";
                 });
 
+            void SetHangmanImage()
+            {
+                _hangman_count = ++_hangman_count % 7;
+                Hangman_Image = _hangman_count.ToString();
+            }
 
             this.WhenAny(x => x.Timer, _ => string.Empty).Subscribe(Func =>
                {
                    if(_timer==0)
                    {
-                       _hangman_count = ++_hangman_count % 7;
-                       Hangman_Image = _hangman_count.ToString();
+                       SetHangmanImage();
                    }
                });
         }
@@ -336,13 +404,16 @@ namespace HangmanApp.Droid.ViewModel
             return ch.ToString();
         }
 
-        private void ShowHiddenWord()
+        private void ShowHiddenWord(int i)
         {
-            Slot01_Image = getString(hidden_word[0]);
-            Slot02_Image = getString(hidden_word[1]);
-            Slot03_Image = getString(hidden_word[2]);
-            Slot04_Image = getString(hidden_word[3]);
-            Slot05_Image = getString(hidden_word[4]);
+            switch(i)
+            {
+                case 1: Slot01_Image = getString(hidden_word[0]); break;
+                case 2: Slot02_Image = getString(hidden_word[1]); break;
+                case 3: Slot03_Image = getString(hidden_word[2]); break;
+                case 4: Slot04_Image = getString(hidden_word[3]); break;
+                case 5: Slot05_Image = getString(hidden_word[4]); break;
+            }
         }
 
         //private void SetTimer()
