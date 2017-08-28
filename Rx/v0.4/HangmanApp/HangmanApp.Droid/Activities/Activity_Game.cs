@@ -73,6 +73,10 @@ namespace HangmanApp.Droid.Activities
 
         /* ==================================================================================================== */
 
+        /* v0.4 */
+        /* load hangman image */
+        private string Hangman_Image { get => string.Empty; set => SetImageView(Resource.Id.imageViewHangman, value); }
+
 
         /* */
         private bool run_flag = true;
@@ -106,6 +110,12 @@ namespace HangmanApp.Droid.Activities
         public TextView textViewTitle { get; private set; }
         public TextView textViewTimer { get; private set; }
 
+        public TextView textViewHighest { get; private set; }
+        public TextView textViewScore { get; private set; }
+
+
+        public ImageView imageViewHangman { get; private set; }
+
         /* For DEbugging */
         public TextView textViewToast { get; private set; }
 
@@ -127,7 +137,7 @@ namespace HangmanApp.Droid.Activities
         {
             ViewModel = new ViewModel_Game();
 
-            
+
             /* https://reactiveui.net/docs/handbook/data-binding/xamarin-android */
 
             // WireUpControls looks through your layout file, finds all controls 
@@ -135,6 +145,11 @@ namespace HangmanApp.Droid.Activities
             // This is basically the same functionality as http://jakewharton.github.io/butterknife/ provides
 
             this.WireUpControls(); // v0.4 => added this code
+
+
+            /* */
+            this.OneWayBind(ViewModel, x => x.Score, c => c.textViewScore.Text);
+
 
 
             /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
@@ -145,15 +160,16 @@ namespace HangmanApp.Droid.Activities
 
             ThreadPool.QueueUserWorkItem(_ =>
             {
-                int i = 0;
-                int max = 20;
+                //int i = 0;
+                //int max = 20;
                 while (run_flag)
                 {
                     Thread.Sleep(1000);
                     RunOnUiThread(() =>
                     {
-                        ViewModel.Timer = (max - i).ToString();
-                        i = ++i % max;
+                        //textViewTimer.Text = (max - i).ToString();
+                        //i = ++i % max;
+                        ViewModel.TimerTick();
                     });
                 }
             });
@@ -166,6 +182,12 @@ namespace HangmanApp.Droid.Activities
 
             /* Set the font for the count-down timer */
             textViewTimer.Typeface = Typeface.CreateFromAsset(Assets, Digital_Font);
+
+
+
+
+            //SetImageView(Resource.Id.imageViewHangman, "hangman00");
+
 
 
                 /* Setup the font for the button  */
@@ -200,6 +222,8 @@ namespace HangmanApp.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Slot04_Image, c => c.Slot04_Image);
             this.OneWayBind(ViewModel, x => x.Slot05_Image, c => c.Slot05_Image);
 
+            /* v0.4 display hangman image onto screen*/
+            this.OneWayBind(ViewModel, x => x.Hangman_Image, c => c.Hangman_Image);
 
             /*
              * The following code bind the keyboard to the View Model
@@ -252,6 +276,7 @@ namespace HangmanApp.Droid.Activities
             btn13.Click += (sender, e) => SetButtonID(btn13);
             btn14.Click += (sender, e) => SetButtonID(btn14);
             btn15.Click += (sender, e) => SetButtonID(btn15);
+
 
         }
 

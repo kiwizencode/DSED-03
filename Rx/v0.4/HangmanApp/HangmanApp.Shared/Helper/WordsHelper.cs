@@ -19,7 +19,7 @@ namespace HangmanApp.Shared.Helper
         protected static int[] word_index;
 
         static int counter;
-        static readonly int length = 26;
+        //static readonly int length = 26;
 
         /// <summary>
         /// The synchronization lock.
@@ -133,6 +133,8 @@ namespace HangmanApp.Shared.Helper
                 });
 
 
+                    /* v0.4 */
+                    /* refactor the code such that the function will add a charactor to the stream at a time from string pass throught*/ 
                     void GenerateUniqueLetter(string list)
                     {
                         for (int i = 0; i < list.Length; i++)
@@ -142,35 +144,87 @@ namespace HangmanApp.Shared.Helper
                         }
                     }
 
+                /* v0.4 */
+                /* add letter from hidden word to builder list */
                 GenerateUniqueLetter(hiddenword);
 
                 /* Best way to randomize an array with .NET
-                 * https://stackoverflow.com/questions/108819/best-way-to-randomize-an-array-with-net */
-                //string temp = chars.OrderBy(x => random.Next()).ToArray();
+                 * https://stackoverflow.com/questions/108819/best-way-to-randomize-an-array-with-net
+                   
+                   string temp = chars.OrderBy(x => random.Next()).ToArray();  */
+
+                /* v0.4 */
+                /* add letter from a randomized alpahbet list into the builder list */
                 GenerateUniqueLetter(new string(chars.OrderBy(x => random.Next()).ToArray()));
 
+                /* v0.4 */
+                /* because the letter from the hidden word is added in the front of the builder list and the rest of letter at the back.
+                   pick the first few charactor [0..num] from the builder list and randomize it. 
+                   num => the total length of letters to be returned. */
                 string temp_list = new string(char_list.ToArray());
-                return new string(temp_list.Substring(0, 15).OrderBy(x => random.Next()).ToArray());
+                return new string(temp_list.Substring(0, num).OrderBy(x => random.Next()).ToArray());
 
             }
 
         }
-
+        /// <summary>
+        /// return the next hidden word
+        /// </summary>
+        /// <returns></returns>
         public static string GetNextWord() {
             string text = _list[word_index[counter++]];
             /* The following code ensure that when the counter reach the last word in the list, 
                it will reset bask to zero and restart from the bigining of the list    */
             counter = counter % word_index.Length; 
-            return text; }
+            return text;
+        }
 
-        /*
-         *  https://stackoverflow.com/questions/3122677/add-zero-padding-to-a-string
-         */
-        //for (int i = 1; i < 16;i++)
-        //{
-        //    string i_str = i.ToString();
-        //    string text = i_str.PadLeft(2,'0');
-        //    Console.WriteLine("btn"+text);
-        //}
+
+        /// <summary>
+        /// return the score value for the letter
+        /// </summary>
+        /// <param name="ch"></param>
+        /// <returns></returns>
+        public static int GetScore(char ch)
+        {
+            switch(ch)
+            {
+                case 'a':
+                case 'e':
+                case 'i':
+                case 'l':
+                case 'n':
+                case 'o':
+                case 'r':
+                case 's':
+                case 't':
+                case 'u': return 1;
+
+                case 'd':
+                case 'g': return 2;
+
+                case 'b':
+                case 'c':
+                case 'm':
+                case 'p': return 3;
+
+                case 'f':
+                case 'h':
+                case 'v':
+                case 'w':
+                case 'y': return 4;
+
+                case 'k': return 5;
+
+                case 'j':
+                case 'x': return 8;
+
+                case 'q':
+                case 'z': return 10;
+
+                default: throw new InvalidDataException("undefine score value in GetScore function");
+            }
+            
+        }
     }
 }

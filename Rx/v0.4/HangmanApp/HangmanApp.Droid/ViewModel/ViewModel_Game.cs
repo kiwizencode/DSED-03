@@ -15,17 +15,18 @@ namespace HangmanApp.Droid.ViewModel
         private readonly string LetterFile = "letter_";
         private static readonly string QuestionMarkImage = "question_mark";
         private static readonly string BlankFile = "hangman_blank";
+        private static readonly string HangmanImage = "hangman";
 
         /// <summary>
         /// stores the hidden word
         /// </summary>
-        public string hidden_word { get; private set; } 
+        public string hidden_word { get; private set; }
 
-        private string _slot01_Image = QuestionMarkImage ;
+        private string _slot01_Image = QuestionMarkImage;
         public string Slot01_Image
         {
             get => _slot01_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot01_Image, LetterFile + value) ;
+            set => this.RaiseAndSetIfChanged(ref _slot01_Image, LetterFile + value);
         }
 
         private string _slot02_Image = QuestionMarkImage;
@@ -54,7 +55,15 @@ namespace HangmanApp.Droid.ViewModel
         {
             get => _slot05_Image;
             set => this.RaiseAndSetIfChanged(ref _slot05_Image, LetterFile + value);
-        } 
+        }
+
+        /* v0.4 added to load hangman image */
+        private string _hangman_image = "hangman00"; // set the default image to load when activity start
+        public string Hangman_Image
+        {
+            get => _hangman_image;
+            set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanImage + value.PadLeft(2, '0'));
+        }
 
 
         private string _btn01 = string.Empty;
@@ -159,30 +168,29 @@ namespace HangmanApp.Droid.ViewModel
             set => this.RaiseAndSetIfChanged(ref _btn15, value);
         }
 
-        private int _timer;
-        public string Timer
-        {
-            get => _timer.ToString();
-            set
-            {
-                int i;
-                if (int.TryParse(value, out i))
-                {
-                    this.RaiseAndSetIfChanged(ref _timer, i);
-                }
-            }
-        }
-        private string _button_letter;
+
+        private string _button_letter = "?";
         public string Btn_Text
         {
             get => _button_letter ;
             set
             {
-                char ch = value.ToLower()[0];
-                if (hidden_word.LastIndexOf(ch) != -1)
-                    Toast = "Letter Found !!!";
-                else
-                    Toast = "Wrong Letter !!!";
+                ////char ch = value.ToLower()[0];
+                ////if (hidden_word.LastIndexOf(ch) != -1)
+                ////{
+                ////    //Toast = "Letter Found !!!";
+                ////    Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString() + " " + _timer.ToString();
+                ////    _score += _timer + WordsHelper.GetScore(ch);
+                ////    this.RaisePropertyChanged("Score");
+
+                ////    _timer = MAX_TICK;
+                ////    this.RaisePropertyChanged("Timer");
+                    
+                ////}
+                ////else
+                ////    //Toast = "Wrong Letter !!!";
+                ////    Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString();
+
                 this.RaiseAndSetIfChanged(ref _button_letter, value);
             }
         }
@@ -195,6 +203,67 @@ namespace HangmanApp.Droid.ViewModel
             set => this.RaiseAndSetIfChanged(ref _toast, value);
         }
 
+
+        private int _score;
+        public string Score { get => _score.ToString(); set { } }
+
+        private int _timer;
+        public string Timer
+        {
+            /*  How to add zero-padding to a string
+                https://stackoverflow.com/questions/3122677/add-zero-padding-to-a-string */
+            get => _timer.ToString().PadLeft(2, '0');
+            set
+            {
+                int i;
+                if (int.TryParse(value, out i))
+                {
+                    this.RaiseAndSetIfChanged(ref _timer, i);
+                }
+            }
+        }
+
+        /* added in v0.4 */
+        /* display the score */
+        private readonly int MAX_TICK = 20; 
+
+        private int _hangman_count = 6;
+        public void TimerTick()
+        {
+            //if(_timer==0)
+            //{
+            //    _hangman_count = ++_hangman_count % 7;
+            //    Hangman_Image = _hangman_count.ToString();
+            //}
+
+
+            ////char ch = (_button_letter != string.Empty) ? _button_letter.ToLower()[0] : '?' ;
+            //char ch = _button_letter.ToLower()[0];
+
+            //if (hidden_word.LastIndexOf(ch) != -1)
+            //{
+            //    Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString() + " + " + _timer.ToString();
+            //    _score += _timer + WordsHelper.GetScore(ch);
+            //    _timer = MAX_TICK;
+            //}
+            //else
+            //{
+            //    if(ch != '?')
+            //        Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString();
+            //    _timer = (_timer == 0) ? MAX_TICK : _timer - 1;
+            //}
+
+            ///* Not a best way of doing */
+            //_button_letter = "?";
+
+            //this.RaisePropertyChanged("Score");
+            //
+            _timer = (_timer == 0) ? MAX_TICK : _timer - 1;
+            this.RaisePropertyChanged("Timer");
+        }
+
+        private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord(); }
+
         public ViewModel_Game()
         {
             GenerateHiddenWord();
@@ -204,9 +273,30 @@ namespace HangmanApp.Droid.ViewModel
             ButtonLetterInitializer();
 
             //SetTimer();
+
+            this.WhenAny(x => x.Btn_Text, _ => string.Empty).Subscribe( Func =>
+                {
+                    char ch = Btn_Text.ToLower()[0];
+                    if (hidden_word.LastIndexOf(ch) != -1)
+                    {
+                        _score += _timer + WordsHelper.GetScore(ch);
+                        _timer = MAX_TICK;
+                        this.RaisePropertyChanged("Score");
+                        this.RaisePropertyChanged("Timer");
+                    }
+                });
+
+
+            this.WhenAny(x => x.Timer, _ => string.Empty).Subscribe(Func =>
+               {
+                   if(_timer==0)
+                   {
+                       _hangman_count = ++_hangman_count % 7;
+                       Hangman_Image = _hangman_count.ToString();
+                   }
+               });
         }
 
-        private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord(); }
 
 
         /// <summary>

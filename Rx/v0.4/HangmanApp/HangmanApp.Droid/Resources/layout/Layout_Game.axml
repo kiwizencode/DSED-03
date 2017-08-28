@@ -51,27 +51,58 @@
     <!-- 1st item  container is a Vertical Linear Layout -->
         <LinearLayout
             android:orientation="vertical"
-            android:minWidth="25px"
-            android:minHeight="25px"
+            android:layout_height="match_parent"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:background="@drawable/profile_border"
-            android:layout_gravity="right">
-        <!-- Using custom color profile for the TextView
-  https://material.io/guidelines/style/color.html#color-color-palette  -->
-            <TextView
-                android:text=" Score : "
-                android:textAppearance="?android:attr/textAppearanceSmall"
+            android:paddingRight="10dp">
+        <!-- v0.4 add the highest score display  -->
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#D32F2F"
-                android:gravity="right" />
-            <TextView
-                android:layout_width="100dp"
+                android:layout_gravity="right">
+            <!-- Using custom color profile for the TextView
+  https://material.io/guidelines/style/color.html#color-color-palette  -->
+                <TextView
+                    android:text=" Highest : "
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#D32F2F"
+                    android:gravity="right" />
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewHighest"
+                    android:gravity="start"
+                    android:textColor="@android:color/holo_red_dark"
+                    android:textAlignment="textEnd" />
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:minWidth="25px"
+                android:minHeight="25px"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/textViewScore"
-                android:gravity="start"
-                android:textColor="@android:color/holo_red_dark" />
+                android:layout_gravity="right">
+            <!-- Using custom color profile for the TextView
+  https://material.io/guidelines/style/color.html#color-color-palette  -->
+                <TextView
+                    android:text=" Score : "
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#D32F2F"
+                    android:gravity="right" />
+                <TextView
+                    android:layout_width="75dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textViewScore"
+                    android:gravity="right"
+                    android:textColor="@android:color/holo_red_dark" />
+            </LinearLayout>
         </LinearLayout>
     <!-- 2nd item container is only TextView -->
         <TextView
@@ -94,7 +125,7 @@
             android:background="@drawable/profile_border"
             android:layout_gravity="right">
             <TextView
-                android:text=" Current Profile : "
+                android:text=" Profile : "
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,11 +141,11 @@
     </LinearLayout>
 <!-- ImageView to hold the graphic for hangman-->
     <ImageView
-        android:src="@android:drawable/ic_menu_gallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewHangman"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:paddingTop="5dp" />
 <!-- The following layout is to show the "guess" word -->
     <LinearLayout
         android:gravity="center"
@@ -206,7 +237,7 @@
             android:layout_gravity="right"
             android:textColor="#E65100"
             android:textSize="28dp"
-			android:tag="02" />
+            android:tag="02" />
         <Button
             android:id="@+id/btn03"
             android:layout_width="50dp"
@@ -214,23 +245,23 @@
             android:layout_gravity="right"
             android:textColor="#E65100"
             android:textSize="28dp"
-			android:tag="03" />
+            android:tag="03" />
         <Button
             android:id="@+id/btn04"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#E65100"
-            android:textSize="28dp" 
-			android:tag="04" />
+            android:textSize="28dp"
+            android:tag="04" />
         <Button
             android:id="@+id/btn05"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#E65100"
-            android:textSize="28dp" 
-			android:tag="05"/>
+            android:textSize="28dp"
+            android:tag="05" />
     </LinearLayout>
 <!-- 2nd row with 5 buttons-->
     <LinearLayout
@@ -246,40 +277,40 @@
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" 
-			android:tag="06" />
+            android:textSize="28dp"
+            android:tag="06" />
         <Button
             android:id="@+id/btn07"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" 
-			android:tag="07" />
+            android:textSize="28dp"
+            android:tag="07" />
         <Button
             android:id="@+id/btn08"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" 
-			android:tag="08" />
+            android:textSize="28dp"
+            android:tag="08" />
         <Button
             android:id="@+id/btn09"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" 
-			android:tag="09" />
+            android:textSize="28dp"
+            android:tag="09" />
         <Button
             android:id="@+id/btn10"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#BF360C"
-            android:textSize="28dp" 
-			android:tag="10" />
+            android:textSize="28dp"
+            android:tag="10" />
     </LinearLayout>
 <!-- 3rd row with 5 buttons-->
     <LinearLayout
@@ -294,40 +325,40 @@
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" 
-			android:tag="11" />
+            android:textSize="28dp"
+            android:tag="11" />
         <Button
             android:id="@+id/btn12"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" 
-			android:tag="12" />
+            android:textSize="28dp"
+            android:tag="12" />
         <Button
             android:id="@+id/btn13"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" 
-			android:tag="13" />
+            android:textSize="28dp"
+            android:tag="13" />
         <Button
             android:id="@+id/btn14"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" 
-			android:tag="14" />
+            android:textSize="28dp"
+            android:tag="14" />
         <Button
             android:id="@+id/btn15"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="right"
             android:textColor="#5D4037"
-            android:textSize="28dp" 
-			android:tag="15" />
+            android:textSize="28dp"
+            android:tag="15" />
     </LinearLayout>
     <LinearLayout
         android:layout_height="wrap_content"
