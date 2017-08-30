@@ -11,10 +11,11 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 
-using ReactiveUI;
 //using HangmanApp.Droid.ViewModel;
 using System.Reactive.Linq;
 using Android.Graphics;
+
+using ReactiveUI;
 using HangmanApp.Droid.Helper;
 
 namespace HangmanApp.Droid.Activities
@@ -58,10 +59,24 @@ namespace HangmanApp.Droid.Activities
 
             Intent activity;
 
-            /* bring up Start Game Activity when user click the button */
+            /* activate Start Game Activity when user click the button */
             btnStartGame.Click += delegate
             {
                 activity = new Intent(this, typeof(Activity_Game));
+                StartActivity(activity);
+            };
+
+            /* activate Profile Activity when user click the button */
+            btnScores.Click += delegate
+            {
+                activity = new Intent(this, typeof(Activity_Scores));
+                StartActivity(activity);
+            };
+
+            /* activate Profile Activity when user click the button */
+            btnProfile.Click += delegate
+            {
+                activity = new Intent(this, typeof(Activity_Profile));
                 StartActivity(activity);
             };
         }

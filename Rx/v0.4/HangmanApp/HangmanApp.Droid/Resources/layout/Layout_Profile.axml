@@ -6,31 +6,35 @@
     android:background="@drawable/hangman_blank"
     android:minWidth="25px"
     android:minHeight="25px"
-    android:paddingRight="15dp"
+    android:paddingBottom="15dp"
     android:paddingLeft="15dp"
-    android:paddingTop="15dp"
-    android:paddingBottom="15dp">
+    android:paddingRight="15dp"
+    android:paddingTop="15dp">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:id="@+id/TitleLayout"
         android:background="@drawable/title_bar"
         android:minWidth="25px"
-        android:minHeight="25px">
+        android:minHeight="25px"
+        android:gravity="center_horizontal">
         <TextView
-            android:text="Hangman Game"
+            android:text="Select a Profile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textViewTitle"
             android:textColor="@android:color/black"
-            android:layout_gravity="center"
             android:textSize="30dp"
-            android:paddingTop="5dp" />
+            android:layout_gravity="center" />
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="5dp" />
+        android:layout_height="15dp"
+        android:id="@+id/imageView1" />
     <LinearLayout
         android:orientation="vertical"
         android:minWidth="25px"
@@ -57,47 +61,47 @@
     </LinearLayout>
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="25dp" />
+        android:layout_height="15dp" />
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <TextView
+            android:text="Name :"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView1"
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            android:layout_width="wrap_content"
+            android:layout_marginBottom="0.0dp" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/editTextProfile"
+            android:inputType="text" />
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+    </LinearLayout>
     <Button
-        android:id="@+id/btnStartGame"
-        android:text="Start a New Game"
+        android:text="Create new profile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="28dp"
-        android:textColor="#3E2723" />
-    <Button
-        android:text="Highest Scores"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnScores"
-        android:textSize="28dp"
-        android:textColor="#3E2723" />
-<!-- -->
+        android:id="@+id/btnSave" />
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1" />
-    <Button
-        android:id="@+id/btnProfile"
-        android:text="Profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="28dp"
-        android:textColor="#3E2723" />
-    <Button
-        android:id="@+id/btnCredits"
-        android:text="Credits"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="28dp"
-        android:textColor="#3E2723" />
+        android:layout_height="15dp" />
     <TextView
-        android:text="Text"
-        android:id="@+id/textViewMessage"
-        android:textColor="@android:color/holo_blue_dark"
-        android:typeface="monospace"
-        android:gravity="center_horizontal"
+        android:text="  Available profile to select:"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp" />
+        android:textColor="@android:color/black" />
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/listProfile" />
 </LinearLayout>
