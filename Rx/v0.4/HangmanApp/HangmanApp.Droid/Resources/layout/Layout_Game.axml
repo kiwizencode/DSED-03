@@ -52,7 +52,7 @@
         android:minHeight="25px"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <!-- 1st item  container is a Vertical Linear Layout -->
+    <!-- 1st item  container is a Linear Layout -->
         <LinearLayout
             android:orientation="vertical"
             android:layout_height="match_parent"
@@ -368,7 +368,7 @@
             android:textSize="28dp"
             android:tag="15" />
     </LinearLayout>
-  <!-- 
+<!-- 
     <LinearLayout
         android:layout_height="wrap_content"
         android:layout_width="match_parent"

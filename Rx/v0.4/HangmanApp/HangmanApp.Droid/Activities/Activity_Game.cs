@@ -16,14 +16,15 @@ using System.Threading;
 using HangmanApp.Droid.ViewModel;
 using Android.Graphics;
 using System.Reactive.Linq;
+using HangmanApp.Droid.Helper;
 
 namespace HangmanApp.Droid.Activities
 {
     [Activity(Label = "Game Activity")]
     public class Activity_Game : ReactiveActivity, IViewFor<ViewModel_Game>
     {
-        readonly string Game_Font = "fonts/FFF_Tusj.ttf";
-        readonly string Digital_Font = "fonts/Digital-Dismay.otf";
+        //readonly string Game_Font = "fonts/FFF_Tusj.ttf";
+        //readonly string Digital_Font = "fonts/Digital-Dismay.otf";
 
         #region Implementation of IViewFor<> Interface
         private ViewModel_Game _model;
@@ -39,29 +40,29 @@ namespace HangmanApp.Droid.Activities
         }
         #endregion
 
-        /// <summary>
-        /// set the image of ImageView based on the input resource
-        /// 
-        /// </summary>
-        /// <param name="id">ImageView resource id</param>
-        /// <param name="resource">Image file name</param>
-        private void SetImageView(int id, string resource)
-        {
-            ImageView image = FindViewById<ImageView>(id);
+        ///// <summary>
+        ///// set the image of ImageView based on the input resource
+        ///// 
+        ///// </summary>
+        ///// <param name="id">ImageView resource id</param>
+        ///// <param name="resource">Image file name</param>
+        //private void SetImageView(int id, string resource)
+        //{
+        //    ImageView image = FindViewById<ImageView>(id);
 
-            /* How to change the ImageView source dynamically from a string? (Xamarin Android) 
-             * https://stackoverflow.com/questions/39938391/how-to-change-the-imageview-source-dynamically-from-a-string-xamarin-android  */
+        //    /* How to change the ImageView source dynamically from a string? (Xamarin Android) 
+        //        * https://stackoverflow.com/questions/39938391/how-to-change-the-imageview-source-dynamically-from-a-string-xamarin-android  */
 
-            int image_id = Resources.GetIdentifier(resource, "drawable", PackageName);
-            image.SetImageResource(image_id);
+        //    int image_id = Resources.GetIdentifier(resource, "drawable", PackageName);
+        //    image.SetImageResource(image_id);
 
-            /* added in v0.4 */
-            /* set the ImageView to invisible intially */
-            //image.Visibility =  (image.Visibility == ViewStates.Visible) ?   ViewStates.Invisible : ViewStates.Visible;
+        //    /* added in v0.4 */
+        //    /* set the ImageView to invisible intially */
+        //    //image.Visibility =  (image.Visibility == ViewStates.Visible) ?   ViewStates.Invisible : ViewStates.Visible;
 
-            /* The following code will also work. */
-            //image.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
-        }
+        //    /* The following code will also work. */
+        //    //image.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
+        //}
 
         /* ==================================================================================================== */
         /* Set the letter image for the 5 letter slot for the hidden word */
@@ -69,17 +70,17 @@ namespace HangmanApp.Droid.Activities
         /* v0.4 changes - rename the variable from Slotxx_Image to Slotxx_Image*/
         /* The get operator in the following 15 properties are not being used.
            But have to be added somehow so that the reactive bind function will work.*/
-        private string Slot01_Image { get => string.Empty; set => SetImageView(Resource.Id.ImageSlot01, value); }
-        private string Slot02_Image { get => string.Empty; set => SetImageView(Resource.Id.ImageSlot02, value); }
-        private string Slot03_Image { get => string.Empty; set => SetImageView(Resource.Id.ImageSlot03, value); }
-        private string Slot04_Image { get => string.Empty; set => SetImageView(Resource.Id.ImageSlot04,value); }
-        private string Slot05_Image { get => string.Empty; set => SetImageView(Resource.Id.ImageSlot05,value); }
+        private string Slot01_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot01, value); }
+        private string Slot02_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot02, value); }
+        private string Slot03_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot03, value); }
+        private string Slot04_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot04,value); }
+        private string Slot05_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot05,value); }
 
         /* ==================================================================================================== */
 
         /* v0.4 */
         /* load hangman image */
-        private string Hangman_Image { get => string.Empty; set => SetImageView(Resource.Id.imageViewHangman, value); }
+        private string Hangman_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.imageViewHangman, value); }
         
 
         /* */
@@ -181,37 +182,36 @@ namespace HangmanApp.Droid.Activities
             /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
 
 
-
             /* Set the font for the activity title bar*/
-            textViewTitle.Typeface = Typeface.CreateFromAsset(Assets, Game_Font);
+            textViewTitle.Typeface = Typeface.CreateFromAsset(Assets, FontsHelper.Title_Font);
 
             /* Set the font for the count-down timer */
-            var digital_font = Typeface.CreateFromAsset(Assets, Digital_Font);
+            var digital_font = Typeface.CreateFromAsset(Assets, FontsHelper.Digital_Font);
             textViewTimer.Typeface = digital_font;
             textViewHighest.Typeface = digital_font;
             textViewScore.Typeface = digital_font;
 
-            /* Setup the font for the button  */
-            void SetupButton(Button btn, int btn_id)
-                {
-                    btn.Typeface = Typeface.CreateFromAsset(Assets, Game_Font);
-                }
+            ///* Setup the font for the button  */
+            //void SetupButton(Button btn, int btn_id)
+            //    {
+            //        btn.Typeface = Typeface.CreateFromAsset(Assets, FontsHelper.Title_Font);
+            //    }
 
-            SetupButton(btn01, Resource.Id.btn01);
-            SetupButton(btn02, Resource.Id.btn02);
-            SetupButton(btn03, Resource.Id.btn03);
-            SetupButton(btn04, Resource.Id.btn04);
-            SetupButton(btn05, Resource.Id.btn05);
-            SetupButton(btn06, Resource.Id.btn06);
-            SetupButton(btn07, Resource.Id.btn07);
-            SetupButton(btn08, Resource.Id.btn08);
-            SetupButton(btn09, Resource.Id.btn09);
-            SetupButton(btn10, Resource.Id.btn10);
-            SetupButton(btn11, Resource.Id.btn11);
-            SetupButton(btn12, Resource.Id.btn12);
-            SetupButton(btn13, Resource.Id.btn13);
-            SetupButton(btn14, Resource.Id.btn14);
-            SetupButton(btn15, Resource.Id.btn15);
+            FontsHelper.SetupButton(this, btn01, Resource.Id.btn01);
+            FontsHelper.SetupButton(this, btn02, Resource.Id.btn02);
+            FontsHelper.SetupButton(this, btn03, Resource.Id.btn03);
+            FontsHelper.SetupButton(this, btn04, Resource.Id.btn04);
+            FontsHelper.SetupButton(this, btn05, Resource.Id.btn05);
+            FontsHelper.SetupButton(this, btn06, Resource.Id.btn06);
+            FontsHelper.SetupButton(this, btn07, Resource.Id.btn07);
+            FontsHelper.SetupButton(this, btn08, Resource.Id.btn08);
+            FontsHelper.SetupButton(this, btn09, Resource.Id.btn09);
+            FontsHelper.SetupButton(this, btn10, Resource.Id.btn10);
+            FontsHelper.SetupButton(this, btn11, Resource.Id.btn11);
+            FontsHelper.SetupButton(this, btn12, Resource.Id.btn12);
+            FontsHelper.SetupButton(this, btn13, Resource.Id.btn13);
+            FontsHelper.SetupButton(this, btn14, Resource.Id.btn14);
+            FontsHelper.SetupButton(this, btn15, Resource.Id.btn15);
 
 
             /*

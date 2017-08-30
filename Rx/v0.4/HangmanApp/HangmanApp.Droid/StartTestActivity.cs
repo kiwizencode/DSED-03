@@ -17,8 +17,8 @@ namespace HangmanApp.Droid
     /*
      * use this to test unctionality of individual activity
      */
-    //[Activity(Label = "HangmanApp")]
-    [Activity(Label = "HangmanApp", MainLauncher = true)]
+    [Activity(Label = "HangmanApp")]
+    //[Activity(Label = "HangmanApp", MainLauncher = true)]
     public class StartTestActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)

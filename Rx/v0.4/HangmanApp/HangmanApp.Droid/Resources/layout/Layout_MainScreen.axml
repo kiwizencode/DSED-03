@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/hangman_blank"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/TitleLayout"
+        android:background="@drawable/title_bar"
+        android:minWidth="25px"
+        android:minHeight="25px">
+        <TextView
+            android:text="Hangman Game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewTitle"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center"
+            android:textSize="30dp"
+            android:paddingTop="5dp" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/profile_border"
+        android:layout_gravity="right">
+    <!-- https://material.io/guidelines/style/color.html#color-color-palette  -->
+        <TextView
+            android:text=" User Profile : "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF5722"
+            android:layout_gravity="center" />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewProfile"
+            android:gravity="center"
+            android:textColor="#424242"
+            android:text="1234567890" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="25dp" />
+    <Button
+        android:id="@+id/btnStartGame"
+        android:text="Start a New Game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:textColor="#5D4037" />
+    <Button
+        android:text="Highest Scores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnScores"
+        android:textSize="28dp"
+        android:textColor="#5D4037" />
+<!-- -->
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1" />
+    <Button
+        android:id="@+id/btnProfile"
+        android:text="Profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:textColor="#5D4037" />
+    <Button
+        android:id="@+id/btnCredits"
+        android:text="Credits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:textColor="#5D4037" />
+    <TextView
+        android:text="Text"
+        android:id="@+id/textViewMessage"
+        android:textColor="@android:color/holo_blue_dark"
+        android:typeface="monospace"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp" />
+</LinearLayout>
