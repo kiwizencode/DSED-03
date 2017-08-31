@@ -20,12 +20,17 @@ namespace HangmanApp.Droid.Activities
     public class Activity_Profile : ReactiveActivity
     {
         public TextView textViewTitle { get; private set; }
+        public Button btnSave { get; private set; }
+        public Button btnCancel { get; private set; }
+        public Button btnCreate { get; private set; }
+        public LinearLayout CreateProfileLayout { get; private set; }
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
 
             // Create your application here
-            SetContentView(Resource.Layout.Layout_Profile);
+            SetContentView(Resource.Layout.Layout_Profile_v2);
 
             Initializer();
         }
@@ -40,8 +45,30 @@ namespace HangmanApp.Droid.Activities
             this.WireUpControls(); // v0.4 => added this code
 
             /* Set the font for the activity title bar*/
-            textViewTitle.Typeface = Typeface.CreateFromAsset(Assets, FontsHelper.Title_Font);
+            textViewTitle.Typeface =  FontsHelper.Title_Font;
 
+            FontsHelper.SetupButton(this, btnCreate, Resource.Id.btnCreate);
+            FontsHelper.SetupButton(this, btnSave, Resource.Id.btnSave);
+            FontsHelper.SetupButton(this, btnCancel, Resource.Id.btnCancel);
+
+            /* */
+            btnCreate.Click += delegate
+            {
+                //activity = new Intent(this, typeof(Activity_Game));
+                CreateProfileLayout.Visibility = ViewStates.Visible;
+            };
+
+            btnSave.Click += delegate
+            {
+                //activity = new Intent(this, typeof(Activity_Game));
+                CreateProfileLayout.Visibility = ViewStates.Gone;
+            };
+
+            btnCancel.Click += delegate
+            {
+                //activity = new Intent(this, typeof(Activity_Game));
+                CreateProfileLayout.Visibility = ViewStates.Gone;
+            };
         }
     }
 }

@@ -136,8 +136,8 @@
     <None Include="Assets\AboutAssets.txt" />
     <AndroidResource Include="Resources\layout\Layout_Game.axml" />
     <AndroidResource Include="Resources\layout\Layout_MainScreen.axml" />
-    <AndroidResource Include="Resources\layout\Layout_Profile.axml" />
     <AndroidResource Include="Resources\layout\Layout_Scores.axml" />
+    <AndroidResource Include="Resources\layout\Layout_Profile_v2.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\Strings.xml" />

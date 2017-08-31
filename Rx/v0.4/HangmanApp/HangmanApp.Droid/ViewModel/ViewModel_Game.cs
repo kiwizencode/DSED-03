@@ -284,7 +284,7 @@ namespace HangmanApp.Droid.ViewModel
             GenerateHiddenWord();
 
             /* for debug purpose */
-            hidden_word = "heels";
+            //hidden_word = "heels";
 
             //ShowHiddenWord();
 

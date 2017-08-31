@@ -50,7 +50,7 @@ namespace HangmanApp.Droid.Activities
             this.WireUpControls(); // v0.4 => added this code
 
             /* Set the font for the activity title bar*/
-            textViewTitle.Typeface = Typeface.CreateFromAsset(Assets, FontsHelper.Title_Font);
+            textViewTitle.Typeface =  FontsHelper.Title_Font;
 
             FontsHelper.SetupButton(this, btnStartGame, Resource.Id.btn01);
             FontsHelper.SetupButton(this, btnScores, Resource.Id.btn02);

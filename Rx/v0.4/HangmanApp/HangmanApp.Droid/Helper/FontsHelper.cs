@@ -5,6 +5,7 @@ using System.Text;
 using HangmanApp.Droid.Activities;
 using ReactiveUI;
 using Android.Graphics;
+using Android.App;
 
 namespace HangmanApp.Droid.Helper
 {
@@ -16,16 +17,28 @@ namespace HangmanApp.Droid.Helper
 
         protected static FontsHelper _self;
 
-        public static string Title_Font { get; set; } = "fonts/FFF_Tusj.ttf";
+        public static Typeface Title_Font { get; set; }
 
-        public static string Digital_Font { get; set; } = "fonts/Digital-Dismay.otf";
+        public static Typeface Digital_Font { get; set; }
 
         static FontsHelper()
         {
             _self = new FontsHelper();
+
         }
 
-        protected FontsHelper() { }
+        protected FontsHelper() {
+
+            /* https://stackoverflow.com/questions/43279971/get-current-activity-xamarin-android */
+            //var activity = ((Activity)Xamarin.Forms.Forms.Context);
+            //(Activity_MainScreen)Forms.Context;
+
+            /* https://forums.xamarin.com/discussion/11102/what-is-equivalent-to-getapplicationcontext-in-xamarin-android  */
+            var activity = Application.Context;
+
+            Title_Font = Typeface.CreateFromAsset(activity.Assets, "fonts/FFF_Tusj.ttf");
+            Digital_Font = Typeface.CreateFromAsset(activity.Assets, "fonts/Digital-Dismay.otf");
+        }
 
         /* changed in v0.4*/
         /// <summary>
@@ -56,7 +69,8 @@ namespace HangmanApp.Droid.Helper
 
         public static void SetupButton(ReactiveActivity activity, Button btn, int btn_id)
         {
-            btn.Typeface = Typeface.CreateFromAsset(activity.Assets, FontsHelper.Title_Font);
+            //btn.Typeface = Typeface.CreateFromAsset(activity.Assets, FontsHelper.Title_Font);
+            btn.Typeface = Title_Font;
         }
     }
 }

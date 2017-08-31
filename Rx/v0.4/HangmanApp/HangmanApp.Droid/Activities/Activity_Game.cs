@@ -183,10 +183,10 @@ namespace HangmanApp.Droid.Activities
 
 
             /* Set the font for the activity title bar*/
-            textViewTitle.Typeface = Typeface.CreateFromAsset(Assets, FontsHelper.Title_Font);
+            textViewTitle.Typeface = FontsHelper.Title_Font;
 
             /* Set the font for the count-down timer */
-            var digital_font = Typeface.CreateFromAsset(Assets, FontsHelper.Digital_Font);
+            var digital_font = FontsHelper.Digital_Font;
             textViewTimer.Typeface = digital_font;
             textViewHighest.Typeface = digital_font;
             textViewScore.Typeface = digital_font;
