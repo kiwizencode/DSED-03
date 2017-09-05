@@ -18,6 +18,8 @@ using Android.Graphics;
 using System.Reactive.Linq;
 using HangmanApp.Droid.Helper;
 
+
+
 namespace HangmanApp.Droid.Activities
 {
     [Activity(Label = "Game Activity")]
@@ -197,21 +199,21 @@ namespace HangmanApp.Droid.Activities
             //        btn.Typeface = Typeface.CreateFromAsset(Assets, FontsHelper.Title_Font);
             //    }
 
-            FontsHelper.SetupButton(this, btn01, Resource.Id.btn01);
-            FontsHelper.SetupButton(this, btn02, Resource.Id.btn02);
-            FontsHelper.SetupButton(this, btn03, Resource.Id.btn03);
-            FontsHelper.SetupButton(this, btn04, Resource.Id.btn04);
-            FontsHelper.SetupButton(this, btn05, Resource.Id.btn05);
-            FontsHelper.SetupButton(this, btn06, Resource.Id.btn06);
-            FontsHelper.SetupButton(this, btn07, Resource.Id.btn07);
-            FontsHelper.SetupButton(this, btn08, Resource.Id.btn08);
-            FontsHelper.SetupButton(this, btn09, Resource.Id.btn09);
-            FontsHelper.SetupButton(this, btn10, Resource.Id.btn10);
-            FontsHelper.SetupButton(this, btn11, Resource.Id.btn11);
-            FontsHelper.SetupButton(this, btn12, Resource.Id.btn12);
-            FontsHelper.SetupButton(this, btn13, Resource.Id.btn13);
-            FontsHelper.SetupButton(this, btn14, Resource.Id.btn14);
-            FontsHelper.SetupButton(this, btn15, Resource.Id.btn15);
+            //FontsHelper.SetupButton(this, btn01, Resource.Id.btn01);
+            //FontsHelper.SetupButton(this, btn02, Resource.Id.btn02);
+            //FontsHelper.SetupButton(this, btn03, Resource.Id.btn03);
+            //FontsHelper.SetupButton(this, btn04, Resource.Id.btn04);
+            //FontsHelper.SetupButton(this, btn05, Resource.Id.btn05);
+            //FontsHelper.SetupButton(this, btn06, Resource.Id.btn06);
+            //FontsHelper.SetupButton(this, btn07, Resource.Id.btn07);
+            //FontsHelper.SetupButton(this, btn08, Resource.Id.btn08);
+            //FontsHelper.SetupButton(this, btn09, Resource.Id.btn09);
+            //FontsHelper.SetupButton(this, btn10, Resource.Id.btn10);
+            //FontsHelper.SetupButton(this, btn11, Resource.Id.btn11);
+            //FontsHelper.SetupButton(this, btn12, Resource.Id.btn12);
+            //FontsHelper.SetupButton(this, btn13, Resource.Id.btn13);
+            //FontsHelper.SetupButton(this, btn14, Resource.Id.btn14);
+            //FontsHelper.SetupButton(this, btn15, Resource.Id.btn15);
 
 
             /*

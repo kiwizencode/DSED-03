@@ -17,7 +17,9 @@ using Android.Graphics;
 
 using ReactiveUI;
 using HangmanApp.Droid.Helper;
+using Xamarin.Forms.Xaml;
 
+[assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace HangmanApp.Droid.Activities
 {
     [Activity(Label = "HangmanApp", MainLauncher = true)]
