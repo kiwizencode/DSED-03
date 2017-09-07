@@ -4,7 +4,7 @@ using Android.OS;
 
 namespace HangmanApp.Droid
 {
-    [Activity(Label = "HangmanApp.Droid", MainLauncher = true)]
+    [Activity(Label = "HangmanApp.Droid")] //, MainLauncher = true)]
     public class MainActivity : Activity
     {
         protected override void OnCreate(Bundle savedInstanceState)
