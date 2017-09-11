@@ -148,13 +148,45 @@
         </LinearLayout>
     </LinearLayout>
 <!-- ImageView to hold the graphic for hangman-->
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewHangman"
-        android:layout_weight="1"
-        android:paddingTop="5dp" />
 <!-- The following layout is to show the "guess" word -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:src="@android:drawable/ic_menu_gallery" />
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:visibility="invisible"
+            android:src="@android:drawable/ic_menu_gallery" />
+        <ImageView
+            android:id="@+id/imageViewHangman"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+        <LinearLayout
+            android:orientation="vertical"
+            android:minWidth="25px"
+            android:minHeight="25px"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <Button
+                android:text="New Game"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnStartNew"
+                android:textSize="10dp" />
+        </LinearLayout>
+    </LinearLayout>
     <LinearLayout
         android:gravity="center"
         android:layout_width="wrap_content"
