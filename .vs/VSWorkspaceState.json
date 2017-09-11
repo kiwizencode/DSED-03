@@ -3,8 +3,9 @@
     "",
     "\\Rx",
     "\\Rx\\v0.4",
-    "\\Rx\\v0.5"
+    "\\Rx\\v0.4\\HangmanApp",
+    "\\Rx\\v0.4\\Note.Taking"
   ],
-  "SelectedNode": "\\Rx\\v0.5",
+  "SelectedNode": "\\Rx\\v0.4\\HangmanApp\\HangmanApp.sln",
   "PreviewInSolutionExplorer": false
 }
