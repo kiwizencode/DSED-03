@@ -128,27 +128,6 @@ namespace HangmanApp.Droid.Activities
             this.WireUpControls(); // v0.4 => added this code
 
 
-            this.OneWayBind(ViewModel, x => x.Run_Flag, c => c.Run_Flag );
-            /* */
-            this.OneWayBind(ViewModel, x => x.Score, c => c.textViewScore.Text);
-
-
-            /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
-
-            /* The following code may not be the correct way of doing things. But just get it working and resolve it when I have a better understanding of ReactiveUI */
-
-            this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
-
-            ThreadPool.QueueUserWorkItem( _ => 
-                {
-                    while (Run_Flag)
-                    {
-                        Thread.Sleep(1000);
-                        RunOnUiThread(() => ViewModel.TimerTick());
-                    }
-                }
-            );
-
             /* Set the font for the activity title bar*/
             textViewTitle.Typeface = FontsHelper.Title_Font;
 
@@ -158,12 +137,13 @@ namespace HangmanApp.Droid.Activities
             textViewHighest.Typeface = digital_font;
             textViewScore.Typeface = digital_font;
 
-                /* v0.5 */
-                /* Setup the font for the button  */
-                void SetupButton(Button btn, int btn_id)
-                {
-                    btn.Typeface = FontsHelper.Title_Font;
-                }
+
+            /* v0.5 */
+            /* Setup the font for the button  */
+            void SetupButton(Button btn, int btn_id)
+            {
+                btn.Typeface = FontsHelper.Title_Font;
+            }
 
             SetupButton(btn01, Resource.Id.btn01);
             SetupButton(btn02, Resource.Id.btn02);
@@ -181,6 +161,44 @@ namespace HangmanApp.Droid.Activities
             SetupButton(btn14, Resource.Id.btn14);
             SetupButton(btn15, Resource.Id.btn15);
 
+
+            /* added in v0.3 */
+            void SetButtonID(Button btn)
+            {
+                Button_Text = btn.Text; this.RaisePropertyChanged("Button_Text");
+                Button_Tag = btn.Tag.ToString(); this.RaisePropertyChanged("Button_Tag");
+                /* added in v0.4 => set button to invisible once button is clicked. */
+                btn.Visibility = ViewStates.Invisible;
+            }
+
+            /* btn01.Click += (sender, e) => SetButtonID(btn01); }; */
+            btn01.Click += (sender, e) => SetButtonID(btn01);
+            btn02.Click += (sender, e) => SetButtonID(btn02);
+            btn03.Click += (sender, e) => SetButtonID(btn03);
+            btn04.Click += (sender, e) => SetButtonID(btn04);
+            btn05.Click += (sender, e) => SetButtonID(btn05);
+            btn06.Click += (sender, e) => SetButtonID(btn06);
+            btn07.Click += (sender, e) => SetButtonID(btn07);
+            btn08.Click += (sender, e) => SetButtonID(btn08);
+            btn09.Click += (sender, e) => SetButtonID(btn09);
+            btn10.Click += (sender, e) => SetButtonID(btn10);
+            btn11.Click += (sender, e) => SetButtonID(btn11);
+            btn12.Click += (sender, e) => SetButtonID(btn12);
+            btn13.Click += (sender, e) => SetButtonID(btn13);
+            btn14.Click += (sender, e) => SetButtonID(btn14);
+            btn15.Click += (sender, e) => SetButtonID(btn15);
+
+
+
+            this.OneWayBind(ViewModel, x => x.Run_Flag, c => c.Run_Flag );
+            /* */
+            this.OneWayBind(ViewModel, x => x.Score, c => c.textViewScore.Text);
+
+            this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
+            this.Bind(ViewModel, x => x.Btn_Text, c => c.Button_Text);
+            this.Bind(ViewModel, x => x.Btn_Tag, c => c.Button_Tag);
+
+            //this.OneWayBind(ViewModel, x => x.Toast, c => c.textViewToast.Text);
 
             /*
              * The following code bind the hidden word display slot to the View Model
@@ -214,37 +232,21 @@ namespace HangmanApp.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Btn14, c => c.btn14.Text);
             this.OneWayBind(ViewModel, x => x.Btn15, c => c.btn15.Text);
 
-            /* Following code is to capture button information when user click a button */
 
-            this.Bind(ViewModel, x => x.Btn_Text, c => c.Button_Text);
-            this.Bind(ViewModel, x => x.Btn_Tag, c => c.Button_Tag);
-            //this.OneWayBind(ViewModel, x => x.Toast, c => c.textViewToast.Text);
+            /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
 
-                /* added in v0.3 */
-                void SetButtonID(Button btn)
+            /* The following code may not be the correct way of doing things. 
+             * But just get it working and resolve it when I have a better understanding of ReactiveUI */
+
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
+                while (Run_Flag)
                 {
-                    Button_Text = btn.Text ; this.RaisePropertyChanged("Button_Text");
-                    Button_Tag = btn.Tag.ToString(); this.RaisePropertyChanged("Button_Tag");
-                    /* added in v0.4 => set button to invisible once button is clicked. */
-                    btn.Visibility = ViewStates.Invisible;
+                    Thread.Sleep(1000);
+                    RunOnUiThread(() => ViewModel.TimerTick());
                 }
-
-            /* btn01.Click += (sender, e) => SetButtonID(btn01); }; */
-            btn01.Click += (sender, e) => SetButtonID(btn01); 
-            btn02.Click += (sender, e) => SetButtonID(btn02);
-            btn03.Click += (sender, e) => SetButtonID(btn03);
-            btn04.Click += (sender, e) => SetButtonID(btn04);
-            btn05.Click += (sender, e) => SetButtonID(btn05);
-            btn06.Click += (sender, e) => SetButtonID(btn06);
-            btn07.Click += (sender, e) => SetButtonID(btn07);
-            btn08.Click += (sender, e) => SetButtonID(btn08);
-            btn09.Click += (sender, e) => SetButtonID(btn09);
-            btn10.Click += (sender, e) => SetButtonID(btn10);
-            btn11.Click += (sender, e) => SetButtonID(btn11);
-            btn12.Click += (sender, e) => SetButtonID(btn12);
-            btn13.Click += (sender, e) => SetButtonID(btn13);
-            btn14.Click += (sender, e) => SetButtonID(btn14);
-            btn15.Click += (sender, e) => SetButtonID(btn15);
+            }
+            );
 
         }
     }
