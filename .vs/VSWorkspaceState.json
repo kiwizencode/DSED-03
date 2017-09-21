@@ -2,10 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Rx",
-    "\\Rx\\v0.4",
-    "\\Rx\\v0.4\\HangmanApp",
-    "\\Rx\\v0.4\\Note.Taking"
+    "\\Rx\\v0.5",
+    "\\Rx\\v0.5\\HangmanApp"
   ],
-  "SelectedNode": "\\Rx\\v0.4\\HangmanApp\\HangmanApp.sln",
+  "SelectedNode": "\\Rx\\v0.5\\HangmanApp\\HangmanApp.sln",
   "PreviewInSolutionExplorer": false
 }
