@@ -116,10 +116,10 @@ namespace HangmanApp.Droid.ViewModel
             }
         }
 
-        private static int MAX_GUESS { get; set; } = 6;
+        private static int MAX_GUESS { get; set; } = 7;
         /* added in v0.4 */
         /* display the score */
-        private static int MAX_TICK { get; set; }=20; 
+        private static int MAX_TICK { get; set; }=5; 
         public void TimerTick()
         {
             if(Run_Flag)
@@ -183,6 +183,7 @@ namespace HangmanApp.Droid.ViewModel
             {
                 _hangman_count = ++_hangman_count % 7;
                 Hangman_Image = _hangman_count.ToString();
+                this.RaisePropertyChanged("Hangman_Image");
                 
                 /* increment wrong guess counter 
                    but not during intialization of button when the letter is question mark */
