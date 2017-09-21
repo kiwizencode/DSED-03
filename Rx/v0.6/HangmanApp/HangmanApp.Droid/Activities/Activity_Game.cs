@@ -111,90 +111,38 @@ namespace HangmanApp.Droid.Activities
             // Create your application here
             SetContentView(Resource.Layout.Layout_Game);
 
-            Initializer();
+            InitializeUIControl();
+
+            InitializeModel();
+
+            /* ####################################################################################### */
+            /* The following code may not be the correct way of doing things. 
+             * But just get it working and resolve it when I have a better understanding of ReactiveUI */
+
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
+                while (Run_Flag)
+                {
+                    Thread.Sleep(1000);
+                    RunOnUiThread(() => ViewModel.TimerTick());
+                }
+            }
+            );
         }
 
-        private void Initializer()
+        /* v0.6 refactor code : method to intitalise model and reactive component */
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeModel()
         {
             ViewModel = new ViewModel_Game();
 
-            /* v0.4 */
-            /* https://reactiveui.net/docs/handbook/data-binding/xamarin-android */
-
-            // WireUpControls looks through your layout file, finds all controls 
-            // with an id defined, and binds them to the controls defined in this class
-            // This is basically the same functionality as http://jakewharton.github.io/butterknife/ provides
-
-            this.WireUpControls(); // v0.4 => added this code
-
-
-            /* Set the font for the activity title bar*/
-            textViewTitle.Typeface = FontsHelper.Title_Font;
-
-            /* Set the font for the count-down timer */
-            var digital_font = FontsHelper.Digital_Font;
-            textViewTimer.Typeface = digital_font;
-            textViewHighest.Typeface = digital_font;
-            textViewScore.Typeface = digital_font;
-
-
-            /* v0.5 */
-            /* Setup the font for the button  */
-            void SetupButton(Button btn, int btn_id)
-            {
-                btn.Typeface = FontsHelper.Title_Font;
-            }
-
-            SetupButton(btn01, Resource.Id.btn01);
-            SetupButton(btn02, Resource.Id.btn02);
-            SetupButton(btn03, Resource.Id.btn03);
-            SetupButton(btn04, Resource.Id.btn04);
-            SetupButton(btn05, Resource.Id.btn05);
-            SetupButton(btn06, Resource.Id.btn06);
-            SetupButton(btn07, Resource.Id.btn07);
-            SetupButton(btn08, Resource.Id.btn08);
-            SetupButton(btn09, Resource.Id.btn09);
-            SetupButton(btn10, Resource.Id.btn10);
-            SetupButton(btn11, Resource.Id.btn11);
-            SetupButton(btn12, Resource.Id.btn12);
-            SetupButton(btn13, Resource.Id.btn13);
-            SetupButton(btn14, Resource.Id.btn14);
-            SetupButton(btn15, Resource.Id.btn15);
-
-
-            /* added in v0.3 */
-            void SetButtonID(Button btn)
-            {
-                Button_Text = btn.Text; this.RaisePropertyChanged("Button_Text");
-                Button_Tag = btn.Tag.ToString(); this.RaisePropertyChanged("Button_Tag");
-                /* added in v0.4 => set button to invisible once button is clicked. */
-                btn.Visibility = ViewStates.Invisible;
-            }
-
-            /* btn01.Click += (sender, e) => SetButtonID(btn01); }; */
-            btn01.Click += (sender, e) => SetButtonID(btn01);
-            btn02.Click += (sender, e) => SetButtonID(btn02);
-            btn03.Click += (sender, e) => SetButtonID(btn03);
-            btn04.Click += (sender, e) => SetButtonID(btn04);
-            btn05.Click += (sender, e) => SetButtonID(btn05);
-            btn06.Click += (sender, e) => SetButtonID(btn06);
-            btn07.Click += (sender, e) => SetButtonID(btn07);
-            btn08.Click += (sender, e) => SetButtonID(btn08);
-            btn09.Click += (sender, e) => SetButtonID(btn09);
-            btn10.Click += (sender, e) => SetButtonID(btn10);
-            btn11.Click += (sender, e) => SetButtonID(btn11);
-            btn12.Click += (sender, e) => SetButtonID(btn12);
-            btn13.Click += (sender, e) => SetButtonID(btn13);
-            btn14.Click += (sender, e) => SetButtonID(btn14);
-            btn15.Click += (sender, e) => SetButtonID(btn15);
-
-
-
-            this.OneWayBind(ViewModel, x => x.Run_Flag, c => c.Run_Flag );
             /* */
+            this.OneWayBind(ViewModel, x => x.Run_Flag, c => c.Run_Flag);
             this.OneWayBind(ViewModel, x => x.Score, c => c.textViewScore.Text);
-
             this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
+
             this.Bind(ViewModel, x => x.Btn_Text, c => c.Button_Text);
             this.Bind(ViewModel, x => x.Btn_Tag, c => c.Button_Tag);
 
@@ -212,10 +160,7 @@ namespace HangmanApp.Droid.Activities
             /* v0.4 display hangman image onto screen*/
             this.OneWayBind(ViewModel, x => x.Hangman_Image, c => c.Hangman_Image);
 
-            /*
-             * The following code bind the keyboard to the View Model
-             */
-
+            /* The following code bind the keyboard to the View Model */
             this.OneWayBind(ViewModel, x => x.Btn01, c => c.btn01.Text);
             this.OneWayBind(ViewModel, x => x.Btn02, c => c.btn02.Text);
             this.OneWayBind(ViewModel, x => x.Btn03, c => c.btn03.Text);
@@ -231,23 +176,63 @@ namespace HangmanApp.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Btn13, c => c.btn13.Text);
             this.OneWayBind(ViewModel, x => x.Btn14, c => c.btn14.Text);
             this.OneWayBind(ViewModel, x => x.Btn15, c => c.btn15.Text);
-
-
-            /* $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$ */
-
-            /* The following code may not be the correct way of doing things. 
-             * But just get it working and resolve it when I have a better understanding of ReactiveUI */
-
-            ThreadPool.QueueUserWorkItem(_ =>
-            {
-                while (Run_Flag)
-                {
-                    Thread.Sleep(1000);
-                    RunOnUiThread(() => ViewModel.TimerTick());
-                }
-            }
-            );
-
         }
+
+        /* v0.6 refactor code : method to intitalise UI Controls */
+        /// <summary>
+        /// 
+        /// </summary>
+        private void InitializeUIControl()
+        {
+
+            /* v0.4 */
+            /* https://reactiveui.net/docs/handbook/data-binding/xamarin-android */
+
+            // WireUpControls looks through your layout file, finds all controls 
+            // with an id defined, and binds them to the controls defined in this class
+            // This is basically the same functionality as http://jakewharton.github.io/butterknife/ provides
+
+            this.WireUpControls(); // v0.4 => added this code
+
+            /* Set the font for the activity title bar*/
+            textViewTitle.Typeface = FontsHelper.Title_Font;
+
+            /* Set the font for the count-down timer */
+            var digital_font = FontsHelper.Digital_Font;
+            textViewTimer.Typeface = digital_font;
+            textViewHighest.Typeface = digital_font;
+            textViewScore.Typeface = digital_font;
+
+            /* v0.6 has refactor the following code : Initialise the button UI */
+            InitializeButton(btn01);
+            InitializeButton(btn02);
+            InitializeButton(btn03);
+            InitializeButton(btn04);
+            InitializeButton(btn05);
+            InitializeButton(btn06);
+            InitializeButton(btn07);
+            InitializeButton(btn08);
+            InitializeButton(btn09);
+            InitializeButton(btn10);
+            InitializeButton(btn11);
+            InitializeButton(btn12);
+            InitializeButton(btn13);
+            InitializeButton(btn14);
+            InitializeButton(btn15);
+
+            void InitializeButton(Button new_btn)
+            {
+                void setupButtonClickEvent(Button btn)
+                {
+                    Button_Text = btn.Text; this.RaisePropertyChanged("Button_Text");
+                    Button_Tag = btn.Tag.ToString(); this.RaisePropertyChanged("Button_Tag");
+                    /* added in v0.4 => set button to invisible once button is clicked. */
+                    btn.Visibility = ViewStates.Invisible;
+                }
+                new_btn.Typeface = FontsHelper.Title_Font;
+                new_btn.Click += (sender, e) => setupButtonClickEvent(sender as Button);
+            }
+        }
+
     }
 }
