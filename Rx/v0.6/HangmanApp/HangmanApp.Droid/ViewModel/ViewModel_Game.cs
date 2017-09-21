@@ -10,10 +10,10 @@ namespace HangmanApp.Droid.ViewModel
 {
     public class ViewModel_Game : ReactiveObject
     {
-        private readonly string LetterFile = "letter_";
-        private static readonly string QuestionMarkImage = "question_mark";
-        private static readonly string BlankFile = "hangman_blank";
-        private static readonly string HangmanImage = "hangman";
+        private static string LetterFile { get; set; } = "letter_";
+        private static string QuestionMarkImage { get; set; } ="question_mark";
+        //private static readonly string BlankFile = "hangman_blank";
+        private static string HangmanImage { get; set; } = "hangman";
 
         /// <summary>
         /// stores the hidden word
@@ -21,191 +21,88 @@ namespace HangmanApp.Droid.ViewModel
         public string hidden_word { get; private set; }
 
         private string _slot01_Image = QuestionMarkImage;
-        public string Slot01_Image
-        {
-            get => _slot01_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot01_Image, LetterFile + value);
-        }
+        public string Slot01_Image { get => _slot01_Image;
+                                     set => this.RaiseAndSetIfChanged(ref _slot01_Image, LetterFile + value); }
 
         private string _slot02_Image = QuestionMarkImage;
-        public string Slot02_Image
-        {
-            get => _slot02_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot02_Image, LetterFile + value);
-        }
+        public string Slot02_Image { get => _slot02_Image;
+                                     set => this.RaiseAndSetIfChanged(ref _slot02_Image, LetterFile + value); }
 
         private string _slot03_Image = QuestionMarkImage;
-        public string Slot03_Image
-        {
-            get => _slot03_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot03_Image, LetterFile + value);
-        }
+        public string Slot03_Image { get => _slot03_Image;
+                                     set => this.RaiseAndSetIfChanged(ref _slot03_Image, LetterFile + value); }
 
         private string _slot04_Image = QuestionMarkImage;
-        public string Slot04_Image
-        {
-            get => _slot04_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot04_Image, LetterFile + value);
-        }
+        public string Slot04_Image { get => _slot04_Image;
+                                     set => this.RaiseAndSetIfChanged(ref _slot04_Image, LetterFile + value); }
 
         private string _slot05_Image = QuestionMarkImage;
-        public string Slot05_Image
-        {
-            get => _slot05_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot05_Image, LetterFile + value);
-        }
+        public string Slot05_Image { get => _slot05_Image;
+                                     set => this.RaiseAndSetIfChanged(ref _slot05_Image, LetterFile + value); }
 
         /* v0.4 added to load hangman image */
         private string _hangman_image = "hangman00"; // set the default image to load when activity start
-        public string Hangman_Image
-        {
-            get => _hangman_image;
-            set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanImage + value.PadLeft(2, '0'));
-        }
-
+        public string Hangman_Image { get => _hangman_image;
+                  set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanImage + value.PadLeft(2, '0')); }
 
         private string _btn01 = string.Empty;
-        public string Btn01
-        {
-            get => _btn01.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn01, value);
-        }
+        public string Btn01 { get => _btn01.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn01, value); }
 
         private string _btn02 = string.Empty;
-        public string Btn02
-        {
-            get => _btn02.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn02, value);
-        }
+        public string Btn02 { get => _btn02.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn02, value); }
 
         private string _btn03 = string.Empty;
-        public string Btn03
-        {
-            get => _btn03.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn03, value);
-        }
+        public string Btn03 { get => _btn03.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn03, value); }
+
         private string _btn04 = string.Empty;
-        public string Btn04
-        {
-            get => _btn04.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn04, value);
-        }
+        public string Btn04 { get => _btn04.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn04, value); }
 
         private string _btn05 = string.Empty;
-        public string Btn05
-        {
-            get => _btn05.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn05, value);
-        }
+        public string Btn05 { get => _btn05.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn05, value); }
 
         private string _btn06 = string.Empty;
-        public string Btn06
-        {
-            get => _btn06.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn06, value);
-        }
+        public string Btn06 { get => _btn06.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn06, value); }
 
         private string _btn07 = string.Empty;
-        public string Btn07
-        {
-            get => _btn07.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn07, value);
-        }
+        public string Btn07 { get => _btn07.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn07, value); }
 
         private string _btn08 = string.Empty;
-        public string Btn08
-        {
-            get => _btn08.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn08, value);
-        }
+        public string Btn08 { get => _btn08.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn08, value); }
 
         private string _btn09 = string.Empty;
-        public string Btn09
-        {
-            get => _btn09.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn09, value);
-        }
+        public string Btn09 { get => _btn09.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn09, value); }
+
         private string _btn10 = string.Empty;
-        public string Btn10
-        {
-            get => _btn10.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn10, value);
-        }
+        public string Btn10 { get => _btn10.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn10, value); }
 
         private string _btn11 = string.Empty;
-        public string Btn11
-        {
-            get => _btn11.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn11, value);
-        }
+        public string Btn11 { get => _btn11.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn11, value); }
 
         private string _btn12 = string.Empty;
-        public string Btn12
-        {
-            get => _btn12.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn12, value);
-        }
+        public string Btn12 { get => _btn12.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn12, value); }
 
         private string _btn13 = string.Empty;
-        public string Btn13
-        {
-            get => _btn13.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn13, value);
-        }
+        public string Btn13 { get => _btn13.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn13, value); }
         private string _btn14 = string.Empty;
-        public string Btn14
-        {
-            get => _btn14.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn14, value);
-        }
+        public string Btn14 { get => _btn14.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn14, value); }
 
         private string _btn15 = string.Empty;
-        public string Btn15
-        {
-            get => _btn15.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn15, value);
-        }
-
-        private string _button_letter = "?";
-        public string Btn_Text
-        {
-            get => _button_letter ;
-            set
-            {
-                ////char ch = value.ToLower()[0];
-                ////if (hidden_word.LastIndexOf(ch) != -1)
-                ////{
-                ////    //Toast = "Letter Found !!!";
-                ////    Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString() + " " + _timer.ToString();
-                ////    _score += _timer + WordsHelper.GetScore(ch);
-                ////    this.RaisePropertyChanged("Score");
-
-                ////    _timer = MAX_TICK;
-                ////    this.RaisePropertyChanged("Timer");
-                    
-                ////}
-                ////else
-                ////    //Toast = "Wrong Letter !!!";
-                ////    Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString();
-
-                this.RaiseAndSetIfChanged(ref _button_letter, value);
-            }
-        }
-        public string Btn_Tag { get; set; }
+        public string Btn15 { get => _btn15.ToUpper(); set => this.RaiseAndSetIfChanged(ref _btn15, value); }
 
         /* v0.4 */
         public bool Run_Flag { get; set; } = true;
 
-        private string _toast;
-        public string Toast
-        {
-            get => _toast;
-            set => this.RaiseAndSetIfChanged(ref _toast, value);
-        }
+        public string Btn_Tag { get; set; }
 
+        private static string QuestionMark { get; set; } = "?";
+        private string _button_letter = QuestionMark;
+        public string Btn_Text { get => _button_letter; set => this.RaiseAndSetIfChanged(ref _button_letter, value); }
 
         private int _score;
         public string Score { get => _score.ToString(); set { } }
+
+        private string _toast;
+        public string Toast { get => _toast; set => this.RaiseAndSetIfChanged(ref _toast, value); }
 
         private int _timer;
         public string Timer
@@ -215,19 +112,14 @@ namespace HangmanApp.Droid.ViewModel
             get => _timer.ToString().PadLeft(2, '0');
             set
             {
-                int i;
-                if (int.TryParse(value, out i))
-                {
-                    this.RaiseAndSetIfChanged(ref _timer, i);
-                }
+                if (int.TryParse(value, out int i)) this.RaiseAndSetIfChanged(ref _timer, i);
             }
         }
 
+        private static int MAX_GUESS { get; set; } = 6;
         /* added in v0.4 */
         /* display the score */
-        private readonly int MAX_TICK = 20; 
-
-        private int _hangman_count = 6;
+        private static int MAX_TICK { get; set; }=20; 
         public void TimerTick()
         {
             if(Run_Flag)
@@ -237,50 +129,13 @@ namespace HangmanApp.Droid.ViewModel
             }
         }
 
-
-        //public ReactiveCommand cmdTimerTick { get; private set; }
-        /* Comment out the old code */
-        //public void TimerTick()
-        //{
-        //    if (_timer == 0)
-        //    {
-        //        _hangman_count = ++_hangman_count % 7;
-        //        Hangman_Image = _hangman_count.ToString();
-        //    }
-
-
-        //    //char ch = (_button_letter != string.Empty) ? _button_letter.ToLower()[0] : '?' ;
-        //    char ch = _button_letter.ToLower()[0];
-
-        //    if (hidden_word.LastIndexOf(ch) != -1)
-        //    {
-        //        Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString() + " + " + _timer.ToString();
-        //        _score += _timer + WordsHelper.GetScore(ch);
-        //        _timer = MAX_TICK;
-        //    }
-        //    else
-        //    {
-        //        if (ch != '?')
-        //            Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString();
-        //        _timer = (_timer == 0) ? MAX_TICK : _timer - 1;
-        //    }
-
-        //    /* Not a best way of doing */
-        //    _button_letter = "?";
-
-        //    this.RaisePropertyChanged("Score");
-
-        //    this.RaisePropertyChanged("Timer");
-        //}
         private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord(); }
 
         private int _worng_guess = 0;
         private int _correct_guess = 0;
+        private int _hangman_count = 6;
         public ViewModel_Game()
         {
-            //cmdTimerTick = ReactiveCommand.Create(TimerTick);
-            
-
             GenerateHiddenWord();
 
             /* for debug purpose */
@@ -292,68 +147,54 @@ namespace HangmanApp.Droid.ViewModel
 
             //SetTimer();
 
+            this.WhenAny(x => x.Btn_Text, _ => string.Empty).Subscribe( Func =>  {
 
-
-
-            this.WhenAny(x => x.Btn_Text, _ => string.Empty).Subscribe( Func =>
+                /* get the letter on the button */
+                char ch = Btn_Text.ToLower()[0];
+                if (hidden_word.LastIndexOf(ch) != -1)
                 {
-                    int SetSlotImage(char letter)
-                    {
-                        int count = 0;
-                        //List<int> letter_index = new List<int>();
-                        for (int i = 0; i < hidden_word.Length; i++)
-                            if (hidden_word[i] == letter)
-                            {
-                                //letter_index.Add(i);
-                                ShowHiddenWord(i + 1);
-                                _correct_guess++;
-                                if(_correct_guess==5)
-                                {
-                                    Run_Flag = false;
-                                    this.RaisePropertyChanged("Run_Flag");
-                                }
-                                    
-                                count++;
-                            }
+                    /* Count the number of time the letter appear in the hidden words*/
+                    int count = CountLetter(ch);
 
-                        return count;
-                    }
+                    /* Calculate the score and update to total score*/
+                    int score = WordsHelper.GetScore(ch);
+                    _score += (_timer + score ) * count ;
 
+                    /* Since the user has found letter/letters in the hidden word.
+                       reset the timer to MAX_TICK*/
+                    //_timer = MAX_TICK;
+                    
+                    this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
+                }
+                else
+                {
+                    SetHangmanImage(); /* set the hangmen image*/
+                    //_timer = MAX_TICK; /* reset the timer counter */
+                }
 
-                    char ch = Btn_Text.ToLower()[0];
-                    if (hidden_word.LastIndexOf(ch) != -1)
-                    {
-                        int count = SetSlotImage(ch);
+                _timer = MAX_TICK; /* reset the timer counter */
+                this.RaisePropertyChanged("Timer"); /* Trigger Property Changed */
 
-                        _score += (_timer + WordsHelper.GetScore(ch)) * count;
-                        _timer = MAX_TICK;
-                        this.RaisePropertyChanged("Score");
-                    }
-                    else
-                    {
-                        //if (ch != '?')
-                        //    Toast = "" + ch + " : " + WordsHelper.GetScore(ch).ToString();
-                        if (ch != '?')
-                            _worng_guess++;
-                        if(_worng_guess == 6)
-                        {
-                            Run_Flag = false;
-                            this.RaisePropertyChanged("Run_Flag");
-                        }
-                        SetHangmanImage();
-                        _timer = MAX_TICK;
-                        
-
-                    }
-                    this.RaisePropertyChanged("Timer");
-                    /* Not a best way of doing */
-                    _button_letter = "?";
-                });
+                /* Not a best way of doing */
+                _button_letter = QuestionMark;
+            });
 
             void SetHangmanImage()
             {
                 _hangman_count = ++_hangman_count % 7;
                 Hangman_Image = _hangman_count.ToString();
+                
+                /* increment wrong guess counter 
+                   but not during intialization of button when the letter is question mark */
+                //if (ch != QuestionMark[0])
+                _worng_guess++;
+
+                /* User has so amny guesses based on  MAX_GUESS */
+                if (_worng_guess == MAX_GUESS)
+                {
+                    Run_Flag = false; /* set the flag to start the timer */
+                    this.RaisePropertyChanged("Run_Flag"); /* Trigger Property Changed */
+                }
             }
 
             this.WhenAny(x => x.Timer, _ => string.Empty).Subscribe(Func =>
@@ -363,6 +204,30 @@ namespace HangmanApp.Droid.ViewModel
                        SetHangmanImage();
                    }
                });
+
+
+            int CountLetter(char letter)
+            {
+                int count = 0;
+                //List<int> letter_index = new List<int>();
+                for (int i = 0; i < hidden_word.Length; i++)
+                    if (hidden_word[i] == letter)
+                    {
+                        //letter_index.Add(i);
+                        ShowHiddenWord(i + 1);
+                        _correct_guess++;
+                        if (_correct_guess == 5)
+                        {
+                            Run_Flag = false;
+                            this.RaisePropertyChanged("Run_Flag");
+                        }
+
+                        count++;
+                    }
+
+                return count;
+            }
+
         }
 
 

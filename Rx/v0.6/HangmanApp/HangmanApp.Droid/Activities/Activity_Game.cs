@@ -40,35 +40,28 @@ namespace HangmanApp.Droid.Activities
         }
         #endregion
 
-
         /* ==================================================================================================== */
         /* Set the letter image for the 5 letter slot for the hidden word */
-
         /* v0.4 changes - rename the Slotxx_Image varaiable */
-
-        private string Slot01_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot01, value); }
-        private string Slot02_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot02, value); }
-        private string Slot03_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot03, value); }
-        private string Slot04_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot04,value); }
-        private string Slot05_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot05,value); }
-
+        private string Slot01_Image { get => string.Empty;
+                                      set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot01, value); }
+        private string Slot02_Image { get => string.Empty;
+                                      set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot02, value); }
+        private string Slot03_Image { get => string.Empty;
+                                      set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot03, value); }
+        private string Slot04_Image { get => string.Empty;
+                                      set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot04,value); }
+        private string Slot05_Image { get => string.Empty;
+                                      set => FontsHelper.SetImageView(this,Resource.Id.ImageSlot05,value); }
         /* ==================================================================================================== */
 
         /* v0.4 */
         /* load hangman image */
-        private string Hangman_Image { get => string.Empty; set => FontsHelper.SetImageView(this,Resource.Id.imageViewHangman, value); }
-        
-        /* */
-        //private bool run_flag = true;
-        public bool Run_Flag { get; set; }
+        private string Hangman_Image { get => string.Empty;
+                                       set => FontsHelper.SetImageView(this,Resource.Id.imageViewHangman, value); }
 
-        private int SelectButton { get; set; }
-        public string Button_Text { get; set; }
-        public string Button_Tag { get; set; }
-
-        /* ############################## */
-
-        /* v0.4 change all the following controls variable into property */
+        /* ################################################################# */
+        /* v0.4 change all the following controls variable into property     */
         /* https://reactiveui.net/docs/handbook/data-binding/xamarin-android */
 
         public Button btn01 { get; private set; }
@@ -87,22 +80,24 @@ namespace HangmanApp.Droid.Activities
         public Button btn14 { get; private set; }
         public Button btn15 { get; private set; }
 
-
         public TextView textViewTitle { get; private set; }
         public TextView textViewTimer { get; private set; }
-
         public TextView textViewHighest { get; private set; }
         public TextView textViewScore { get; private set; }
-
 
         public ImageView imageViewHangman { get; private set; }
 
         /* For DEbugging */
         //public TextView textViewToast { get; private set; }
 
-        /* ############################## */
+        /* ################################################################# */
 
-
+        /* */
+        //private bool run_flag = true;
+        public bool Run_Flag { get; set; }
+        private int SelectButton { get; set; }
+        public string Button_Text { get; set; }
+        public string Button_Tag { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -119,15 +114,13 @@ namespace HangmanApp.Droid.Activities
             /* The following code may not be the correct way of doing things. 
              * But just get it working and resolve it when I have a better understanding of ReactiveUI */
 
-            ThreadPool.QueueUserWorkItem(_ =>
-            {
+            ThreadPool.QueueUserWorkItem( _ =>  {
                 while (Run_Flag)
                 {
                     Thread.Sleep(1000);
                     RunOnUiThread(() => ViewModel.TimerTick());
                 }
-            }
-            );
+             });
         }
 
         /* v0.6 refactor code : method to intitalise model and reactive component */
