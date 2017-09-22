@@ -101,6 +101,13 @@ namespace HangmanApp.Droid.ViewModel
         private int _score;
         public string Score { get => _score.ToString(); set { } }
 
+        /* v0.6 added Highest Score */
+        private int _highestscore = 0;
+        public string HighestScore {
+            get => _highestscore > 0 ?  _highestscore.ToString() : "";
+            set { }
+        }
+
         private string _toast;
         public string Toast { get => _toast; set => this.RaiseAndSetIfChanged(ref _toast, value); }
 
@@ -116,10 +123,11 @@ namespace HangmanApp.Droid.ViewModel
             }
         }
 
-        private static int MAX_GUESS { get; set; } = 7;
+        private static int MAX_GUESS { get; set; } = 6;
+        private static int MAX_COUNT { get; set; } = 5;
         /* added in v0.4 */
         /* display the score */
-        private static int MAX_TICK { get; set; }=5; 
+        private static int MAX_TICK { get; set; }=20; 
         public void TimerTick()
         {
             if(Run_Flag)
@@ -134,23 +142,26 @@ namespace HangmanApp.Droid.ViewModel
         private int _worng_guess = 0;
         private int _correct_guess = 0;
         private int _hangman_count = 6;
+
+        /* v0.6 setup the winning/lossing flag */
+        private bool _winning_flag = false;
+        public bool IsWinning { get => _winning_flag; set => this.RaiseAndSetIfChanged(ref _winning_flag, value); }
+
+
         public ViewModel_Game()
         {
             GenerateHiddenWord();
+            ButtonLetterInitializer();
 
             /* for debug purpose */
             //hidden_word = "heels";
-
             //ShowHiddenWord();
-
-            ButtonLetterInitializer();
-
             //SetTimer();
 
             this.WhenAny(x => x.Btn_Text, _ => string.Empty).Subscribe( Func =>  {
 
                 /* get the letter on the button */
-                char ch = Btn_Text.ToLower()[0];
+                char ch = Btn_Text.ToLower()[0]; /* convert string to char */
                 if (hidden_word.LastIndexOf(ch) != -1)
                 {
                     /* Count the number of time the letter appear in the hidden words*/
@@ -159,79 +170,131 @@ namespace HangmanApp.Droid.ViewModel
                     /* Calculate the score and update to total score*/
                     int score = WordsHelper.GetScore(ch);
                     _score += (_timer + score ) * count ;
+                    this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
+
 
                     /* Since the user has found letter/letters in the hidden word.
                        reset the timer to MAX_TICK*/
                     //_timer = MAX_TICK;
-                    
-                    this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
+
+                    /* v0.6 update the highest score */
+                    if (_correct_guess==MAX_COUNT)
+                    {
+                        _highestscore += _score;
+                        this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
+
+                        _winning_flag = true;
+                        this.RaisePropertyChanged("IsWinning"); /* Trigger Property Changed */
+                    }
                 }
                 else
                 {
                     SetHangmanImage(); /* set the hangmen image*/
-                    //_timer = MAX_TICK; /* reset the timer counter */
+                                       //_timer = MAX_TICK; /* reset the timer counter */
+                                       /* User has so amny guesses based on  MAX_GUESS */
                 }
 
-                _timer = MAX_TICK; /* reset the timer counter */
+                if(Run_Flag)
+                    _timer = MAX_TICK; /* reset the timer counter */
                 this.RaisePropertyChanged("Timer"); /* Trigger Property Changed */
 
                 /* Not a best way of doing */
                 _button_letter = QuestionMark;
             });
 
-            void SetHangmanImage()
-            {
-                _hangman_count = ++_hangman_count % 7;
-                Hangman_Image = _hangman_count.ToString();
-                this.RaisePropertyChanged("Hangman_Image");
-                
-                /* increment wrong guess counter 
-                   but not during intialization of button when the letter is question mark */
-                //if (ch != QuestionMark[0])
-                _worng_guess++;
 
-                /* User has so amny guesses based on  MAX_GUESS */
-                if (_worng_guess == MAX_GUESS)
-                {
-                    Run_Flag = false; /* set the flag to start the timer */
-                    this.RaisePropertyChanged("Run_Flag"); /* Trigger Property Changed */
+
+            this.WhenAny(x => x.Timer, _ => string.Empty).Subscribe( Func =>  {
+                if(_timer==0) {
+                    SetHangmanImage();
                 }
-            }
-
-            this.WhenAny(x => x.Timer, _ => string.Empty).Subscribe(Func =>
-               {
-                   if(_timer==0)
-                   {
-                       SetHangmanImage();
-                   }
-               });
+            });
 
 
             int CountLetter(char letter)
             {
                 int count = 0;
-                //List<int> letter_index = new List<int>();
                 for (int i = 0; i < hidden_word.Length; i++)
                     if (hidden_word[i] == letter)
                     {
-                        //letter_index.Add(i);
                         ShowHiddenWord(i + 1);
                         _correct_guess++;
-                        if (_correct_guess == 5)
+                        if (_correct_guess == MAX_COUNT)
                         {
                             Run_Flag = false;
                             this.RaisePropertyChanged("Run_Flag");
                         }
-
                         count++;
                     }
-
                 return count;
             }
 
         }
 
+        public void SetHangmanImage()
+        {
 
+            _hangman_count = ++_hangman_count % 7;
+            Hangman_Image = _hangman_count.ToString();
+            this.RaisePropertyChanged("Hangman_Image");
+
+            /* increment wrong guess counter 
+               but not during intialization of button when the letter is question mark */
+            if (Hangman_Image != "hangman00")
+                _worng_guess++;
+
+            if (_worng_guess == MAX_GUESS)
+            {
+                _highestscore += _score;
+                this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
+
+                _winning_flag = false;
+                this.RaisePropertyChanged("IsWinning"); /* Trigger Property Changed */
+
+                Run_Flag = false; /* set the flag to start the timer */
+                this.RaisePropertyChanged("Run_Flag"); /* Trigger Property Changed */
+            }
+
+        }
+
+        public void Reset()
+        {
+            Run_Flag = true;
+            this.RaisePropertyChanged("Run_Flag");
+
+            _hangman_count = 0;
+            _hangman_image = "hangman00";
+            this.RaisePropertyChanged("Hangman_Image");
+
+            _slot01_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot01_Image");
+
+            _slot02_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot02_Image");
+
+            _slot03_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot03_Image");
+
+            _slot04_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot04_Image");
+
+            _slot05_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot05_Image");
+
+            _score = 0;
+            this.RaisePropertyChanged("Score");
+
+            _timer = MAX_TICK;
+            this.RaisePropertyChanged("Timer");
+
+            _correct_guess = 0;
+            _worng_guess = 0;
+            _winning_flag = false;
+            
+            GenerateHiddenWord();
+
+            ButtonLetterInitializer();
+        }
 
         /// <summary>
         /// Initialize all the 15 letters buttons "keyboard" at the start of a new game.

@@ -98,6 +98,8 @@ namespace HangmanApp.Droid.Activities
         private int SelectButton { get; set; }
         public string Button_Text { get; set; }
         public string Button_Tag { get; set; }
+        /* v0.6 add check winning flag */
+        public bool IsWinning_Flag { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -114,13 +116,127 @@ namespace HangmanApp.Droid.Activities
             /* The following code may not be the correct way of doing things. 
              * But just get it working and resolve it when I have a better understanding of ReactiveUI */
 
-            ThreadPool.QueueUserWorkItem( _ =>  {
+            bool flag = true;
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
+                while(flag)
+                {
+                    while (Run_Flag)
+                    {
+                        Thread.Sleep(1000);
+                        RunOnUiThread(() => ViewModel.TimerTick());
+                    }
+
+                    if (IsWinning_Flag)
+                    {
+                        RunOnUiThread(() =>
+                        {
+                            Toast.MakeText(this, "You have won !!!\nLet's guess another hidden word.", ToastLength.Short).Show();
+                            //Toast.MakeText(this, "Let's guess another hidden word.", ToastLength.Long).Show();
+                            ViewModel.Reset();
+                        });
+                        Run_Flag = true;
+                        Thread.Sleep(2000);
+                    }
+                    else
+                    {
+                        RunOnUiThread(() =>
+                        {
+                            Toast.MakeText(this, "You did not guess the word!!!", ToastLength.Short).Show();
+                            Toast.MakeText(this, "The hiden word is " + ViewModel.hidden_word, ToastLength.Long).Show();
+                        });
+                        flag = false;
+                    }
+                }
+
+
+            });
+
+
+
+            /*v0.6 setup the trigger for winning and losing the game */
+
+            //this.WhenAnyValue(x => x.Run_Flag).Subscribe(Func =>
+            //{
+            //    if (IsWinning_Flag)
+            //    {
+            //        RunOnUiThread(() =>
+            //        {
+            //            Toast.MakeText(this, "You have won !!!", ToastLength.Short).Show();
+            //        });
+
+            //    }
+            //    else
+            //    {
+            //        RunOnUiThread(() =>
+            //        {
+            //            Toast.MakeText(this, "You did guess the word!!!", ToastLength.Short).Show();
+            //            Toast.MakeText(this, "The hiden word is " + ViewModel.hidden_word, ToastLength.Long).Show();
+            //        });
+
+            //    }
+            //});
+
+
+            //this.WhenAny(x => x.Run_Flag, _ => false).Subscribe(Func =>
+            //{
+            //    if (IsWinning_Flag)
+            //    {
+            //        Toast.MakeText(this, "You have won !!!", ToastLength.Short).Show();
+            //    }
+            //    else
+            //    {
+            //        if(Run_Flag != true )
+
+            //        {
+            //            Toast.MakeText(this, "You did guess the word!!!", ToastLength.Short).Show();
+            //            Toast.MakeText(this, "The hiden word is " + ViewModel.hidden_word, ToastLength.Long).Show();
+            //        }
+
+            //    }
+            //});
+
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void RunApp()
+        {
+
+            /* ####################################################################################### */
+            /* The following code may not be the correct way of doing things. 
+             * But just get it working and resolve it when I have a better understanding of ReactiveUI */
+
+            ThreadPool.QueueUserWorkItem(_ =>
+            {
                 while (Run_Flag)
                 {
                     Thread.Sleep(1000);
                     RunOnUiThread(() => ViewModel.TimerTick());
                 }
-             });
+
+                if (IsWinning_Flag)
+                {
+                    RunOnUiThread(() =>
+                    {
+                        Toast.MakeText(this, "You have won !!!", ToastLength.Short).Show();
+                        Toast.MakeText(this, "Let's guess another hidden word.", ToastLength.Long).Show();
+                    });
+
+                    ViewModel.Reset();
+                    RunApp();
+                }
+                else
+                {
+                    RunOnUiThread(() =>
+                    {
+                        Toast.MakeText(this, "You did not guess the word!!!", ToastLength.Short).Show();
+                        Toast.MakeText(this, "The hiden word is " + ViewModel.hidden_word, ToastLength.Long).Show();
+                    });
+                }
+
+            });
         }
 
         /* v0.6 refactor code : method to intitalise model and reactive component */
@@ -134,11 +250,16 @@ namespace HangmanApp.Droid.Activities
             /* */
             this.OneWayBind(ViewModel, x => x.Run_Flag, c => c.Run_Flag);
             this.OneWayBind(ViewModel, x => x.Score, c => c.textViewScore.Text);
+            
             this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
+
+            /* v0.6 added the highest score and the winning flag checking */
+            this.OneWayBind(ViewModel, x => x.HighestScore, c => c.textViewHighest.Text);
+            this.OneWayBind(ViewModel, x => x.IsWinning, c => c.IsWinning_Flag);
+            /* */
 
             this.Bind(ViewModel, x => x.Btn_Text, c => c.Button_Text);
             this.Bind(ViewModel, x => x.Btn_Tag, c => c.Button_Tag);
-
             //this.OneWayBind(ViewModel, x => x.Toast, c => c.textViewToast.Text);
 
             /*
@@ -224,7 +345,25 @@ namespace HangmanApp.Droid.Activities
                 }
                 new_btn.Typeface = FontsHelper.Title_Font;
                 new_btn.Click += (sender, e) => setupButtonClickEvent(sender as Button);
+
             }
+
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn01.Visibility = ViewStates.Visible );
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn02.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn03.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn04.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn05.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn06.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn07.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn08.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn09.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn10.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn11.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn12.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn13.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn14.Visibility = ViewStates.Visible);
+            this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn15.Visibility = ViewStates.Visible);
+
         }
 
     }
