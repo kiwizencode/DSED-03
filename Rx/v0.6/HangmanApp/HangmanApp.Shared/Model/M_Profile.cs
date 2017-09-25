@@ -12,7 +12,7 @@ namespace HangmanApp.Shared.Model
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; } = 0;
         public string Name { get; set; }
-        public int Scores { get; set; }
+        public int Scores { get; set; } = 0;
         public DateTime Timestamp { get; set; }
         public override string ToString()
         {

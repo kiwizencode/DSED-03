@@ -147,10 +147,10 @@ namespace HangmanApp.Droid.ViewModel
         private bool _winning_flag = false;
         public bool IsWinning { get => _winning_flag; set => this.RaiseAndSetIfChanged(ref _winning_flag, value); }
 
-
         public ViewModel_Game()
         {
             GenerateHiddenWord();
+
             ButtonLetterInitializer();
 
             /* for debug purpose */

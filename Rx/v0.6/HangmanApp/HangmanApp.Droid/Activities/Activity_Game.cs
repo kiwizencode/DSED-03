@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reactive.Linq;
+using System.Threading;
 
 using Android.App;
 using Android.Content;
@@ -9,16 +11,15 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using Android.Graphics;
 
 using ReactiveUI;
 
-using System.Threading;
 using HangmanApp.Droid.ViewModel;
-using Android.Graphics;
-using System.Reactive.Linq;
 using HangmanApp.Droid.Helper;
-
-
+using HangmanApp.Shared.DataAccessObject;
+using HangmanApp.Shared.Model;
+using System.Collections;
 
 namespace HangmanApp.Droid.Activities
 {
@@ -85,6 +86,9 @@ namespace HangmanApp.Droid.Activities
         public TextView textViewHighest { get; private set; }
         public TextView textViewScore { get; private set; }
 
+        /* v0.6 add User Profile */
+        public TextView textViewProfile { get; private set; }
+
         public ImageView imageViewHangman { get; private set; }
 
         /* For DEbugging */
@@ -100,6 +104,8 @@ namespace HangmanApp.Droid.Activities
         public string Button_Tag { get; set; }
         /* v0.6 add check winning flag */
         public bool IsWinning_Flag { get; set; }
+
+        public Model_Profile Current_Profile { get; set; }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -127,6 +133,8 @@ namespace HangmanApp.Droid.Activities
                         RunOnUiThread(() => ViewModel.TimerTick());
                     }
 
+                    /*v0.6 setup the trigger for winning and losing the game */
+
                     if (IsWinning_Flag)
                     {
                         RunOnUiThread(() =>
@@ -150,11 +158,10 @@ namespace HangmanApp.Droid.Activities
                 }
 
 
+
             });
 
-
-
-            /*v0.6 setup the trigger for winning and losing the game */
+            
 
             //this.WhenAnyValue(x => x.Run_Flag).Subscribe(Func =>
             //{
