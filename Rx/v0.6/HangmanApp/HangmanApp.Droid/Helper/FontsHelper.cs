@@ -66,11 +66,10 @@ namespace HangmanApp.Droid.Helper
             //image.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
         }
 
-        /* v0.5 reomve following code */
-        //public static void SetupButton(ReactiveActivity activity, Button btn, int btn_id)
-        //{
-        //    //btn.Typeface = Typeface.CreateFromAsset(activity.Assets, FontsHelper.Title_Font);
-        //    btn.Typeface = Title_Font;
-        //}
+        /* v0.6 SetupButtonFont */
+        public static void SetupButtonFont(Button btn)
+        {
+            btn.Typeface = Title_Font;
+        }
     }
 }

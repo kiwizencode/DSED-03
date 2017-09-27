@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 
 using HangmanApp.Shared.Helper;
+using HangmanApp.Shared.Model;
+using HangmanApp.Shared.DataAccessObject;
 
 namespace HangmanApp.Droid.ViewModel
 {
@@ -107,6 +109,9 @@ namespace HangmanApp.Droid.ViewModel
             get => _highestscore > 0 ?  _highestscore.ToString() : "";
             set { }
         }
+
+        /* v0.6 add profile model */
+        public Model_Profile Profile { get; set; } = null;
 
         private string _toast;
         public string Toast { get => _toast; set => this.RaiseAndSetIfChanged(ref _toast, value); }

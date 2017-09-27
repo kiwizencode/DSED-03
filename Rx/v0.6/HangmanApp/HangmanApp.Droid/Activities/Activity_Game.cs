@@ -23,7 +23,7 @@ using System.Collections;
 
 namespace HangmanApp.Droid.Activities
 {
-    [Activity(Label = "Game Activity", MainLauncher = true)]
+    [Activity(Label = "Game Activity")] //, MainLauncher = true)]
     public class Activity_Game : ReactiveActivity, IViewFor<ViewModel_Game>
     {
 
@@ -88,7 +88,6 @@ namespace HangmanApp.Droid.Activities
 
         /* v0.6 add User Profile */
         public TextView textViewProfile { get; private set; }
-
         public ImageView imageViewHangman { get; private set; }
 
         /* For DEbugging */
@@ -105,7 +104,9 @@ namespace HangmanApp.Droid.Activities
         /* v0.6 add check winning flag */
         public bool IsWinning_Flag { get; set; }
 
-        public Model_Profile Current_Profile { get; set; }
+        public Model_Profile Current_Profile { get; set; } = null;
+
+        private string profile_id = string.Empty;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -324,6 +325,27 @@ namespace HangmanApp.Droid.Activities
             textViewHighest.Typeface = digital_font;
             textViewScore.Typeface = digital_font;
 
+
+            this.WhenAnyValue(x => x.textViewScore.Text).Subscribe( _ => {
+
+                if(int.TryParse(textViewScore.Text, out int highestscore))
+                {
+                    if (Current_Profile != null)
+                    {
+                        int scores = Current_Profile.Scores;
+                        if (scores < highestscore)
+                        {
+                            Current_Profile.Scores = highestscore;
+                            ProfileRepository.SaveProfile(Current_Profile);
+                        }
+
+                    }
+                }
+
+            });
+
+
+
             /* v0.6 has refactor the following code : Initialise the button UI */
             InitializeButton(btn01);
             InitializeButton(btn02);
@@ -350,7 +372,8 @@ namespace HangmanApp.Droid.Activities
                     /* added in v0.4 => set button to invisible once button is clicked. */
                     btn.Visibility = ViewStates.Invisible;
                 }
-                new_btn.Typeface = FontsHelper.Title_Font;
+                //new_btn.Typeface = FontsHelper.Title_Font;
+                FontsHelper.SetupButtonFont(new_btn);
                 new_btn.Click += (sender, e) => setupButtonClickEvent(sender as Button);
 
             }
@@ -371,6 +394,20 @@ namespace HangmanApp.Droid.Activities
             this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn14.Visibility = ViewStates.Visible);
             this.WhenAnyValue(x => x.btn01.Text).Subscribe(Func => btn15.Visibility = ViewStates.Visible);
 
+            //this.Bind(ViewModel, x => x.Profile, c => c.Current_Profile);
+
+            /* v0.6 */
+            /* https://developer.xamarin.com/recipes/android/fundamentals/activity/pass_data_between_activity/ */
+
+            profile_id = Intent.GetStringExtra("Profile_ID") ?? string.Empty;
+
+            if(profile_id != string.Empty)
+            {
+                int id = int.Parse(profile_id);
+                Current_Profile = ProfileRepository.GetProfile(id);
+                textViewProfile.Text = Current_Profile.Name;
+            }
+            
         }
 
     }

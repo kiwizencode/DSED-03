@@ -1436,6 +1436,9 @@ namespace HangmanApp.Droid
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f080070
+			public const int CreateProfileLayout = 2131230832;
+			
 			// aapt resource value: 0x7f080057
 			public const int ImageSlot01 = 2131230807;
 			
@@ -1450,6 +1453,9 @@ namespace HangmanApp.Droid
 			
 			// aapt resource value: 0x7f08005b
 			public const int ImageSlot05 = 2131230811;
+			
+			// aapt resource value: 0x7f080074
+			public const int ListProfile = 2131230836;
 			
 			// aapt resource value: 0x7f08004f
 			public const int TitleLayout = 2131230799;
@@ -1550,6 +1556,27 @@ namespace HangmanApp.Droid
 			// aapt resource value: 0x7f08006a
 			public const int btn15 = 2131230826;
 			
+			// aapt resource value: 0x7f080073
+			public const int btnCancel = 2131230835;
+			
+			// aapt resource value: 0x7f080075
+			public const int btnCreate = 2131230837;
+			
+			// aapt resource value: 0x7f08006e
+			public const int btnCredits = 2131230830;
+			
+			// aapt resource value: 0x7f08006d
+			public const int btnProfile = 2131230829;
+			
+			// aapt resource value: 0x7f080072
+			public const int btnSave = 2131230834;
+			
+			// aapt resource value: 0x7f08006c
+			public const int btnScores = 2131230828;
+			
+			// aapt resource value: 0x7f08006b
+			public const int btnStartGame = 2131230827;
+			
 			// aapt resource value: 0x7f080056
 			public const int btnStartNew = 2131230806;
 			
@@ -1586,6 +1613,9 @@ namespace HangmanApp.Droid
 			// aapt resource value: 0x7f08001c
 			public const int dropdown = 2131230748;
 			
+			// aapt resource value: 0x7f080071
+			public const int editTextProfile = 2131230833;
+			
 			// aapt resource value: 0x7f080042
 			public const int edit_query = 2131230786;
 			
@@ -1618,6 +1648,9 @@ namespace HangmanApp.Droid
 			
 			// aapt resource value: 0x7f080009
 			public const int listMode = 2131230729;
+			
+			// aapt resource value: 0x7f080076
+			public const int listViewScores = 2131230838;
 			
 			// aapt resource value: 0x7f08002a
 			public const int list_item = 2131230762;
@@ -1723,6 +1756,9 @@ namespace HangmanApp.Droid
 			
 			// aapt resource value: 0x7f080051
 			public const int textViewHighest = 2131230801;
+			
+			// aapt resource value: 0x7f08006f
+			public const int textViewMessage = 2131230831;
 			
 			// aapt resource value: 0x7f080054
 			public const int textViewProfile = 2131230804;
@@ -1871,19 +1907,28 @@ namespace HangmanApp.Droid
 			public const int Layout_Game = 2130903065;
 			
 			// aapt resource value: 0x7f03001a
-			public const int Main = 2130903066;
+			public const int Layout_MainScreen = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public const int select_dialog_item_material = 2130903067;
+			public const int Layout_Profile_v2 = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public const int select_dialog_multichoice_material = 2130903068;
+			public const int Layout_Scores = 2130903068;
 			
 			// aapt resource value: 0x7f03001d
-			public const int select_dialog_singlechoice_material = 2130903069;
+			public const int Main = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public const int support_simple_spinner_dropdown_item = 2130903070;
+			public const int select_dialog_item_material = 2130903070;
+			
+			// aapt resource value: 0x7f03001f
+			public const int select_dialog_multichoice_material = 2130903071;
+			
+			// aapt resource value: 0x7f030020
+			public const int select_dialog_singlechoice_material = 2130903072;
+			
+			// aapt resource value: 0x7f030021
+			public const int support_simple_spinner_dropdown_item = 2130903073;
 			
 			static Layout()
 			{
