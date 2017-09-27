@@ -26,7 +26,7 @@ namespace HangmanApp.Droid
             base.OnCreate(savedInstanceState);
 
             // Create your application here
-            Intent activity = new Intent(this, typeof(Activity_MainScreen));
+            Intent activity = new Intent(this, typeof(Activity_Game));
             StartActivity(activity);
 
             this.Finish();

@@ -142,8 +142,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/textViewProfile"
                 android:gravity="center"
-                android:textColor="#424242"
-                android:text="1234567890" />
+                android:textColor="#424242" />
         </LinearLayout>
     </LinearLayout>
 <!-- ImageView to hold the graphic for hangman-->
@@ -176,14 +175,18 @@
             android:orientation="vertical"
             android:minWidth="25px"
             android:minHeight="25px"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dp">
             <Button
                 android:text="New Game"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnStartNew"
-                android:textSize="10dp" />
+                android:gravity="center"
+                android:textAlignment="center"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
     </LinearLayout>
     <LinearLayout

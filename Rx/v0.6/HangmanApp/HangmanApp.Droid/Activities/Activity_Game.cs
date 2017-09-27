@@ -81,6 +81,8 @@ namespace HangmanApp.Droid.Activities
         public Button btn14 { get; private set; }
         public Button btn15 { get; private set; }
 
+        public Button btnStartNew { get; private set; }
+
         public TextView textViewTitle { get; private set; }
         public TextView textViewTimer { get; private set; }
         public TextView textViewHighest { get; private set; }
@@ -118,6 +120,20 @@ namespace HangmanApp.Droid.Activities
             InitializeUIControl();
 
             InitializeModel();
+
+
+            /* v0.6 */
+            /* https://developer.xamarin.com/recipes/android/fundamentals/activity/pass_data_between_activity/ */
+
+            profile_id = Intent.GetStringExtra("Profile_ID") ?? string.Empty;
+
+            if (profile_id != string.Empty)
+            {
+                int id = int.Parse(profile_id);
+                Current_Profile = ProfileRepository.GetProfile(id);
+                textViewProfile.Text = Current_Profile.Name;
+            }
+
 
             /* ####################################################################################### */
             /* The following code may not be the correct way of doing things. 
@@ -344,6 +360,13 @@ namespace HangmanApp.Droid.Activities
 
             });
 
+            /* v0.6 start a new game */
+
+            btnStartNew.Click += delegate {
+                ViewModel.Reset();
+                RunApp();
+            };
+
 
 
             /* v0.6 has refactor the following code : Initialise the button UI */
@@ -396,17 +419,7 @@ namespace HangmanApp.Droid.Activities
 
             //this.Bind(ViewModel, x => x.Profile, c => c.Current_Profile);
 
-            /* v0.6 */
-            /* https://developer.xamarin.com/recipes/android/fundamentals/activity/pass_data_between_activity/ */
 
-            profile_id = Intent.GetStringExtra("Profile_ID") ?? string.Empty;
-
-            if(profile_id != string.Empty)
-            {
-                int id = int.Parse(profile_id);
-                Current_Profile = ProfileRepository.GetProfile(id);
-                textViewProfile.Text = Current_Profile.Name;
-            }
             
         }
 
