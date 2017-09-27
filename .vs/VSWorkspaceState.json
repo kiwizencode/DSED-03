@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Rx",
-    "\\Rx\\v0.6",
-    "\\Rx\\v0.6\\HangmanApp"
+    "\\Guess5App"
   ],
-  "SelectedNode": "\\Rx\\v0.6\\HangmanApp\\HangmanApp.sln",
+  "SelectedNode": "\\Guess5App\\Guess5App.sln",
   "PreviewInSolutionExplorer": false
 }
