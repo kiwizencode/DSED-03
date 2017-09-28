@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace HangmanApp.Droid.Activities // Guess5App.Droid
 {
     //[Activity(Label = "Splast Activity", MainLauncher = true)]
-    [Activity(Theme = "@style/MyTheme.Splash", NoHistory = true)] //, MainLauncher = true, NoHistory = true)]
+    [Activity(Label = "Guess Five", Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
     public class Activity_Splash : AppCompatActivity
     {
         static readonly string TAG = "X:" + typeof(Activity_Splash).Name;
@@ -29,7 +29,7 @@ namespace HangmanApp.Droid.Activities // Guess5App.Droid
             base.OnResume();
             var startUp = new Task(() =>
             {
-                Task.Delay(2000);
+                //Task.Delay(2000);
                 var intent = new Intent(this, typeof(Activity_MainScreen));
                 StartActivity(intent);
             });
