@@ -93,6 +93,7 @@
     <Compile Include="Activities\Activity_MainScreen.cs" />
     <Compile Include="Activities\Activity_Profile.cs" />
     <Compile Include="Activities\Activity_Scores.cs" />
+    <Compile Include="Activities\Activity_Splash.cs" />
     <Compile Include="Helper\FontsHelper.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -107,6 +108,7 @@
     <None Include="Resources\AboutResources.txt" />
     <None Include="Properties\AndroidManifest.xml" />
     <None Include="Assets\AboutAssets.txt" />
+    <AndroidResource Include="Resources\drawable\guess_five.png" />
     <AndroidResource Include="Resources\layout\Layout_Game.axml" />
     <AndroidResource Include="Resources\layout\Layout_MainScreen.axml" />
     <AndroidResource Include="Resources\layout\Layout_Profile_v2.axml" />
@@ -116,7 +118,7 @@
     <AndroidResource Include="Resources\layout\Main.axml">
       <SubType>Designer</SubType>
     </AndroidResource>
-    <AndroidResource Include="Resources\values\Strings.xml" />
+    <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\mipmap-hdpi\" />
@@ -241,6 +243,15 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\title_bar.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\colors.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\values\style.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\splash_screen.xml" />
   </ItemGroup>
   <Import Project="..\HangmanApp.Shared\HangmanApp.Shared.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

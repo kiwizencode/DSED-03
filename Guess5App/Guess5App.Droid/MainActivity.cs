@@ -1,19 +1,35 @@
-﻿using Android.App;
-using Android.Widget;
+using Android;
+using Android.App;
 using Android.OS;
+using Android.Support.V7.App;
+using Android.Util;
+using Android.Widget;
 
 namespace Guess5App.Droid
 {
-    [Activity(Label = "Guess5App.Droid", MainLauncher = true)]
-    public class MainActivity : Activity
+    [Activity(Label = "@string/ApplicationName", Theme = "@style/MyTheme")]
+    public class MainActivity : AppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        static readonly string TAG = "X:" + typeof (MainActivity).Name;
+        Button _button;
+        int _clickCount;
+
+        protected override void OnCreate(Bundle savedInstanceState)//Bundle bundle)
         {
             base.OnCreate(savedInstanceState);
 
-            // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+
+            _button = FindViewById<Button>(Resource.Id.MyButton);
+
+            _button.Click += (sender, args) =>
+                             {
+                                 string message = string.Format("You clicked {0} times.", ++_clickCount);
+                                 _button.Text = message;
+                                 Log.Debug(TAG, message);
+                             };
+
+            Log.Debug(TAG, "MainActivity is loaded.");
         }
     }
 }
-
