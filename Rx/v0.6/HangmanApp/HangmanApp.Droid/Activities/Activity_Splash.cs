@@ -16,7 +16,6 @@ namespace HangmanApp.Droid.Activities // Guess5App.Droid
     {
         static readonly string TAG = "X:" + typeof(Activity_Splash).Name;
 
-
         /*
          https://alexdunn.org/2017/02/07/creating-a-splash-page-for-xamarin-forms-android/
          */
