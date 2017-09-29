@@ -3,7 +3,15 @@
           package="Guess5App.Droid.Guess5App.Droid" 
           android:versionCode="1" 
           android:versionName="1.0">
-  <uses-sdk android:minSdkVersion="21" />
-  <application android:allowBackup="true" android:label="@string/app_name">
+  <uses-sdk android:minSdkVersion="16" />
+  
+  <!-- 
+   Hide Action Bar In Android App (for all activity pages) 
+   http://www.technetexperts.com/mobile/hide-action-bar-in-android-app/ 
+   -->  
+  
+  <application android:allowBackup="true" 
+               android:label="@string/app_name"
+               android:theme="@android:style/Theme.NoTitleBar">
   </application>
 </manifest>

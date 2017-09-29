@@ -1,10 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Guess5App",
-    "\\Guess5App\\Guess5App.Droid",
-    "\\Guess5App\\Guess5App.Shared"
+    "\\Guess5App\\Guess5App.Shared",
+    "\\Rx",
+    "\\Rx\\v0.6",
+    "\\Rx\\v0.6\\HangmanApp"
   ],
-  "SelectedNode": "\\Guess5App\\Guess5App.sln",
+  "SelectedNode": "\\Rx\\v0.6\\HangmanApp\\HangmanApp.sln",
   "PreviewInSolutionExplorer": false
 }
