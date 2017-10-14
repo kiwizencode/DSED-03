@@ -47,12 +47,27 @@ namespace Guess5App.Droid.Activities
         #endregion
 
 
+        /* v0.4 */
+        /* load hangman image */
+        private string Hangman_Image
+        {
+            get => string.Empty;
+            set => FontsHelper.SetImageView(this, Resource.Id.imageViewHangman, value);
+        }
+
+
+
         public TextView textViewTitle { get; private set; }
         public TextView textViewTimer { get; private set; }
         public TextView textViewHighest { get; private set; }
         public TextView textViewScore { get; private set; }
 
 
+        /* v0.6 add User Profile */
+        public TextView textViewProfile { get; private set; }
+        public ImageView imageViewHangman { get; private set; }
+
+        /* add Guess5s v0.1 */
         public Button btnStartNew { get; private set; }
 
 
@@ -88,17 +103,25 @@ namespace Guess5App.Droid.Activities
             //});
 
 
-            ///* https://reactiveui.net/docs/handbook/commands/invoking-commands  */
+            /* https://reactiveui.net/docs/handbook/commands/invoking-commands  */
+
+
+            
             var interval = TimeSpan.FromSeconds(1);
-            var o = Observable.Timer(interval, interval).Where(i => (Run_Flag?1:0) == 1 ) ;
-            ////o.InvokeCommand( this.ViewModel, x => ViewModel.TickCommand);
-            o.Subscribe(delegate { RunOnUiThread(() => ViewModel.TimerTick());  });
+            Observable.Timer(interval, interval)
+                        .Where(i => (Run_Flag?1:0) == 1 )
+                           .Subscribe(delegate { RunOnUiThread(() => ViewModel.TimerTick()); });
+            
 
-
+            /*
             btnStartNew.Click += delegate
             {
-                Run_Flag = !Run_Flag;
+                //Run_Flag = !Run_Flag;
+                //ViewModel.TickCommand().;
             };
+            */
+
+            this.BindCommand(this.ViewModel, v => v.TickCommand, c => c.btnStartNew,"Click");
 
         }
 
@@ -114,6 +137,15 @@ namespace Guess5App.Droid.Activities
             // This is basically the same functionality as http://jakewharton.github.io/butterknife/ provides
 
             this.WireUpControls(); // v0.4 => added this code
+
+            /* Set the font for the activity title bar*/
+            textViewTitle.Typeface = FontsHelper.Title_Font;
+
+            /* Set the font for the count-down timer */
+            var digital_font = FontsHelper.Digital_Font;
+            textViewTimer.Typeface = digital_font;
+            textViewHighest.Typeface = digital_font;
+            textViewScore.Typeface = digital_font;
         }
 
         private void InitializeModel()
@@ -123,6 +155,10 @@ namespace Guess5App.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Run_Flag, c => c.Run_Flag);
             this.OneWayBind(ViewModel, x => x.Score, c => c.textViewScore.Text);
             this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
+
+            /* v0.4 display hangman image onto screen*/
+            this.OneWayBind(ViewModel, x => x.Hangman_Image, c => c.Hangman_Image);
         }
+
     }
 }

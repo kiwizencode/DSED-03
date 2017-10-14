@@ -348,6 +348,33 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f01001e
 			public const int expandActivityOverflowButtonDrawable = 2130771998;
 			
+			// aapt resource value: 0x7f0100ce
+			public const int font = 2130772174;
+			
+			// aapt resource value: 0x7f0100c7
+			public const int fontProviderAuthority = 2130772167;
+			
+			// aapt resource value: 0x7f0100ca
+			public const int fontProviderCerts = 2130772170;
+			
+			// aapt resource value: 0x7f0100cb
+			public const int fontProviderFetchStrategy = 2130772171;
+			
+			// aapt resource value: 0x7f0100cc
+			public const int fontProviderFetchTimeout = 2130772172;
+			
+			// aapt resource value: 0x7f0100c8
+			public const int fontProviderPackage = 2130772168;
+			
+			// aapt resource value: 0x7f0100c9
+			public const int fontProviderQuery = 2130772169;
+			
+			// aapt resource value: 0x7f0100cd
+			public const int fontStyle = 2130772173;
+			
+			// aapt resource value: 0x7f0100cf
+			public const int fontWeight = 2130772175;
+			
 			// aapt resource value: 0x7f010028
 			public const int gapBetweenBars = 2130772008;
 			
@@ -719,29 +746,29 @@ namespace Guess5App.Droid
 		public partial class Color
 		{
 			
-			// aapt resource value: 0x7f060038
-			public const int abc_background_cache_hint_selector_material_dark = 2131099704;
+			// aapt resource value: 0x7f06003b
+			public const int abc_background_cache_hint_selector_material_dark = 2131099707;
 			
-			// aapt resource value: 0x7f060039
-			public const int abc_background_cache_hint_selector_material_light = 2131099705;
+			// aapt resource value: 0x7f06003c
+			public const int abc_background_cache_hint_selector_material_light = 2131099708;
 			
 			// aapt resource value: 0x7f060000
 			public const int abc_input_method_navigation_guard = 2131099648;
 			
-			// aapt resource value: 0x7f06003a
-			public const int abc_primary_text_disable_only_material_dark = 2131099706;
-			
-			// aapt resource value: 0x7f06003b
-			public const int abc_primary_text_disable_only_material_light = 2131099707;
-			
-			// aapt resource value: 0x7f06003c
-			public const int abc_primary_text_material_dark = 2131099708;
-			
 			// aapt resource value: 0x7f06003d
-			public const int abc_primary_text_material_light = 2131099709;
+			public const int abc_primary_text_disable_only_material_dark = 2131099709;
 			
 			// aapt resource value: 0x7f06003e
-			public const int abc_search_url_text = 2131099710;
+			public const int abc_primary_text_disable_only_material_light = 2131099710;
+			
+			// aapt resource value: 0x7f06003f
+			public const int abc_primary_text_material_dark = 2131099711;
+			
+			// aapt resource value: 0x7f060040
+			public const int abc_primary_text_material_light = 2131099712;
+			
+			// aapt resource value: 0x7f060041
+			public const int abc_search_url_text = 2131099713;
 			
 			// aapt resource value: 0x7f060001
 			public const int abc_search_url_text_normal = 2131099649;
@@ -752,14 +779,14 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f060003
 			public const int abc_search_url_text_selected = 2131099651;
 			
-			// aapt resource value: 0x7f06003f
-			public const int abc_secondary_text_material_dark = 2131099711;
+			// aapt resource value: 0x7f060042
+			public const int abc_secondary_text_material_dark = 2131099714;
 			
-			// aapt resource value: 0x7f060040
-			public const int abc_secondary_text_material_light = 2131099712;
+			// aapt resource value: 0x7f060043
+			public const int abc_secondary_text_material_light = 2131099715;
 			
-			// aapt resource value: 0x7f060035
-			public const int accent = 2131099701;
+			// aapt resource value: 0x7f060038
+			public const int accent = 2131099704;
 			
 			// aapt resource value: 0x7f060004
 			public const int accent_material_dark = 2131099652;
@@ -848,11 +875,20 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f060020
 			public const int material_deep_teal_500 = 2131099680;
 			
-			// aapt resource value: 0x7f060033
-			public const int primary = 2131099699;
-			
 			// aapt resource value: 0x7f060034
-			public const int primaryDark = 2131099700;
+			public const int notification_action_color_filter = 2131099700;
+			
+			// aapt resource value: 0x7f060035
+			public const int notification_icon_bg_color = 2131099701;
+			
+			// aapt resource value: 0x7f060033
+			public const int notification_material_background_media_default_color = 2131099699;
+			
+			// aapt resource value: 0x7f060036
+			public const int primary = 2131099702;
+			
+			// aapt resource value: 0x7f060037
+			public const int primaryDark = 2131099703;
 			
 			// aapt resource value: 0x7f060021
 			public const int primary_dark_material_dark = 2131099681;
@@ -896,8 +932,8 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f06002e
 			public const int secondary_text_disabled_material_light = 2131099694;
 			
-			// aapt resource value: 0x7f060037
-			public const int splash_background = 2131099703;
+			// aapt resource value: 0x7f06003a
+			public const int splash_background = 2131099706;
 			
 			// aapt resource value: 0x7f06002f
 			public const int switch_thumb_disabled_material_dark = 2131099695;
@@ -905,11 +941,11 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f060030
 			public const int switch_thumb_disabled_material_light = 2131099696;
 			
-			// aapt resource value: 0x7f060041
-			public const int switch_thumb_material_dark = 2131099713;
+			// aapt resource value: 0x7f060044
+			public const int switch_thumb_material_dark = 2131099716;
 			
-			// aapt resource value: 0x7f060042
-			public const int switch_thumb_material_light = 2131099714;
+			// aapt resource value: 0x7f060045
+			public const int switch_thumb_material_light = 2131099717;
 			
 			// aapt resource value: 0x7f060031
 			public const int switch_thumb_normal_material_dark = 2131099697;
@@ -917,8 +953,8 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f060032
 			public const int switch_thumb_normal_material_light = 2131099698;
 			
-			// aapt resource value: 0x7f060036
-			public const int window_background = 2131099702;
+			// aapt resource value: 0x7f060039
+			public const int window_background = 2131099705;
 			
 			static Color()
 			{
@@ -1113,6 +1149,21 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f07003b
 			public const int abc_text_size_title_material_toolbar = 2131165243;
 			
+			// aapt resource value: 0x7f070046
+			public const int compat_button_inset_horizontal_material = 2131165254;
+			
+			// aapt resource value: 0x7f070047
+			public const int compat_button_inset_vertical_material = 2131165255;
+			
+			// aapt resource value: 0x7f070048
+			public const int compat_button_padding_horizontal_material = 2131165256;
+			
+			// aapt resource value: 0x7f070049
+			public const int compat_button_padding_vertical_material = 2131165257;
+			
+			// aapt resource value: 0x7f07004a
+			public const int compat_control_corner_material = 2131165258;
+			
 			// aapt resource value: 0x7f07003c
 			public const int dialog_fixed_height_major = 2131165244;
 			
@@ -1130,6 +1181,51 @@ namespace Guess5App.Droid
 			
 			// aapt resource value: 0x7f070041
 			public const int disabled_alpha_material_light = 2131165249;
+			
+			// aapt resource value: 0x7f07004b
+			public const int notification_action_icon_size = 2131165259;
+			
+			// aapt resource value: 0x7f07004c
+			public const int notification_action_text_size = 2131165260;
+			
+			// aapt resource value: 0x7f07004d
+			public const int notification_big_circle_margin = 2131165261;
+			
+			// aapt resource value: 0x7f070043
+			public const int notification_content_margin_start = 2131165251;
+			
+			// aapt resource value: 0x7f07004e
+			public const int notification_large_icon_height = 2131165262;
+			
+			// aapt resource value: 0x7f07004f
+			public const int notification_large_icon_width = 2131165263;
+			
+			// aapt resource value: 0x7f070044
+			public const int notification_main_column_padding_top = 2131165252;
+			
+			// aapt resource value: 0x7f070045
+			public const int notification_media_narrow_margin = 2131165253;
+			
+			// aapt resource value: 0x7f070050
+			public const int notification_right_icon_size = 2131165264;
+			
+			// aapt resource value: 0x7f070042
+			public const int notification_right_side_padding_top = 2131165250;
+			
+			// aapt resource value: 0x7f070051
+			public const int notification_small_icon_background_padding = 2131165265;
+			
+			// aapt resource value: 0x7f070052
+			public const int notification_small_icon_size_as_large = 2131165266;
+			
+			// aapt resource value: 0x7f070053
+			public const int notification_subtext_size = 2131165267;
+			
+			// aapt resource value: 0x7f070054
+			public const int notification_top_pad = 2131165268;
+			
+			// aapt resource value: 0x7f070055
+			public const int notification_top_pad_large_text = 2131165269;
 			
 			static Dimension()
 			{
@@ -1433,16 +1529,52 @@ namespace Guess5App.Droid
 			public const int letter_z = 2130837599;
 			
 			// aapt resource value: 0x7f020060
-			public const int profile_border = 2130837600;
+			public const int notification_action_background = 2130837600;
 			
 			// aapt resource value: 0x7f020061
-			public const int question_mark = 2130837601;
+			public const int notification_bg = 2130837601;
 			
 			// aapt resource value: 0x7f020062
-			public const int splash_screen = 2130837602;
+			public const int notification_bg_low = 2130837602;
 			
 			// aapt resource value: 0x7f020063
-			public const int title_bar = 2130837603;
+			public const int notification_bg_low_normal = 2130837603;
+			
+			// aapt resource value: 0x7f020064
+			public const int notification_bg_low_pressed = 2130837604;
+			
+			// aapt resource value: 0x7f020065
+			public const int notification_bg_normal = 2130837605;
+			
+			// aapt resource value: 0x7f020066
+			public const int notification_bg_normal_pressed = 2130837606;
+			
+			// aapt resource value: 0x7f020067
+			public const int notification_icon_background = 2130837607;
+			
+			// aapt resource value: 0x7f02006e
+			public const int notification_template_icon_bg = 2130837614;
+			
+			// aapt resource value: 0x7f02006f
+			public const int notification_template_icon_low_bg = 2130837615;
+			
+			// aapt resource value: 0x7f020068
+			public const int notification_tile_bg = 2130837608;
+			
+			// aapt resource value: 0x7f020069
+			public const int notify_panel_notification_icon_bg = 2130837609;
+			
+			// aapt resource value: 0x7f02006a
+			public const int profile_border = 2130837610;
+			
+			// aapt resource value: 0x7f02006b
+			public const int question_mark = 2130837611;
+			
+			// aapt resource value: 0x7f02006c
+			public const int splash_screen = 2130837612;
+			
+			// aapt resource value: 0x7f02006d
+			public const int title_bar = 2130837613;
 			
 			static Drawable()
 			{
@@ -1457,50 +1589,59 @@ namespace Guess5App.Droid
 		public partial class Id
 		{
 			
+			// aapt resource value: 0x7f08005f
+			public const int ImageSlot01 = 2131230815;
+			
+			// aapt resource value: 0x7f080060
+			public const int ImageSlot02 = 2131230816;
+			
+			// aapt resource value: 0x7f080061
+			public const int ImageSlot03 = 2131230817;
+			
+			// aapt resource value: 0x7f080062
+			public const int ImageSlot04 = 2131230818;
+			
+			// aapt resource value: 0x7f080063
+			public const int ImageSlot05 = 2131230819;
+			
 			// aapt resource value: 0x7f080057
-			public const int ImageSlot01 = 2131230807;
+			public const int TitleLayout = 2131230807;
 			
-			// aapt resource value: 0x7f080058
-			public const int ImageSlot02 = 2131230808;
+			// aapt resource value: 0x7f080076
+			public const int action0 = 2131230838;
 			
-			// aapt resource value: 0x7f080059
-			public const int ImageSlot03 = 2131230809;
-			
-			// aapt resource value: 0x7f08005a
-			public const int ImageSlot04 = 2131230810;
-			
-			// aapt resource value: 0x7f08005b
-			public const int ImageSlot05 = 2131230811;
-			
-			// aapt resource value: 0x7f08006b
-			public const int MyButton = 2131230827;
-			
-			// aapt resource value: 0x7f08004f
-			public const int TitleLayout = 2131230799;
-			
-			// aapt resource value: 0x7f080040
-			public const int action_bar = 2131230784;
+			// aapt resource value: 0x7f080048
+			public const int action_bar = 2131230792;
 			
 			// aapt resource value: 0x7f080000
 			public const int action_bar_activity_content = 2131230720;
 			
-			// aapt resource value: 0x7f08003f
-			public const int action_bar_container = 2131230783;
+			// aapt resource value: 0x7f080047
+			public const int action_bar_container = 2131230791;
 			
-			// aapt resource value: 0x7f08003b
-			public const int action_bar_root = 2131230779;
+			// aapt resource value: 0x7f080043
+			public const int action_bar_root = 2131230787;
 			
 			// aapt resource value: 0x7f080001
 			public const int action_bar_spinner = 2131230721;
 			
-			// aapt resource value: 0x7f080024
-			public const int action_bar_subtitle = 2131230756;
+			// aapt resource value: 0x7f08002d
+			public const int action_bar_subtitle = 2131230765;
 			
-			// aapt resource value: 0x7f080023
-			public const int action_bar_title = 2131230755;
+			// aapt resource value: 0x7f08002c
+			public const int action_bar_title = 2131230764;
 			
-			// aapt resource value: 0x7f080041
-			public const int action_context_bar = 2131230785;
+			// aapt resource value: 0x7f080073
+			public const int action_container = 2131230835;
+			
+			// aapt resource value: 0x7f080049
+			public const int action_context_bar = 2131230793;
+			
+			// aapt resource value: 0x7f08007a
+			public const int action_divider = 2131230842;
+			
+			// aapt resource value: 0x7f080074
+			public const int action_image = 2131230836;
 			
 			// aapt resource value: 0x7f080002
 			public const int action_menu_divider = 2131230722;
@@ -1508,161 +1649,212 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f080003
 			public const int action_menu_presenter = 2131230723;
 			
-			// aapt resource value: 0x7f08003d
-			public const int action_mode_bar = 2131230781;
+			// aapt resource value: 0x7f080045
+			public const int action_mode_bar = 2131230789;
 			
-			// aapt resource value: 0x7f08003c
-			public const int action_mode_bar_stub = 2131230780;
+			// aapt resource value: 0x7f080044
+			public const int action_mode_bar_stub = 2131230788;
 			
-			// aapt resource value: 0x7f080025
-			public const int action_mode_close_button = 2131230757;
+			// aapt resource value: 0x7f08002e
+			public const int action_mode_close_button = 2131230766;
 			
-			// aapt resource value: 0x7f080026
-			public const int activity_chooser_view_content = 2131230758;
+			// aapt resource value: 0x7f080075
+			public const int action_text = 2131230837;
 			
-			// aapt resource value: 0x7f080030
-			public const int alertTitle = 2131230768;
+			// aapt resource value: 0x7f080083
+			public const int actions = 2131230851;
 			
-			// aapt resource value: 0x7f080016
-			public const int always = 2131230742;
-			
-			// aapt resource value: 0x7f080013
-			public const int beginning = 2131230739;
-			
-			// aapt resource value: 0x7f08005c
-			public const int btn01 = 2131230812;
-			
-			// aapt resource value: 0x7f08005d
-			public const int btn02 = 2131230813;
-			
-			// aapt resource value: 0x7f08005e
-			public const int btn03 = 2131230814;
-			
-			// aapt resource value: 0x7f08005f
-			public const int btn04 = 2131230815;
-			
-			// aapt resource value: 0x7f080060
-			public const int btn05 = 2131230816;
-			
-			// aapt resource value: 0x7f080061
-			public const int btn06 = 2131230817;
-			
-			// aapt resource value: 0x7f080062
-			public const int btn07 = 2131230818;
-			
-			// aapt resource value: 0x7f080063
-			public const int btn08 = 2131230819;
-			
-			// aapt resource value: 0x7f080064
-			public const int btn09 = 2131230820;
-			
-			// aapt resource value: 0x7f080065
-			public const int btn10 = 2131230821;
-			
-			// aapt resource value: 0x7f080066
-			public const int btn11 = 2131230822;
-			
-			// aapt resource value: 0x7f080067
-			public const int btn12 = 2131230823;
-			
-			// aapt resource value: 0x7f080068
-			public const int btn13 = 2131230824;
-			
-			// aapt resource value: 0x7f080069
-			public const int btn14 = 2131230825;
-			
-			// aapt resource value: 0x7f08006a
-			public const int btn15 = 2131230826;
-			
-			// aapt resource value: 0x7f080056
-			public const int btnStartNew = 2131230806;
-			
-			// aapt resource value: 0x7f080036
-			public const int buttonPanel = 2131230774;
+			// aapt resource value: 0x7f08002f
+			public const int activity_chooser_view_content = 2131230767;
 			
 			// aapt resource value: 0x7f080038
-			public const int checkbox = 2131230776;
-			
-			// aapt resource value: 0x7f080017
-			public const int collapseActionView = 2131230743;
-			
-			// aapt resource value: 0x7f080031
-			public const int contentPanel = 2131230769;
-			
-			// aapt resource value: 0x7f080035
-			public const int custom = 2131230773;
-			
-			// aapt resource value: 0x7f080034
-			public const int customPanel = 2131230772;
-			
-			// aapt resource value: 0x7f08003e
-			public const int decor_content_parent = 2131230782;
-			
-			// aapt resource value: 0x7f080029
-			public const int default_activity_button = 2131230761;
+			public const int alertTitle = 2131230776;
 			
 			// aapt resource value: 0x7f08001b
-			public const int dialog = 2131230747;
+			public const int always = 2131230747;
 			
-			// aapt resource value: 0x7f08000c
-			public const int disableHome = 2131230732;
+			// aapt resource value: 0x7f080028
+			public const int async = 2131230760;
+			
+			// aapt resource value: 0x7f080018
+			public const int beginning = 2131230744;
+			
+			// aapt resource value: 0x7f080029
+			public const int blocking = 2131230761;
+			
+			// aapt resource value: 0x7f080064
+			public const int btn01 = 2131230820;
+			
+			// aapt resource value: 0x7f080065
+			public const int btn02 = 2131230821;
+			
+			// aapt resource value: 0x7f080066
+			public const int btn03 = 2131230822;
+			
+			// aapt resource value: 0x7f080067
+			public const int btn04 = 2131230823;
+			
+			// aapt resource value: 0x7f080068
+			public const int btn05 = 2131230824;
+			
+			// aapt resource value: 0x7f080069
+			public const int btn06 = 2131230825;
+			
+			// aapt resource value: 0x7f08006a
+			public const int btn07 = 2131230826;
+			
+			// aapt resource value: 0x7f08006b
+			public const int btn08 = 2131230827;
+			
+			// aapt resource value: 0x7f08006c
+			public const int btn09 = 2131230828;
+			
+			// aapt resource value: 0x7f08006d
+			public const int btn10 = 2131230829;
+			
+			// aapt resource value: 0x7f08006e
+			public const int btn11 = 2131230830;
+			
+			// aapt resource value: 0x7f08006f
+			public const int btn12 = 2131230831;
+			
+			// aapt resource value: 0x7f080070
+			public const int btn13 = 2131230832;
+			
+			// aapt resource value: 0x7f080071
+			public const int btn14 = 2131230833;
+			
+			// aapt resource value: 0x7f080072
+			public const int btn15 = 2131230834;
+			
+			// aapt resource value: 0x7f08005e
+			public const int btnStartNew = 2131230814;
+			
+			// aapt resource value: 0x7f08003e
+			public const int buttonPanel = 2131230782;
+			
+			// aapt resource value: 0x7f080077
+			public const int cancel_action = 2131230839;
+			
+			// aapt resource value: 0x7f080040
+			public const int checkbox = 2131230784;
+			
+			// aapt resource value: 0x7f08007f
+			public const int chronometer = 2131230847;
 			
 			// aapt resource value: 0x7f08001c
-			public const int dropdown = 2131230748;
+			public const int collapseActionView = 2131230748;
 			
-			// aapt resource value: 0x7f080042
-			public const int edit_query = 2131230786;
+			// aapt resource value: 0x7f080039
+			public const int contentPanel = 2131230777;
 			
-			// aapt resource value: 0x7f080014
-			public const int end = 2131230740;
+			// aapt resource value: 0x7f08003d
+			public const int custom = 2131230781;
 			
-			// aapt resource value: 0x7f080027
-			public const int expand_activities_button = 2131230759;
+			// aapt resource value: 0x7f08003c
+			public const int customPanel = 2131230780;
 			
-			// aapt resource value: 0x7f080037
-			public const int expanded_menu = 2131230775;
+			// aapt resource value: 0x7f080046
+			public const int decor_content_parent = 2131230790;
+			
+			// aapt resource value: 0x7f080032
+			public const int default_activity_button = 2131230770;
+			
+			// aapt resource value: 0x7f080020
+			public const int dialog = 2131230752;
+			
+			// aapt resource value: 0x7f080011
+			public const int disableHome = 2131230737;
+			
+			// aapt resource value: 0x7f080021
+			public const int dropdown = 2131230753;
+			
+			// aapt resource value: 0x7f08004a
+			public const int edit_query = 2131230794;
+			
+			// aapt resource value: 0x7f080019
+			public const int end = 2131230745;
+			
+			// aapt resource value: 0x7f080085
+			public const int end_padder = 2131230853;
+			
+			// aapt resource value: 0x7f080030
+			public const int expand_activities_button = 2131230768;
+			
+			// aapt resource value: 0x7f08003f
+			public const int expanded_menu = 2131230783;
+			
+			// aapt resource value: 0x7f08002a
+			public const int forever = 2131230762;
 			
 			// aapt resource value: 0x7f080004
 			public const int home = 2131230724;
 			
-			// aapt resource value: 0x7f08000d
-			public const int homeAsUp = 2131230733;
+			// aapt resource value: 0x7f080012
+			public const int homeAsUp = 2131230738;
+			
+			// aapt resource value: 0x7f080034
+			public const int icon = 2131230772;
+			
+			// aapt resource value: 0x7f080084
+			public const int icon_group = 2131230852;
+			
+			// aapt resource value: 0x7f08001d
+			public const int ifRoom = 2131230749;
+			
+			// aapt resource value: 0x7f080031
+			public const int image = 2131230769;
+			
+			// aapt resource value: 0x7f08005d
+			public const int imageViewHangman = 2131230813;
+			
+			// aapt resource value: 0x7f080080
+			public const int info = 2131230848;
 			
 			// aapt resource value: 0x7f08002b
-			public const int icon = 2131230763;
-			
-			// aapt resource value: 0x7f080018
-			public const int ifRoom = 2131230744;
-			
-			// aapt resource value: 0x7f080028
-			public const int image = 2131230760;
-			
-			// aapt resource value: 0x7f080055
-			public const int imageViewHangman = 2131230805;
+			public const int italic = 2131230763;
 			
 			// aapt resource value: 0x7f080009
-			public const int listMode = 2131230729;
-			
-			// aapt resource value: 0x7f08002a
-			public const int list_item = 2131230762;
-			
-			// aapt resource value: 0x7f080015
-			public const int middle = 2131230741;
-			
-			// aapt resource value: 0x7f08001e
-			public const int multiply = 2131230750;
-			
-			// aapt resource value: 0x7f080019
-			public const int never = 2131230745;
-			
-			// aapt resource value: 0x7f08000e
-			public const int none = 2131230734;
+			public const int line1 = 2131230729;
 			
 			// aapt resource value: 0x7f08000a
-			public const int normal = 2131230730;
+			public const int line3 = 2131230730;
 			
-			// aapt resource value: 0x7f08002d
-			public const int parentPanel = 2131230765;
+			// aapt resource value: 0x7f08000e
+			public const int listMode = 2131230734;
+			
+			// aapt resource value: 0x7f080033
+			public const int list_item = 2131230771;
+			
+			// aapt resource value: 0x7f080079
+			public const int media_actions = 2131230841;
+			
+			// aapt resource value: 0x7f08001a
+			public const int middle = 2131230746;
+			
+			// aapt resource value: 0x7f080023
+			public const int multiply = 2131230755;
+			
+			// aapt resource value: 0x7f08001e
+			public const int never = 2131230750;
+			
+			// aapt resource value: 0x7f080013
+			public const int none = 2131230739;
+			
+			// aapt resource value: 0x7f08000f
+			public const int normal = 2131230735;
+			
+			// aapt resource value: 0x7f080082
+			public const int notification_background = 2131230850;
+			
+			// aapt resource value: 0x7f08007c
+			public const int notification_main_column = 2131230844;
+			
+			// aapt resource value: 0x7f08007b
+			public const int notification_main_column_container = 2131230843;
+			
+			// aapt resource value: 0x7f080035
+			public const int parentPanel = 2131230773;
 			
 			// aapt resource value: 0x7f080005
 			public const int progress_circular = 2131230725;
@@ -1670,116 +1862,134 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f080006
 			public const int progress_horizontal = 2131230726;
 			
+			// aapt resource value: 0x7f080042
+			public const int radio = 2131230786;
+			
+			// aapt resource value: 0x7f080081
+			public const int right_icon = 2131230849;
+			
+			// aapt resource value: 0x7f08007d
+			public const int right_side = 2131230845;
+			
+			// aapt resource value: 0x7f080024
+			public const int screen = 2131230756;
+			
 			// aapt resource value: 0x7f08003a
-			public const int radio = 2131230778;
-			
-			// aapt resource value: 0x7f08001f
-			public const int screen = 2131230751;
-			
-			// aapt resource value: 0x7f080032
-			public const int scrollView = 2131230770;
-			
-			// aapt resource value: 0x7f080044
-			public const int search_badge = 2131230788;
-			
-			// aapt resource value: 0x7f080043
-			public const int search_bar = 2131230787;
-			
-			// aapt resource value: 0x7f080045
-			public const int search_button = 2131230789;
-			
-			// aapt resource value: 0x7f08004a
-			public const int search_close_btn = 2131230794;
-			
-			// aapt resource value: 0x7f080046
-			public const int search_edit_frame = 2131230790;
+			public const int scrollView = 2131230778;
 			
 			// aapt resource value: 0x7f08004c
-			public const int search_go_btn = 2131230796;
+			public const int search_badge = 2131230796;
 			
-			// aapt resource value: 0x7f080047
-			public const int search_mag_icon = 2131230791;
-			
-			// aapt resource value: 0x7f080048
-			public const int search_plate = 2131230792;
-			
-			// aapt resource value: 0x7f080049
-			public const int search_src_text = 2131230793;
+			// aapt resource value: 0x7f08004b
+			public const int search_bar = 2131230795;
 			
 			// aapt resource value: 0x7f08004d
-			public const int search_voice_btn = 2131230797;
+			public const int search_button = 2131230797;
+			
+			// aapt resource value: 0x7f080052
+			public const int search_close_btn = 2131230802;
 			
 			// aapt resource value: 0x7f08004e
-			public const int select_dialog_listview = 2131230798;
+			public const int search_edit_frame = 2131230798;
 			
-			// aapt resource value: 0x7f080039
-			public const int shortcut = 2131230777;
+			// aapt resource value: 0x7f080054
+			public const int search_go_btn = 2131230804;
 			
-			// aapt resource value: 0x7f08000f
-			public const int showCustom = 2131230735;
+			// aapt resource value: 0x7f08004f
+			public const int search_mag_icon = 2131230799;
 			
-			// aapt resource value: 0x7f080010
-			public const int showHome = 2131230736;
+			// aapt resource value: 0x7f080050
+			public const int search_plate = 2131230800;
 			
-			// aapt resource value: 0x7f080011
-			public const int showTitle = 2131230737;
+			// aapt resource value: 0x7f080051
+			public const int search_src_text = 2131230801;
+			
+			// aapt resource value: 0x7f080055
+			public const int search_voice_btn = 2131230805;
+			
+			// aapt resource value: 0x7f080056
+			public const int select_dialog_listview = 2131230806;
+			
+			// aapt resource value: 0x7f080041
+			public const int shortcut = 2131230785;
+			
+			// aapt resource value: 0x7f080014
+			public const int showCustom = 2131230740;
+			
+			// aapt resource value: 0x7f080015
+			public const int showHome = 2131230741;
+			
+			// aapt resource value: 0x7f080016
+			public const int showTitle = 2131230742;
 			
 			// aapt resource value: 0x7f080007
 			public const int split_action_bar = 2131230727;
 			
-			// aapt resource value: 0x7f080020
-			public const int src_atop = 2131230752;
+			// aapt resource value: 0x7f080025
+			public const int src_atop = 2131230757;
 			
-			// aapt resource value: 0x7f080021
-			public const int src_in = 2131230753;
+			// aapt resource value: 0x7f080026
+			public const int src_in = 2131230758;
 			
-			// aapt resource value: 0x7f080022
-			public const int src_over = 2131230754;
+			// aapt resource value: 0x7f080027
+			public const int src_over = 2131230759;
 			
-			// aapt resource value: 0x7f08004b
-			public const int submit_area = 2131230795;
-			
-			// aapt resource value: 0x7f08000b
-			public const int tabMode = 2131230731;
-			
-			// aapt resource value: 0x7f080033
-			public const int textSpacerNoButtons = 2131230771;
-			
-			// aapt resource value: 0x7f080051
-			public const int textViewHighest = 2131230801;
-			
-			// aapt resource value: 0x7f080054
-			public const int textViewProfile = 2131230804;
-			
-			// aapt resource value: 0x7f080052
-			public const int textViewScore = 2131230802;
+			// aapt resource value: 0x7f080078
+			public const int status_bar_latest_event_content = 2131230840;
 			
 			// aapt resource value: 0x7f080053
-			public const int textViewTimer = 2131230803;
+			public const int submit_area = 2131230803;
 			
-			// aapt resource value: 0x7f080050
-			public const int textViewTitle = 2131230800;
+			// aapt resource value: 0x7f080010
+			public const int tabMode = 2131230736;
 			
-			// aapt resource value: 0x7f08002c
-			public const int title = 2131230764;
+			// aapt resource value: 0x7f08000b
+			public const int text = 2131230731;
 			
-			// aapt resource value: 0x7f08002f
-			public const int title_template = 2131230767;
+			// aapt resource value: 0x7f08000c
+			public const int text2 = 2131230732;
 			
-			// aapt resource value: 0x7f08002e
-			public const int topPanel = 2131230766;
+			// aapt resource value: 0x7f08003b
+			public const int textSpacerNoButtons = 2131230779;
+			
+			// aapt resource value: 0x7f080059
+			public const int textViewHighest = 2131230809;
+			
+			// aapt resource value: 0x7f08005c
+			public const int textViewProfile = 2131230812;
+			
+			// aapt resource value: 0x7f08005a
+			public const int textViewScore = 2131230810;
+			
+			// aapt resource value: 0x7f08005b
+			public const int textViewTimer = 2131230811;
+			
+			// aapt resource value: 0x7f080058
+			public const int textViewTitle = 2131230808;
+			
+			// aapt resource value: 0x7f08007e
+			public const int time = 2131230846;
+			
+			// aapt resource value: 0x7f08000d
+			public const int title = 2131230733;
+			
+			// aapt resource value: 0x7f080037
+			public const int title_template = 2131230775;
+			
+			// aapt resource value: 0x7f080036
+			public const int topPanel = 2131230774;
 			
 			// aapt resource value: 0x7f080008
 			public const int up = 2131230728;
 			
-			// aapt resource value: 0x7f080012
-			public const int useLogo = 2131230738;
+			// aapt resource value: 0x7f080017
+			public const int useLogo = 2131230743;
 			
-			// aapt resource value: 0x7f08001a
-			public const int withText = 2131230746;
+			// aapt resource value: 0x7f08001f
+			public const int withText = 2131230751;
 			
-			// aapt resource value: 0x7f08001d
-			public const int wrap_content = 2131230749;
+			// aapt resource value: 0x7f080022
+			public const int wrap_content = 2131230754;
 			
 			static Id()
 			{
@@ -1802,6 +2012,12 @@ namespace Guess5App.Droid
 			
 			// aapt resource value: 0x7f090002
 			public const int abc_max_action_buttons = 2131296258;
+			
+			// aapt resource value: 0x7f090003
+			public const int cancel_button_image_alpha = 2131296259;
+			
+			// aapt resource value: 0x7f090004
+			public const int status_bar_notification_info_maxnum = 2131296260;
 			
 			static Integer()
 			{
@@ -1895,19 +2111,61 @@ namespace Guess5App.Droid
 			public const int Layout_Game = 2130903065;
 			
 			// aapt resource value: 0x7f03001a
-			public const int Main = 2130903066;
+			public const int notification_action = 2130903066;
 			
 			// aapt resource value: 0x7f03001b
-			public const int select_dialog_item_material = 2130903067;
+			public const int notification_action_tombstone = 2130903067;
 			
 			// aapt resource value: 0x7f03001c
-			public const int select_dialog_multichoice_material = 2130903068;
+			public const int notification_media_action = 2130903068;
 			
 			// aapt resource value: 0x7f03001d
-			public const int select_dialog_singlechoice_material = 2130903069;
+			public const int notification_media_cancel_action = 2130903069;
 			
 			// aapt resource value: 0x7f03001e
-			public const int support_simple_spinner_dropdown_item = 2130903070;
+			public const int notification_template_big_media = 2130903070;
+			
+			// aapt resource value: 0x7f03001f
+			public const int notification_template_big_media_custom = 2130903071;
+			
+			// aapt resource value: 0x7f030020
+			public const int notification_template_big_media_narrow = 2130903072;
+			
+			// aapt resource value: 0x7f030021
+			public const int notification_template_big_media_narrow_custom = 2130903073;
+			
+			// aapt resource value: 0x7f030022
+			public const int notification_template_custom_big = 2130903074;
+			
+			// aapt resource value: 0x7f030023
+			public const int notification_template_icon_group = 2130903075;
+			
+			// aapt resource value: 0x7f030024
+			public const int notification_template_lines_media = 2130903076;
+			
+			// aapt resource value: 0x7f030025
+			public const int notification_template_media = 2130903077;
+			
+			// aapt resource value: 0x7f030026
+			public const int notification_template_media_custom = 2130903078;
+			
+			// aapt resource value: 0x7f030027
+			public const int notification_template_part_chronometer = 2130903079;
+			
+			// aapt resource value: 0x7f030028
+			public const int notification_template_part_time = 2130903080;
+			
+			// aapt resource value: 0x7f030029
+			public const int select_dialog_item_material = 2130903081;
+			
+			// aapt resource value: 0x7f03002a
+			public const int select_dialog_multichoice_material = 2130903082;
+			
+			// aapt resource value: 0x7f03002b
+			public const int select_dialog_singlechoice_material = 2130903083;
+			
+			// aapt resource value: 0x7f03002c
+			public const int support_simple_spinner_dropdown_item = 2130903084;
 			
 			static Layout()
 			{
@@ -1922,11 +2180,11 @@ namespace Guess5App.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f0a0014
-			public const int ApplicationName = 2131361812;
+			// aapt resource value: 0x7f0a0015
+			public const int ApplicationName = 2131361813;
 			
-			// aapt resource value: 0x7f0a0012
-			public const int Hello = 2131361810;
+			// aapt resource value: 0x7f0a0013
+			public const int Hello = 2131361811;
 			
 			// aapt resource value: 0x7f0a0000
 			public const int abc_action_bar_home_description = 2131361792;
@@ -1979,11 +2237,14 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f0a0010
 			public const int abc_toolbar_collapse_description = 2131361808;
 			
-			// aapt resource value: 0x7f0a0013
-			public const int app_name = 2131361811;
+			// aapt resource value: 0x7f0a0014
+			public const int app_name = 2131361812;
+			
+			// aapt resource value: 0x7f0a0012
+			public const int library_name = 2131361810;
 			
 			// aapt resource value: 0x7f0a0011
-			public const int library_name = 2131361809;
+			public const int status_bar_notification_info_overflow = 2131361809;
 			
 			static String()
 			{
@@ -2394,14 +2655,14 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f0b007d
 			public const int Base_Widget_AppCompat_Toolbar_Button_Navigation = 2131427453;
 			
-			// aapt resource value: 0x7f0b011c
-			public const int MyTheme = 2131427612;
+			// aapt resource value: 0x7f0b0128
+			public const int MyTheme = 2131427624;
 			
-			// aapt resource value: 0x7f0b011b
-			public const int MyTheme_Base = 2131427611;
+			// aapt resource value: 0x7f0b0127
+			public const int MyTheme_Base = 2131427623;
 			
-			// aapt resource value: 0x7f0b011d
-			public const int MyTheme_Splash = 2131427613;
+			// aapt resource value: 0x7f0b0129
+			public const int MyTheme_Splash = 2131427625;
 			
 			// aapt resource value: 0x7f0b007e
 			public const int Platform_AppCompat = 2131427454;
@@ -2594,6 +2855,36 @@ namespace Guess5App.Droid
 			
 			// aapt resource value: 0x7f0b00b7
 			public const int TextAppearance_AppCompat_Widget_TextView_SpinnerItem = 2131427511;
+			
+			// aapt resource value: 0x7f0b0120
+			public const int TextAppearance_Compat_Notification = 2131427616;
+			
+			// aapt resource value: 0x7f0b0121
+			public const int TextAppearance_Compat_Notification_Info = 2131427617;
+			
+			// aapt resource value: 0x7f0b011b
+			public const int TextAppearance_Compat_Notification_Info_Media = 2131427611;
+			
+			// aapt resource value: 0x7f0b0126
+			public const int TextAppearance_Compat_Notification_Line2 = 2131427622;
+			
+			// aapt resource value: 0x7f0b011f
+			public const int TextAppearance_Compat_Notification_Line2_Media = 2131427615;
+			
+			// aapt resource value: 0x7f0b011c
+			public const int TextAppearance_Compat_Notification_Media = 2131427612;
+			
+			// aapt resource value: 0x7f0b0122
+			public const int TextAppearance_Compat_Notification_Time = 2131427618;
+			
+			// aapt resource value: 0x7f0b011d
+			public const int TextAppearance_Compat_Notification_Time_Media = 2131427613;
+			
+			// aapt resource value: 0x7f0b0123
+			public const int TextAppearance_Compat_Notification_Title = 2131427619;
+			
+			// aapt resource value: 0x7f0b011e
+			public const int TextAppearance_Compat_Notification_Title_Media = 2131427614;
 			
 			// aapt resource value: 0x7f0b00b8
 			public const int TextAppearance_Widget_AppCompat_ExpandedMenu_Item = 2131427512;
@@ -2856,6 +3147,12 @@ namespace Guess5App.Droid
 			// aapt resource value: 0x7f0b010e
 			public const int Widget_AppCompat_Toolbar_Button_Navigation = 2131427598;
 			
+			// aapt resource value: 0x7f0b0124
+			public const int Widget_Compat_NotificationActionContainer = 2131427620;
+			
+			// aapt resource value: 0x7f0b0125
+			public const int Widget_Compat_NotificationActionText = 2131427621;
+			
 			static Style()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();
@@ -3098,6 +3395,46 @@ namespace Guess5App.Droid
 			
 			// aapt resource value: 4
 			public const int DrawerArrowToggle_topBottomBarArrowSize = 4;
+			
+			public static int[] FontFamily = new int[] {
+					2130772167,
+					2130772168,
+					2130772169,
+					2130772170,
+					2130772171,
+					2130772172};
+			
+			// aapt resource value: 0
+			public const int FontFamily_fontProviderAuthority = 0;
+			
+			// aapt resource value: 3
+			public const int FontFamily_fontProviderCerts = 3;
+			
+			// aapt resource value: 4
+			public const int FontFamily_fontProviderFetchStrategy = 4;
+			
+			// aapt resource value: 5
+			public const int FontFamily_fontProviderFetchTimeout = 5;
+			
+			// aapt resource value: 1
+			public const int FontFamily_fontProviderPackage = 1;
+			
+			// aapt resource value: 2
+			public const int FontFamily_fontProviderQuery = 2;
+			
+			public static int[] FontFamilyFont = new int[] {
+					2130772173,
+					2130772174,
+					2130772175};
+			
+			// aapt resource value: 1
+			public const int FontFamilyFont_font = 1;
+			
+			// aapt resource value: 0
+			public const int FontFamilyFont_fontStyle = 0;
+			
+			// aapt resource value: 2
+			public const int FontFamilyFont_fontWeight = 2;
 			
 			public static int[] LinearLayoutCompat = new int[] {
 					16842927,

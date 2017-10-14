@@ -12,16 +12,15 @@ using System.Threading.Tasks;
 
 namespace Guess5App.Droid
 {
+    /*  Creating a Splash Page for Xamarin.Forms Android
+        https://alexdunn.org/2017/02/07/creating-a-splash-page-for-xamarin-forms-android/ */
+
     //[Activity(Label = "Splast Activity", MainLauncher = true)]
     [Activity(Theme = "@style/MyTheme.Splash", MainLauncher = true, NoHistory = true)]
+    //  The NoHistory flag which disables the back button from going back to this activity, it will destroy itself on leaving.
     public class SplashActivity : AppCompatActivity
     {
-        static readonly string TAG = "X:" + typeof(SplashActivity).Name;
 
-
-        /*
-         https://alexdunn.org/2017/02/07/creating-a-splash-page-for-xamarin-forms-android/
-         */
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
@@ -39,35 +38,6 @@ namespace Guess5App.Droid
 
             startUp.Start();
         }
-
-        //public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
-        //{
-        //    base.OnCreate(savedInstanceState, persistentState);
-        //    Log.Debug(TAG, "SplashActivity.OnCreate");
-        //}
-
-        //// Launches the startup task
-        //protected override void OnResume()
-        //{
-        //    base.OnResume();
-        //    Task startupWork = new Task(() => { SimulateStartup(); });
-        //    startupWork.Start();
-        //}
-
-        //// Prevent the back button from canceling the startup process
-        //public override void OnBackPressed() { }
-
-        //// Simulates background work that happens behind the splash screen
-        //async void SimulateStartup()
-        //{
-        //    Log.Debug(TAG, "Performing some startup work that takes a bit of time.");
-        //    //await Task.Delay(8000); // Simulate a bit of startup work.
-        //    await Task.Delay(3000);
-        //    Log.Debug(TAG, "Startup work is finished - starting MainActivity.");
-        //    StartActivity(new Intent(Application.Context, typeof(MainActivity)));
-
-        //    //Finish();
-        //}
 
     }
 }

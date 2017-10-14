@@ -10,7 +10,8 @@ namespace Guess5App.Shared.DataAccessObject
     public class ProfileDatabase : SQLiteConnection
     {
         static object locker = new object();
-        /// <summary> Initializes a new instance of the <see cref="HangmanApp.Shared.DataAccessObject.ProfileDB"/> TaskDatabase.
+        /// <summary> Initializes a new instance of the 
+        /// <see cref="Guess5App.Shared.DataAccessObject.ProfileDatabase"/> TaskDatabase.
         /// if the database doesn't exist, it will create the database and the all tables. </summary>
         /// <param name="path">Path.</param>
         public ProfileDatabase(string path) : base(path)

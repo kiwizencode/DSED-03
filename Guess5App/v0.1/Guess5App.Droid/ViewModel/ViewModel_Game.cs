@@ -14,10 +14,22 @@ namespace Guess5App.Droid.ViewModel
 {
     public class ViewModel_Game : ReactiveObject
     {
-        public bool Run_Flag { get; set; } = true;
+        private static string LetterFile { get; set; } = "letter_";
+        private static string QuestionMarkImage { get; set; } = "question_mark";
+        private static string HangmanImage { get; set; } = "hangman";
+
+        /* v0.4 added to load hangman image */
+        private string _hangman_image = "hangman00"; // set the default image to load when activity start
+        public string Hangman_Image
+        {
+            get => _hangman_image;
+            set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanImage + value.PadLeft(2, '0'));
+        }
 
 
-        private int _score;
+        public bool Run_Flag { get; set; } = false;
+
+        private int _score = 0;
         public string Score { get => _score.ToString(); set { } }
 
         private static int MAX_TICK { get; set; } = 20;
@@ -39,30 +51,23 @@ namespace Guess5App.Droid.ViewModel
             }
         }
 
-        private readonly ReactiveCommand _tickCommand;
-        public ReactiveCommand TickCommand => _tickCommand ;
+        public ReactiveCommand TickCommand { get; private set; }
 
         public ViewModel_Game()
         {
 
-            //var mainSequence = Observable.Interval(TimeSpan.FromSeconds(1));
-            //var run_is_true = from i in mainSequence
-            //                  where Run_Flag == true
-            //                  select i;
-
-            //run_is_true.Subscribe(x => {
-            //    //ThreadPool.QueueUserWorkItem(_ =>
-            //    //{
-            //    //RunOnUiThread(() => ViewModel.TimerTick());
-            //    TimerTick();
-            //    //});
-            //});
-
-
-            //_tickCommand = ReactiveCommand.Create(() => TimerTick(), outputScheduler: RxApp.MainThreadScheduler );
-            //_tickCommand.e
+            /* https://stackoverflow.com/questions/41161896/how-to-create-a-reactivecommand-that-receives-a-string-in-reactiveui-7-with-xama  */
+            TickCommand = ReactiveCommand.Create(new Action( delegate
+            {
+                Run_Flag = !Run_Flag;
+                if(Run_Flag)
+                {
+                    /* reset the game */
+                    _timer = 20;
+                    this.RaisePropertyChanged("Timer");
+                }
+                this.RaisePropertyChanged("Run_Flag");
+            }));
         }
-
- 
     }
 }

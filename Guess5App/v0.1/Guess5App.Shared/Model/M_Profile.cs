@@ -16,18 +16,5 @@ namespace Guess5App.Shared.Model
         public DateTime Timestamp { get; set; }
 
         public override string ToString() { return Name; }
-        //public override string ToString()
-        //{
-        //    //return Name + " " + Timestamp.ToUniversalTime();
-        //    string score_string = Scores.ToString();
-        //    int len = 10 - Scores.ToString().Length;
-
-        //    string name = Name.Trim();
-        //    //return name.PadRight(10 - name.Length, ' ') + "\t" 
-        //    //    + score_string.PadRight(10 - score_string.Length, '0')
-        //    //    + "\t" + Timestamp.ToShortDateString() ;
-
-        //    return  "".PadLeft(len, '0') + score_string + "\t" + name ;
-        //}
     }
 }
