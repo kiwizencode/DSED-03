@@ -11,7 +11,7 @@ namespace Guess5.Lib.DataAccessObject
 {
 	public class ProfileRepository
 	{
-		ProfileDatabase _db = null;
+		SqliteDatabase _db = null;
 		protected static string _location;
 		protected static ProfileRepository _self;
 
@@ -19,7 +19,7 @@ namespace Guess5.Lib.DataAccessObject
 		{
 			get
 			{
-				var sqliteFilename = "ProfileDB.db3";
+				var sqliteFilename = "myDB.db3";
 
 			#if NETFX_CORE
 				var path = Path.Combine(Windows.Storage.ApplicationData.Current.LocalFolder.Path, sqliteFilename);
@@ -58,26 +58,26 @@ namespace Guess5.Lib.DataAccessObject
 			_location = DatabaseFilePath;
 
 			// instantiate the database	
-			_db = new ProfileDatabase(_location);
+			_db = new SqliteDatabase(_location);
 		}
-		public static Model_Profile GetProfile(int id)
+		public static ProfileModel GetProfile(int id)
 		{
-			return _self._db.GetItem<Model_Profile>(id);
-		}
-
-		public static IEnumerable<Model_Profile> GetProfiles()
-		{
-			return _self._db.GetItems<Model_Profile>();
+			return _self._db.GetItem<ProfileModel>(id);
 		}
 
-		public static int SaveProfile(Model_Profile item)
+		public static IEnumerable<ProfileModel> GetProfiles()
 		{
-			return _self._db.SaveItem<Model_Profile>(item);
+			return _self._db.GetItems<ProfileModel>();
+		}
+
+		public static int SaveProfile(ProfileModel item)
+		{
+			return _self._db.SaveItem<ProfileModel>(item);
 		}
 
 		public static int DeleteProfile(int id)
 		{
-			return _self._db.DeleteItem<Model_Profile>(id);
+			return _self._db.DeleteItem<ProfileModel>(id);
 		}
 	}
 }

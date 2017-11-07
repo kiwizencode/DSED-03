@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="5letters.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="5letters.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="reactiveui" Version="7.4.0" />
     <PackageReference Include="sqlite-net-pcl" Version="1.1.1" />
   </ItemGroup>

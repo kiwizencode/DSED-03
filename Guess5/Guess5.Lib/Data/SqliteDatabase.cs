@@ -7,17 +7,18 @@ using Guess5.Lib.Model;
 
 namespace Guess5.Lib.DataAccessObject
 {
-    public class ProfileDatabase : SQLiteConnection
+    public class SqliteDatabase : SQLiteConnection
     {
         static object locker = new object();
         /// <summary> Initializes a new instance of the 
-        /// <see cref="Guess5App.Shared.DataAccessObject.ProfileDatabase"/> TaskDatabase.
+        /// <see cref="Guess5.Lib.DataAccessObject.SqliteDatabase"/> TaskDatabase.
         /// if the database doesn't exist, it will create the database and the all tables. </summary>
         /// <param name="path">Path.</param>
-        public ProfileDatabase(string path) : base(path)
+        public SqliteDatabase(string path) : base(path)
         {
             // create the tables
-            CreateTable<Model_Profile>();
+            CreateTable<ProfileModel>();
+            CreateTable<ScoreModel>();
         }
 
         /// <summary>return list of profile</summary>

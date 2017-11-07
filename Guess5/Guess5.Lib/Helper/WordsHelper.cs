@@ -53,21 +53,23 @@ namespace Guess5App.Lib.Helper
         /// read words from a text file and update to a list
         /// </summary>
         ///
-        /* Working with files in Xamarin multi-platform environment
-         * https://developer.xamarin.com/guides/xamarin-forms/application-fundamentals/files/ */ 
+        /* 
+         * Working with files in Xamarin multi-platform environment
+         * https://developer.xamarin.com/guides/xamarin-forms/application-fundamentals/files/ 
+         */ 
         private void GenerateWordsList()
         {
             _list = new List<string>();
-
-#if __IOS__
-            var resourcePrefix = "HangmanApp.iOS.";
-#endif
-#if __ANDROID__
-            var resourcePrefix = "HangmanApp.Droid.";
-#endif
-#if WINDOWS_PHONE
-            var resourcePrefix = "HangmanApp.WinPhone.";
-#endif
+            var resourcePrefix = "Guess5.Droid.";
+            #if __IOS__
+            resourcePrefix = "Guess5.iOS.";
+            #endif
+            #if __ANDROID__
+            resourcePrefix = "Guess5.Droid.";
+            #endif
+            #if WINDOWS_PHONE
+            resourcePrefix = "Guess5.WinPhone.";
+            #endif
 
             var assembly = typeof(WordsHelper).GetTypeInfo().Assembly;
             Stream stream = assembly.GetManifestResourceStream(resourcePrefix + _filename);
