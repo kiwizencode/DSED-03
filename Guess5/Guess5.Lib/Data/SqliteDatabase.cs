@@ -4,9 +4,13 @@ using SQLite;
 
 using Guess5.Lib.Model;
 
-
 namespace Guess5.Lib.DataAccessObject
 {
+    /*
+     * This class is the database class which will be accesing the sqlite database 
+     * using the coding style as describe in sample project from the following uri:
+     * https://developer.xamarin.com/samples/mobile/Tasky/
+     */
     public class SqliteDatabase : SQLiteConnection
     {
         static object locker = new object();

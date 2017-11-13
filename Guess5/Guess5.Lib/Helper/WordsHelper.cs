@@ -104,14 +104,12 @@ namespace Guess5App.Lib.Helper
                 Random random = new Random();
                 var builder = new StringBuilder();
 
-                /* add code in v0.3 */
-                /* refactorize the code in v0.4 */
                 /* Not happy with the code found in folowing URI
                  *  How can I generate random alphanumeric strings in C#? 
                  * https://stackoverflow.com/questions/1344221/how-can-i-generate-random-alphanumeric-strings-in-c 
                  * Problem is that it do not generate unique letter in the string each time
                  * 
-                 * Come up with a solution using reactive (version 2 as in v0.4):
+                 * Come up with a solution using reactive :
                  * 
                  * 1. creat a empty list called builder.
                  * 2. add the letter from hidden word into the list, remove any duplicate 
@@ -121,8 +119,7 @@ namespace Guess5App.Lib.Helper
 
                 /* http://introtorx.com/Content/v1.0.10621.0/05_Filtering.html#Distinct */
 
-                /* v0.3 : Using the following to pick up unique letter in the stream. */
-
+                /* Using the following to pick up unique letter in the stream. */
                 var subject = new Subject<int>();
                 var distinct = subject.Distinct();
                 distinct.Subscribe(i => {
@@ -135,7 +132,6 @@ namespace Guess5App.Lib.Helper
                 });
 
 
-                    /* v0.4 */
                     /* refactor the code such that the function will add a charactor to the stream at a time from string pass throught*/ 
                     void GenerateUniqueLetter(string list)
                     {
@@ -146,7 +142,6 @@ namespace Guess5App.Lib.Helper
                         }
                     }
 
-                /* v0.4 */
                 /* add letter from hidden word to builder list */
                 GenerateUniqueLetter(hiddenword);
 
@@ -155,11 +150,9 @@ namespace Guess5App.Lib.Helper
                    
                    string temp = chars.OrderBy(x => random.Next()).ToArray();  */
 
-                /* v0.4 */
                 /* add letter from a randomized alpahbet list into the builder list */
                 GenerateUniqueLetter(new string(chars.OrderBy(x => random.Next()).ToArray()));
 
-                /* v0.4 */
                 /* because the letter from the hidden word is added in the front of the builder list and the rest of letter at the back.
                    pick the first few charactor [0..num] from the builder list and randomize it. 
                    num => the total length of letters to be returned. */

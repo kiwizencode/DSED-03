@@ -1,15 +1,17 @@
-﻿
-using System;
+﻿using System;
 using System.IO;
 using System.Collections.Generic;
 
-
 using Guess5.Lib.Model;
-
 
 namespace Guess5.Lib.DataAccessObject
 {
-	public class ProfileRepository
+    /*
+     * This class using Repository Pattern as describe in sample project from the following uri:
+     * https://developer.xamarin.com/samples/mobile/Tasky/
+     */
+
+    public class ProfileRepository
 	{
 		SqliteDatabase _db = null;
 		protected static string _location;

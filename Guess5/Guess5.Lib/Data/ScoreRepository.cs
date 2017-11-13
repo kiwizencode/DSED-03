@@ -6,6 +6,10 @@ using Guess5.Lib.Model;
 
 namespace Guess5.Lib.DataAccessObject
 {
+    /*
+     * This class using Repository Pattern as describe in sample project from the following uri:
+     * https://developer.xamarin.com/samples/mobile/Tasky/
+     */
     public class ScoreRepository
     { 
         SqliteDatabase _db = null;
