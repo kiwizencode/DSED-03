@@ -8,7 +8,7 @@ using System.Reactive.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Guess5App.Lib.Helper
+namespace Guess5.Lib.Helper
 {
     public class WordsHelper
     {
@@ -99,8 +99,8 @@ namespace Guess5App.Lib.Helper
         {
             lock (_lock)
             {
-                string chars = "abcdefghijklmnopqrstuvwxyz";
-                List<char> char_list = new List<char>();
+                string alphabet_chars = "abcdefghijklmnopqrstuvwxyz";
+                List<char> list_letters = new List<char>();
                 Random random = new Random();
                 var builder = new StringBuilder();
 
@@ -128,7 +128,7 @@ namespace Guess5App.Lib.Helper
                      * https://stackoverflow.com/questions/2279379/how-to-convert-integer-to-char-in-c */
 
                     char ch = ((char)i); // 
-                    char_list.Add(ch);
+                    list_letters.Add(ch);
                 });
 
 
@@ -151,13 +151,14 @@ namespace Guess5App.Lib.Helper
                    string temp = chars.OrderBy(x => random.Next()).ToArray();  */
 
                 /* add letter from a randomized alpahbet list into the builder list */
-                GenerateUniqueLetter(new string(chars.OrderBy(x => random.Next()).ToArray()));
+                GenerateUniqueLetter(new string(alphabet_chars.OrderBy(x => random.Next()).ToArray()));
 
                 /* because the letter from the hidden word is added in the front of the builder list and the rest of letter at the back.
                    pick the first few charactor [0..num] from the builder list and randomize it. 
                    num => the total length of letters to be returned. */
-                string temp_list = new string(char_list.ToArray());
-                return new string(temp_list.Substring(0, num).OrderBy(x => random.Next()).ToArray());
+                string random_letters = new string(list_letters.ToArray());
+
+                return new string(random_letters.Substring(0, num).OrderBy(x => random.Next()).ToArray());
 
             }
 

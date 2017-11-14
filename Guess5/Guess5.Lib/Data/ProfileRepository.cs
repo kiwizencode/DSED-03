@@ -43,9 +43,9 @@ namespace Guess5.Lib.DataAccessObject
 					 #endif
 					var path = Path.Combine(libraryPath, sqliteFilename);
 
-			#endif
+			    #endif
 
-				#endif
+			#endif
 				return path;
 			}
 		}
