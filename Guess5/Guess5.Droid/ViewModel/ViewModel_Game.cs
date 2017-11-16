@@ -22,13 +22,11 @@ namespace Guess5.Droid.ViewModel
         /// The naming convention for the png file is "letter_?.png" where ? is the alphabet
         /// </summary>
         private static string LetterFile { get; set; } = "letter_";
-        
         /// <summary>
         /// This is part of the hangman image png filenames.
         /// The naming convention for the png file is "hangman_0n.png" where n is a number
         /// </summary>
         private static string HangmanImage { get; set; } = "hangman";
-
         /// <summary>
         /// This is the name of the question mark png file name
         /// </summary>
@@ -39,6 +37,7 @@ namespace Guess5.Droid.ViewModel
         /// </summary>
         public string hidden_word { get; private set; }
 
+#region Define Slot Image Variables
         /* ==== Declare variables to store hiddent letter image. I have called them Slot Image =================*/
         private string _slot01_Image = QuestionMarkImage;
         public string Slot01_Image {
@@ -71,11 +70,10 @@ namespace Guess5.Droid.ViewModel
         }
 
         /* ==== End of Slot Image Declaration ===================================================================*/
+        #endregion
 
-
-
+#region Define Buttons Variables
         /* ==== Declare variable to store letter for each button on the view/screen =============================*/
-
         /* There are total 15 buttons. Hence have to declare 15 variables to store letter for each button */
 
         private string _btn01 = string.Empty;
@@ -169,37 +167,9 @@ namespace Guess5.Droid.ViewModel
         }
 
         /* ==== End of declaration of button letter variables ================================================ */
-        
-        /* ===== Declare variable to store the Timer Counter value. ============================= */
-        private static int MAX_TICK { get; set; } = 10;
-        private int _timer;
-        public string Timer
-        {
-            /*  How to add zero-padding to a string
-                https://stackoverflow.com/questions/3122677/add-zero-padding-to-a-string */
-            get => _timer.ToString().PadLeft(2, '0');
-            set
-            {
-                if (int.TryParse(value, out int i))
-                    this.RaiseAndSetIfChanged(ref _timer, i);
-            }
-        }
+        #endregion
 
-
-        /* ===== End of decaration for Timer Counter variable  =================================== */
-
-        private static int MAX_GUESS { get; set; } = 6;
-        private static int MAX_COUNT { get; set; } = 5;
-
-        private int _hangman_count { get; set; } = MAX_GUESS;
-
-        /* ==== Declare variable to store hangman image  ========================================================*/
-        private string _hangman_image = "hangman00"; // set the default image to load when activity start
-        public string Hangman_Image
-        {
-            get => _hangman_image;
-            set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanImage + value.PadLeft(2, '0'));
-        }
+#region Define Variables to retreive Button Number and Letter on the Button
         /* ======================================================================================================*/
 
         /* store the letter value on the button */
@@ -215,6 +185,40 @@ namespace Guess5.Droid.ViewModel
         public string Btn_Tag { get; set; }
 
         /* ====================================================================================================== */
+
+        #endregion
+
+#region Define Ticking Meachanism
+
+        /* ===== Declare variable to store the Timer Counter value. ============================= */
+        private static int MAX_TICK { get; set; } = 10;
+        private int _timer;
+        public string Timer
+        {
+            /*  How to add zero-padding to a string
+                https://stackoverflow.com/questions/3122677/add-zero-padding-to-a-string */
+            get => _timer.ToString().PadLeft(2, '0');
+            set
+            {
+                if (int.TryParse(value, out int i))
+                    this.RaiseAndSetIfChanged(ref _timer, i);
+            }
+        }
+        /* ===== End of decaration for Timer Counter variable  =================================== */
+        #endregion
+
+        private static int MAX_GUESS { get; set; } = 6;
+        private static int MAX_COUNT { get; set; } = 5;
+
+        private int _hangman_count { get; set; } = MAX_GUESS;
+
+        /* ==== Declare variable to store hangman image  ========================================================*/
+        private string _hangman_image = "hangman00"; // set the default image to load when activity start
+        public string Hangman_Image
+        {
+            get => _hangman_image;
+            set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanImage + value.PadLeft(2, '0'));
+        }
         
         /* Correct Answer */
         private int _correct_guess = 0;
