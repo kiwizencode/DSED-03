@@ -25,6 +25,9 @@ namespace Guess5.Droid.ViewModel
         /// </summary>
         private static string HangmanImage { get; set; } = "hangman";
 
+        /// <summary>
+        /// This is the name of the question mark png file name
+        /// </summary>
         private static string QuestionMarkImage { get; set; } = "question_mark";
 
         /// <summary>
@@ -212,6 +215,13 @@ namespace Guess5.Droid.ViewModel
             set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
         }
 
+        private bool _restart_timer_flag;
+        public bool Restart_Timer
+        {
+            get => _restart_timer_flag;
+            set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
+        }
+
         private static int MAX_TICK { get; set; } = 20;
         public void TimerTick()
         {
@@ -221,6 +231,12 @@ namespace Guess5.Droid.ViewModel
                 this.RaisePropertyChanged("Timer");
             }
         }
+
+        public void TimerTick2(int counter) {
+            _timer = counter;
+            this.RaisePropertyChanged("Timer");
+        }
+
 
         /* ======================================================= */
 
@@ -252,11 +268,6 @@ namespace Guess5.Droid.ViewModel
         private int _correct_guess = 0;
         private int _hangman_count = 6;
 
-        /// <summary>
-        /// function that return a random 5 letters hidden words
-        /// </summary>
-        private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord(); }
-
         public ReactiveCommand<Unit, Unit> commandStart;
 
         public ViewModel_Game()
@@ -267,28 +278,36 @@ namespace Guess5.Droid.ViewModel
 
             //Is_Game_Still_Running = false;
 
+            SetComanndStart();
 
-            /* 
-             * http://dotnetpattern.com/csharp-action-delegate 
-             */
-            void doStartButton()
-            {
-                /* check whether any game is running*/
-                if (!Is_Game_Still_Running)
-                {
-                    Is_Game_Still_Running = true;
 
-                    Debug.WriteLine("Is_Game_Still_Running has been set");
-                }
-                else
-                {
-                    // do nothing
-                    Debug.WriteLine("Click === doing nothing");
-                }
-            }
+            //this.WhenAnyValue(x => x.Restart_Timer)
+            //    .Subscribe( _ =>
+            //    {
+            //        var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
+            //        IDisposable timer = interval.Subscribe( i => 
+            //            { //System.Diagnostics.Debug.WriteLine(i);
+            //                _timer = (int)i % MAX_COUNT ;
+            //                System.Diagnostics.Debug.WriteLine(_timer);
+            //                this.RaisePropertyChanged("Timer");
+            //                Debug.WriteLine($"Timer counter : {_timer}");
+            //            });
 
-            Action doStartAction = new Action(doStartButton);
-            commandStart = ReactiveCommand.Create(doStartAction);
+            //        //void doDispose()
+            //        //{
+            //        //    timer.Dispose();
+            //        //}
+
+            //        //Action doDisposeAction = new Action(doDispose);
+
+            //        //this.WhenAnyValue(y => y.Restart_Timer)
+            //        //    .Subscribe( (z) => {
+            //        //        timer.Dispose();
+            //        //    });
+
+            //    });
+
+
 
             /* for debug purpose */
             //hidden_word = "heels";
@@ -296,8 +315,75 @@ namespace Guess5.Droid.ViewModel
             //SetTimer();
         }
 
+        /// <summary>
+        /// function that return a random 5 letters hidden words
+        /// </summary>
+        private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord(); }
 
+        /// <summary>
+        /// Initialize all the 15 letters buttons "keyboard" at the start of a new game.
+        /// It will contain
+        /// </summary>
+        private void ButtonLetterInitializer()
+        {
+            string letter_list = WordsHelper.GenerateRandomLetter(hidden_word);
+            for (int i = 0; i < 15; i++)
+            {
+                string value = "" + letter_list[i];
+                switch (i + 1)
+                {
+                    case 1: Btn01 = value; break;
+                    case 2: Btn02 = value; break;
+                    case 3: Btn03 = value; break;
+                    case 4: Btn04 = value; break;
+                    case 5: Btn05 = value; break;
+                    case 6: Btn06 = value; break;
+                    case 7: Btn07 = value; break;
+                    case 8: Btn08 = value; break;
+                    case 9: Btn09 = value; break;
+                    case 10: Btn10 = value; break;
+                    case 11: Btn11 = value; break;
+                    case 12: Btn12 = value; break;
+                    case 13: Btn13 = value; break;
+                    case 14: Btn14 = value; break;
+                    case 15: Btn15 = value; break;
+                }
+            }
+        }
 
+        private void SetComanndStart()
+        {
+            /* 
+             * http://dotnetpattern.com/csharp-action-delegate 
+             */
+
+            // Debug
+            Is_Game_Still_Running = true;
+
+            void doStartButton()
+            {
+                /* check whether any game is running*/
+                if (!Is_Game_Still_Running)
+                {
+                    //Is_Game_Still_Running = true;
+                }
+                else
+                {
+                    //Is_Game_Still_Running = false;
+  
+                }
+
+                Restart_Timer = true;
+                this.RaisePropertyChanged("Restart_Timer");
+
+                // Debug
+                Debug.WriteLine($"Is_Game_Still_Running {Is_Game_Still_Running}");
+                Debug.WriteLine($"Restart_Timer {Restart_Timer}");
+            }
+
+            Action doStartAction = new Action(doStartButton);
+            commandStart = ReactiveCommand.Create(doStartAction);
+        }
 
         private void CommentOut()
         {
@@ -479,40 +565,6 @@ namespace Guess5.Droid.ViewModel
 
             ButtonLetterInitializer();
         }
-
-        /// <summary>
-        /// Initialize all the 15 letters buttons "keyboard" at the start of a new game.
-        /// It will contain
-        /// </summary>
-        private void ButtonLetterInitializer()
-        {
-            string letter_list = WordsHelper.GenerateRandomLetter(hidden_word);
-            for (int i = 0; i < 15; i++)
-            {
-                string value = "" + letter_list[i];
-                switch (i + 1)
-                {
-                    case 1: Btn01 = value; break;
-                    case 2: Btn02 = value; break;
-                    case 3: Btn03 = value; break;
-                    case 4: Btn04 = value; break;
-                    case 5: Btn05 = value; break;
-                    case 6: Btn06 = value; break;
-                    case 7: Btn07 = value; break;
-                    case 8: Btn08 = value; break;
-                    case 9: Btn09 = value; break;
-                    case 10: Btn10 = value; break;
-                    case 11: Btn11 = value; break;
-                    case 12: Btn12 = value; break;
-                    case 13: Btn13 = value; break;
-                    case 14: Btn14 = value; break;
-                    case 15: Btn15 = value; break;
-                }
-            }
-        }
-
-
-
 
         private void ShowHiddenWord(int i)
         {

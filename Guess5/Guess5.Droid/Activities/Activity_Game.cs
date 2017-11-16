@@ -36,8 +36,6 @@ namespace Guess5.Droid.Activities
         }
         #endregion
 
-
-
         /* load hangman image */
         private string Hangman_Image {
             get => string.Empty;
@@ -126,6 +124,21 @@ namespace Guess5.Droid.Activities
             get => _is_running_flag;
             set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
         }
+
+        private bool _restart_timer_flag;
+        public bool Restart_Timer
+        {
+            get => _restart_timer_flag;
+            set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
+        }
+
+        private bool _stop_flag;
+        public bool Stop_Timer
+        {
+            get => _stop_flag;
+            set => this.RaiseAndSetIfChanged(ref _stop_flag, value);
+        }
+
         private int SelectButton { get; set; }
         public string Button_Text { get; set; }
         public string Button_Tag { get; set; }
@@ -171,6 +184,9 @@ namespace Guess5.Droid.Activities
 
             /* bind "is game still running" flag */
             this.OneWayBind(ViewModel, x => x.Is_Game_Still_Running, c => c.Is_Game_Still_Running);
+
+            /* bind "is game still running" flag */
+            this.OneWayBind(ViewModel, x => x.Restart_Timer, c => c.Restart_Timer);
 
             /* bind "is game won" flag */
             this.OneWayBind(ViewModel, x => x.Is_Game_Won, c => c.Is_Game_Won);
@@ -220,7 +236,6 @@ namespace Guess5.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Btn14, c => c.btn14.Text);
             this.OneWayBind(ViewModel, x => x.Btn15, c => c.btn15.Text);
 
-
             this.BindCommand(ViewModel, x => x.commandStart, c => c.btnStartNew, "Click");
         }
 
@@ -238,11 +253,8 @@ namespace Guess5.Droid.Activities
             // with an id defined, and binds them to the controls defined in this class
             // This is basically the same functionality as http://jakewharton.github.io/butterknife/ provides
 
-            this.WireUpControls(); // 
-                                   /* ========================================================================================= */
-
-
-
+            this.WireUpControls(); 
+            /* ========================================================================================= */
 
             /* ========================================================================================== */
             /* Setup button click event for all 15 buttons                                                */
@@ -306,12 +318,67 @@ namespace Guess5.Droid.Activities
 
         private void InitializeStream()
         {
+            
 
             this.WhenAnyValue(x => x.Is_Game_Still_Running).Select(x => Is_Game_Still_Running==true).Subscribe( (x) => {
                 // Debug
-                //System.Diagnostics.Debug.WriteLine($"Is Game Running ? {x}");
-                btnStartNew.Visibility = x ? ViewStates.Invisible : ViewStates.Visible;
+                System.Diagnostics.Debug.WriteLine($"Is Game Running ? {x}");
+                //btnStartNew.Visibility = x ? ViewStates.Invisible : ViewStates.Visible;
+                //IDisposable timer;
+                //if (x)
+                //{
+                //    var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
+                //    timer = interval.Subscribe(
+                //        i => { System.Diagnostics.Debug.WriteLine(i); });
+
+                //    this.WhenAnyValue(z => z.Is_Game_Still_Running).Select(z => Is_Game_Still_Running == true).Subscribe(
+                //        (z) => { if (!z) timer.Dispose();  });
+
+                //}                
+
             });
+
+            this.WhenAnyValue(x => x.Restart_Timer).Subscribe((x) => {
+                // Debug
+                System.Diagnostics.Debug.WriteLine($"Restart Timer ? {x}");
+                //btnStartNew.Visibility = x ? ViewStates.Invisible : ViewStates.Visible;
+                if (x)
+                {
+                    Stop_Timer = true;
+                    this.RaisePropertyChanged("Stop_Timer");
+
+                    //var interval = Observable.Interval(TimeSpan.FromSeconds(1));
+                    //IDisposable timer = interval.Subscribe(i =>
+                    //   { //System.Diagnostics.Debug.WriteLine(i);
+                    //       var counter = (int)i % 10 + 1;
+                    //       _timer = (int)i % MAX_COUNT;
+                    //       System.Diagnostics.Debug.WriteLine($"timer counter : {counter}");
+                    //       ViewModel.TimerTick2(counter);
+                    //       RunOnUiThread(() => ViewModel.TimerTick2(counter));
+                    //       this.RaisePropertyChanged("Timer");
+                    //       Debug.WriteLine($"Timer counter : {_timer}");
+                    //   });
+                    int MAX_COUNT = 10;
+                    Observable.Interval(TimeSpan.FromSeconds(1))
+                            .Take(MAX_COUNT)
+                            .Repeat()
+                            .Subscribe( value => 
+                        {
+                            var counter = MAX_COUNT - (int)value;
+                            RunOnUiThread(() => ViewModel.TimerTick2(counter));
+                        });
+
+
+
+                    //this.WhenAnyValue(z => z.Stop_Timer)
+                    //.Subscribe((z) =>
+                    //{
+                    //    timer.Dispose();
+                    //});
+                }
+
+            });
+
 
             /* v0.6 start a new game */
 
