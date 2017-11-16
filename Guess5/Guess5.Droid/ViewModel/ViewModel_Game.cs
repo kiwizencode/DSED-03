@@ -258,40 +258,7 @@ namespace Guess5.Droid.ViewModel
         }
         /* ======================================================= */
 
-        /*
-            This flag check whether the "game" is still running.
-            The flag is set to true whenever a new game started.
-            It will remain true during the game session.
-            The flag is set to false when the user lose a game
-         */
-        //private bool _is_running_flag;
-        //public bool Is_Game_Still_Running {
-        //    get => _is_running_flag ;
-        //    set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
-        //}
 
-        //private bool _restart_timer_flag;
-        //public bool Restart_Timer
-        //{
-        //    get => _restart_timer_flag;
-        //    set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
-        //}
-
-        /* the winning/lossing flag */
-        //private bool _winning_flag = false;
-        //public bool Is_Game_Won {
-        //    get => _winning_flag;
-        //    set => this.RaiseAndSetIfChanged(ref _winning_flag, value);
-        //}
-
-        //private string _toast;
-        //public string Toast { get => _toast; set => this.RaiseAndSetIfChanged(ref _toast, value); }
-
-        //private int _wrong_guess = 0;
-        //public int Wrong_Answer {
-        //    get => _wrong_guess;
-        //    set => this.RaiseAndSetIfChanged(ref _wrong_guess, value);
-        //}
 
         public ReactiveCommand<Unit, Unit> commandStart;
 

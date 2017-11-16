@@ -137,31 +137,6 @@ namespace Guess5.Droid.Activities
 
         /* ################################################################# */
 
-        /* */
-        //private bool run_flag = true;
-        //private bool _is_running_flag;
-        //public bool Is_Game_Still_Running
-        //{
-        //    get => _is_running_flag;
-        //    set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
-        //}
-
-        //private bool _restart_timer_flag;
-        //public bool Restart_Timer
-        //{
-        //    get => _restart_timer_flag;
-        //    set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
-        //}
-
-        //private bool _stop_flag;
-        //public bool Stop_Timer
-        //{
-        //    get => _stop_flag;
-        //    set => this.RaiseAndSetIfChanged(ref _stop_flag, value);
-        //}
-        /* add check winning flag */
-        // public bool Is_Game_Won { get; set; }
-
         private int SelectButton { get; set; }
         public string Button_Text { get; set; }
         public string Button_Tag { get; set; }
@@ -205,15 +180,6 @@ namespace Guess5.Droid.Activities
             ViewModel = new ViewModel_Game();
 
             ViewModel.CurrentActivity = this;
-
-            /* bind "is game still running" flag */
-            //this.OneWayBind(ViewModel, x => x.Is_Game_Still_Running, c => c.Is_Game_Still_Running);
-
-            /* bind "is game still running" flag */
-            // this.OneWayBind(ViewModel, x => x.Restart_Timer, c => c.Restart_Timer);
-
-            /* bind "is game won" flag */
-            //this.OneWayBind(ViewModel, x => x.Is_Game_Won, c => c.Is_Game_Won);
 
             /* flag indicate whether the timer is ticking */
             this.OneWayBind(ViewModel, x => x.Timer_Flag, c => c.Timer_Flag);
