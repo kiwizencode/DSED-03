@@ -9,6 +9,6 @@
     <bitmap
         android:src="@drawable/guess_five_v2"
         android:tileMode="disabled"
-        android:gravity="center"/>
+        android:gravity="fill"/>
   </item>
 </layer-list>

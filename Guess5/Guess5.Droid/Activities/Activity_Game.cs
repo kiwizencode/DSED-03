@@ -139,12 +139,12 @@ namespace Guess5.Droid.Activities
 
         /* */
         //private bool run_flag = true;
-        private bool _is_running_flag;
-        public bool Is_Game_Still_Running
-        {
-            get => _is_running_flag;
-            set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
-        }
+        //private bool _is_running_flag;
+        //public bool Is_Game_Still_Running
+        //{
+        //    get => _is_running_flag;
+        //    set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
+        //}
 
         //private bool _restart_timer_flag;
         //public bool Restart_Timer
@@ -207,13 +207,16 @@ namespace Guess5.Droid.Activities
             ViewModel.CurrentActivity = this;
 
             /* bind "is game still running" flag */
-            this.OneWayBind(ViewModel, x => x.Is_Game_Still_Running, c => c.Is_Game_Still_Running);
+            //this.OneWayBind(ViewModel, x => x.Is_Game_Still_Running, c => c.Is_Game_Still_Running);
 
             /* bind "is game still running" flag */
             // this.OneWayBind(ViewModel, x => x.Restart_Timer, c => c.Restart_Timer);
 
             /* bind "is game won" flag */
             //this.OneWayBind(ViewModel, x => x.Is_Game_Won, c => c.Is_Game_Won);
+
+            /* flag indicate whether the timer is ticking */
+            this.OneWayBind(ViewModel, x => x.Timer_Flag, c => c.Timer_Flag);
 
             /* Show the timer counter */
             this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
@@ -339,21 +342,27 @@ namespace Guess5.Droid.Activities
             /* ========================================================================================== */
         }
 
+        private bool _timer_flag = false;
+        public bool Timer_Flag
+        {
+            get => _timer_flag;
+            set => this.RaiseAndSetIfChanged(ref _timer_flag, value);
+        }
 
         private void InitializeStream()
         {
-
-            this.WhenAnyValue(x => x.Is_Game_Still_Running)
-                .Select(flag => Is_Game_Still_Running==true)
+            this.WhenAnyValue(x => x.Timer_Flag)
+                .Select(flag => (Timer_Flag == true) )
                 .Subscribe( (flag) => {
-                // Debug
-                System.Diagnostics.Debug.WriteLine($"Is Game Running ? {flag}");
-
-                btnStartNew.Visibility = flag ? ViewStates.Invisible : ViewStates.Visible;
-                //if(!value)
-                //{
-                // Debug
-                //}
+                    // Debug
+                    System.Diagnostics.Debug.WriteLine($"Is Timer ticking ? {flag}");
+                    /* when the timer is ticking/running , make button invisiable so that user could not click again
+                        until end of the game, which is the timer will be stop */
+                    btnStartNew.Visibility = flag ? ViewStates.Invisible : ViewStates.Visible;
+                    //if(!value)
+                    //{
+                    // Debug
+                    //}
 
                 });
         }

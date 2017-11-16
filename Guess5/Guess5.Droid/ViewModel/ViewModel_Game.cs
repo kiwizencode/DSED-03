@@ -250,25 +250,6 @@ namespace Guess5.Droid.ViewModel
 
         /* ==================================================================================================== */
 
-        /*
-            This flag check whether the "game" is still running.
-            The flag is set to true whenever a new game started.
-            It will remain true during the game session.
-            The flag is set to false when the user lose a game
-         */
-        private bool _is_running_flag;
-        public bool Is_Game_Still_Running {
-            get => _is_running_flag ;
-            set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
-        }
-
-        private bool _restart_timer_flag;
-        public bool Restart_Timer
-        {
-            get => _restart_timer_flag;
-            set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
-        }
-
         private bool _timer_flag = false;
         public bool Timer_Flag
         {
@@ -276,6 +257,25 @@ namespace Guess5.Droid.ViewModel
             set => this.RaiseAndSetIfChanged(ref _timer_flag, value);
         }
         /* ======================================================= */
+
+        /*
+            This flag check whether the "game" is still running.
+            The flag is set to true whenever a new game started.
+            It will remain true during the game session.
+            The flag is set to false when the user lose a game
+         */
+        //private bool _is_running_flag;
+        //public bool Is_Game_Still_Running {
+        //    get => _is_running_flag ;
+        //    set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
+        //}
+
+        //private bool _restart_timer_flag;
+        //public bool Restart_Timer
+        //{
+        //    get => _restart_timer_flag;
+        //    set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
+        //}
 
         /* the winning/lossing flag */
         //private bool _winning_flag = false;
@@ -331,7 +331,7 @@ namespace Guess5.Droid.ViewModel
 
             //Is_Game_Still_Running = false;
 
-            SetComanndStart();
+            InitializeReactiveCommand();
 
             SetupObservable();
 
@@ -382,17 +382,14 @@ namespace Guess5.Droid.ViewModel
             }
         }
 
-
-        
-
-        private void SetComanndStart()
+        private void InitializeReactiveCommand()
         {
             /* 
              * http://dotnetpattern.com/csharp-action-delegate 
              */
 
             // Debug
-            Is_Game_Still_Running = true;
+            //Is_Game_Still_Running = true;
 
             //void doStartButton()
             //{
@@ -514,7 +511,8 @@ namespace Guess5.Droid.ViewModel
                     if(value && timerCounterDisposable != null)
                     {
                         timerCounterDisposable.Dispose();
-                        Is_Game_Still_Running = false;
+                        //Is_Game_Still_Running = false;
+                        Timer_Flag = false;
                         Debug.WriteLine("Stop Timer Counter");
                         Debug.WriteLine("Game Over !!!");
                     }
@@ -571,11 +569,11 @@ namespace Guess5.Droid.ViewModel
                     if (value && timerCounterDisposable != null)
                     {
                         timerCounterDisposable.Dispose();
-                        Is_Game_Still_Running = false;
+                        //Is_Game_Still_Running = false;
+                        Timer_Flag = false;
                         Debug.WriteLine("Stop Timer Counter");
                         Debug.WriteLine("Game Won !!!");
-
-                        Timer_Flag = false;
+                        
                         //this.RaisePropertyChanged("timer_flag");
 
                         _highestscore += _score;
