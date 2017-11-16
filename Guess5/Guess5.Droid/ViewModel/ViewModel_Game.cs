@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Reactive.Linq;
+using System.Reactive;
+using System.Diagnostics;  // used for debugging purpose
 
 using ReactiveUI;
 
 using Guess5.Lib.Helper;
-using Guess5.Lib.Model;
-using System.Reactive;
-using System.Threading.Tasks;
-using System.Diagnostics;
 
 namespace Guess5.Droid.ViewModel
 {
     public class ViewModel_Game : ReactiveObject
     {
+        /// <summary>
+        /// point to the current Activity which is bind to this View Model
+        /// for updating android GUI purpose
+        /// </summary>
         public ReactiveActivity CurrentActivity { get; set; }
 
         /// <summary>
@@ -194,6 +196,7 @@ namespace Guess5.Droid.ViewModel
         /* ==================================================================================================== */
 
         /* ===== Declare variable to store the Timer Counter value. ============================= */
+        private static int MAX_TICK { get; set; } = 10;
         private int _timer;
         public string Timer  {
             /*  How to add zero-padding to a string
@@ -224,22 +227,6 @@ namespace Guess5.Droid.ViewModel
             set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
         }
 
-        private static int MAX_TICK { get; set; } = 20;
-        public void TimerTick()
-        {
-            if (Is_Game_Still_Running)
-            {
-                _timer = (_timer == 0) ? MAX_TICK : _timer - 1;
-                this.RaisePropertyChanged("Timer");
-            }
-        }
-
-        public void TimerTick2(int counter) {
-            _timer = counter;
-            this.RaisePropertyChanged("Timer");
-        }
-
-
         /* ======================================================= */
 
 
@@ -264,11 +251,15 @@ namespace Guess5.Droid.ViewModel
         private string _toast;
         public string Toast { get => _toast; set => this.RaiseAndSetIfChanged(ref _toast, value); }
         private static int MAX_GUESS { get; set; } = 6;
-        private static int MAX_COUNT { get; set; } = 10;
+        private static int MAX_COUNT { get; set; } = 5;
 
-        private int _worng_guess = 0;
+        //private int _wrong_guess = 0;
+        //public int Wrong_Answer {
+        //    get => _wrong_guess;
+        //    set => this.RaiseAndSetIfChanged(ref _wrong_guess, value);
+        //}
         private int _correct_guess = 0;
-        private int _hangman_count = 6;
+        private int _hangman_count = MAX_GUESS;
 
         public ReactiveCommand<Unit, Unit> commandStart;
 
@@ -282,40 +273,15 @@ namespace Guess5.Droid.ViewModel
 
             SetComanndStart();
 
-
-            //this.WhenAnyValue(x => x.Restart_Timer)
-            //    .Subscribe( _ =>
-            //    {
-            //        var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
-            //        IDisposable timer = interval.Subscribe( i => 
-            //            { //System.Diagnostics.Debug.WriteLine(i);
-            //                _timer = (int)i % MAX_COUNT ;
-            //                System.Diagnostics.Debug.WriteLine(_timer);
-            //                this.RaisePropertyChanged("Timer");
-            //                Debug.WriteLine($"Timer counter : {_timer}");
-            //            });
-
-            //        //void doDispose()
-            //        //{
-            //        //    timer.Dispose();
-            //        //}
-
-            //        //Action doDisposeAction = new Action(doDispose);
-
-            //        //this.WhenAnyValue(y => y.Restart_Timer)
-            //        //    .Subscribe( (z) => {
-            //        //        timer.Dispose();
-            //        //    });
-
-            //    });
-
-
+            SetupObservable();
 
             /* for debug purpose */
             //hidden_word = "heels";
             //ShowHiddenWord();
             //SetTimer();
         }
+
+
 
         /// <summary>
         /// function that return a random 5 letters hidden words
@@ -410,7 +376,7 @@ namespace Guess5.Droid.ViewModel
                  */
 
                 timerCounterDisposable = Observable.Interval(TimeSpan.FromSeconds(1))
-                            .Take(MAX_COUNT)
+                            .Take(MAX_TICK)
                             .Distinct()
                             //.Delay(TimeSpan.FromSeconds(1))
                             .Repeat()
@@ -418,10 +384,12 @@ namespace Guess5.Droid.ViewModel
                             {
                                 CurrentActivity.RunOnUiThread(() => 
                                 {
-                                    var counter = MAX_COUNT - (int)value;
+                                    var counter = MAX_TICK - (int)value;
                                     _timer = counter;
                                     this.RaisePropertyChanged("Timer");
                                     Debug.WriteLine($"Timer counter : {_timer}");
+
+                                    
                                 });
                             });
             }
@@ -430,208 +398,69 @@ namespace Guess5.Droid.ViewModel
             commandStart = ReactiveCommand.Create(restartTimerAction);
         }
 
-        private void CommentOut()
+        private void SetupObservable()
         {
-            this.WhenAny(x => x.Btn_Text, _ => string.Empty).Subscribe(Func => {
-
-                /* get the letter on the button */
-                char ch = Btn_Text.ToLower()[0]; /* convert string to char */
-                if (hidden_word.LastIndexOf(ch) != -1)
+            /* 
+                If the timer reach MAX_TICK, show the next hangman png
+             */
+            this.WhenAnyValue(x => x.Timer)
+                .Select(value => (Timer == MAX_TICK.ToString()))
+                .Subscribe((value) =>
                 {
-                    /* Count the number of time the letter appear in the hidden words*/
-                    int count = CountLetter(ch);
-
-                    /* Calculate the score and update to total score*/
-                    int score = WordsHelper.GetScore(ch);
-                    _score += (_timer + score) * count;
-                    this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
-
-
-                    /* Since the user has found letter/letters in the hidden word.
-                       reset the timer to MAX_TICK*/
-                    //_timer = MAX_TICK;
-
-                    /* v0.6 update the highest score */
-                    if (_correct_guess == MAX_COUNT)
+                    if(value)
                     {
-                        _highestscore += _score;
-                        this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
+                        //SetHangmanImage();
+                        Debug.WriteLine($"MAX TICK : {value}");
+                        SetHangmanImage();
 
-                        _winning_flag = true;
-                        this.RaisePropertyChanged("IsWinning"); /* Trigger Property Changed */
+                        //if(_hangman_count != 0)
+                        //    Wrong_Answer++;
+                        //Debug.WriteLine($"Wrong Answer : {Wrong_Answer}");
                     }
-                }
-                else
+                        
+                });
+
+            this.WhenAnyValue(x => x.Hangman_Image)
+                .Select(value => (_hangman_count == MAX_GUESS))
+                .Subscribe((value) => 
                 {
-                    SetHangmanImage(); /* set the hangmen image*/
-                                       //_timer = MAX_TICK; /* reset the timer counter */
-                                       /* User has so amny guesses based on  MAX_GUESS */
-                }
-
-                if (Is_Game_Still_Running)
-                    _timer = MAX_TICK; /* reset the timer counter */
-                this.RaisePropertyChanged("Timer"); /* Trigger Property Changed */
-
-                /* Not a best way of doing */
-                _button_letter = QuestionMark;
-            });
-
-            this.WhenAny(x => x.Btn_Text, _ => string.Empty).Subscribe( Func =>  {
-
-                /* get the letter on the button */
-                char ch = Btn_Text.ToLower()[0]; /* convert string to char */
-                if (hidden_word.LastIndexOf(ch) != -1)
-                {
-                    /* Count the number of time the letter appear in the hidden words*/
-                    int count = CountLetter(ch);
-
-                    /* Calculate the score and update to total score*/
-                    int score = WordsHelper.GetScore(ch);
-                    _score += (_timer + score ) * count ;
-                    this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
-
-
-                    /* Since the user has found letter/letters in the hidden word.
-                       reset the timer to MAX_TICK*/
-                    //_timer = MAX_TICK;
-
-                    /* v0.6 update the highest score */
-                    if (_correct_guess==MAX_COUNT)
+                    if(value && timerCounterDisposable != null)
                     {
-                        _highestscore += _score;
-                        this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
-
-                        _winning_flag = true;
-                        this.RaisePropertyChanged("IsWinning"); /* Trigger Property Changed */
+                        timerCounterDisposable.Dispose();
+                        Is_Game_Still_Running = false;
+                        Debug.WriteLine("Stop Timer Counter");
                     }
-                }
-                else
-                {
-                    SetHangmanImage(); /* set the hangmen image*/
-                                       //_timer = MAX_TICK; /* reset the timer counter */
-                                       /* User has so amny guesses based on  MAX_GUESS */
-                }
+                });
 
-                if(Is_Game_Still_Running)
-                    _timer = MAX_TICK; /* reset the timer counter */
-                this.RaisePropertyChanged("Timer"); /* Trigger Property Changed */
-
-                /* Not a best way of doing */
-                _button_letter = QuestionMark;
-            });
-
-            this.WhenAny(x => x.Timer, _ => string.Empty).Subscribe( Func =>  {
-                if(_timer==0) {
-                    SetHangmanImage();
-                }
-            });
-            
-            int CountLetter(char letter)
-            {
-                int count = 0;
-                for (int i = 0; i < hidden_word.Length; i++)
-                    if (hidden_word[i] == letter)
-                    {
-                        ShowHiddenWord(i + 1);
-                        _correct_guess++;
-                        if (_correct_guess == MAX_COUNT)
-                        {
-                            Is_Game_Still_Running = false;
-                            this.RaisePropertyChanged("Run_Flag");
-                        }
-                        count++;
-                    }
-                return count;
-            }
-
+            //throw new NotImplementedException();
         }
 
         public void SetHangmanImage()
         {
 
-            _hangman_count = ++_hangman_count % 7;
+            _hangman_count = ++_hangman_count % (MAX_GUESS+1);
             Hangman_Image = _hangman_count.ToString();
             this.RaisePropertyChanged("Hangman_Image");
+            Debug.WriteLine($"Hangman Image {_hangman_count}");
 
-            /* increment wrong guess counter 
-               but not during intialization of button when the letter is question mark */
-            if (Hangman_Image != "hangman00")
-                _worng_guess++;
+            ///* increment wrong guess counter 
+            //   but not during intialization of button when the letter is question mark */
+            //if (Hangman_Image != "hangman00")
+            //    _worng_guess++;
 
-            if (_worng_guess == MAX_GUESS)
-            {
-                _highestscore += _score;
-                this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
+            //if (_worng_guess == MAX_GUESS)
+            //{
+            //    _highestscore += _score;
+            //    this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
 
-                _winning_flag = false;
-                this.RaisePropertyChanged("IsWinning"); /* Trigger Property Changed */
+            //    _winning_flag = false;
+            //    this.RaisePropertyChanged("IsWinning"); /* Trigger Property Changed */
 
-                Is_Game_Still_Running = false; /* set the flag to start the timer */
-                this.RaisePropertyChanged("Run_Flag"); /* Trigger Property Changed */
-            }
+            //    Is_Game_Still_Running = false; /* set the flag to start the timer */
+            //    this.RaisePropertyChanged("Run_Flag"); /* Trigger Property Changed */
+            //}
 
         }
 
-        public void Reset()
-        {
-            Is_Game_Still_Running = true;
-            this.RaisePropertyChanged("Run_Flag");
-
-            _hangman_count = 0;
-            _hangman_image = "hangman00";
-            this.RaisePropertyChanged("Hangman_Image");
-
-            _slot01_Image = QuestionMarkImage;
-            this.RaisePropertyChanged("Slot01_Image");
-
-            _slot02_Image = QuestionMarkImage;
-            this.RaisePropertyChanged("Slot02_Image");
-
-            _slot03_Image = QuestionMarkImage;
-            this.RaisePropertyChanged("Slot03_Image");
-
-            _slot04_Image = QuestionMarkImage;
-            this.RaisePropertyChanged("Slot04_Image");
-
-            _slot05_Image = QuestionMarkImage;
-            this.RaisePropertyChanged("Slot05_Image");
-
-            _score = 0;
-            this.RaisePropertyChanged("Score");
-
-            _timer = MAX_TICK;
-            this.RaisePropertyChanged("Timer");
-
-            _correct_guess = 0;
-            _worng_guess = 0;
-            _winning_flag = false;
-            
-            GenerateHiddenWord();
-
-            ButtonLetterInitializer();
-        }
-
-        private void ShowHiddenWord(int i)
-        {
-            string getString(char ch) =>  ch.ToString();
-
-            switch (i)
-            {
-                case 1: Slot01_Image = getString(hidden_word[0]); break;
-                case 2: Slot02_Image = getString(hidden_word[1]); break;
-                case 3: Slot03_Image = getString(hidden_word[2]); break;
-                case 4: Slot04_Image = getString(hidden_word[3]); break;
-                case 5: Slot05_Image = getString(hidden_word[4]); break;
-            }
-        }
-
-        //private void SetTimer()
-        //{
-        //    /* http://www.introtorx.com/Content/v1.0.10621.0/04_CreatingObservableSequences.html#ObservableTimer  */
-        //    var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
-
-        //    interval.ObserveOn(Scheduler.TaskPool)
-        //        .Subscribe(i => Timer = (i % 10).ToString());
-        //}
     }
 }

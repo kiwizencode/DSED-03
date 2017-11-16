@@ -320,11 +320,18 @@ namespace Guess5.Droid.Activities
 
         private void InitializeStream()
         {
-            
 
-            this.WhenAnyValue(x => x.Is_Game_Still_Running).Select(x => Is_Game_Still_Running==true).Subscribe( (x) => {
+            this.WhenAnyValue(x => x.Is_Game_Still_Running)
+                .Select(value => Is_Game_Still_Running==true)
+                .Subscribe( (value) => {
                 // Debug
-                System.Diagnostics.Debug.WriteLine($"Is Game Running ? {x}");
+                System.Diagnostics.Debug.WriteLine($"Is Game Running ? {value}");
+
+                if(!value)
+                {
+                    // Debug
+                    btnStartNew.Visibility = ViewStates.Invisible ;
+                }
                 //btnStartNew.Visibility = x ? ViewStates.Invisible : ViewStates.Visible;
                 //IDisposable timer;
                 //if (x)
@@ -339,183 +346,8 @@ namespace Guess5.Droid.Activities
                 //}                
 
             });
-            /*
-            this.WhenAnyValue(x => x.Restart_Timer).Subscribe((x) => {
-                // Debug
-                System.Diagnostics.Debug.WriteLine($"Restart Timer ? {x}");
-                //btnStartNew.Visibility = x ? ViewStates.Invisible : ViewStates.Visible;
-                if (x)
-                {
-                    Stop_Timer = true;
-                    this.RaisePropertyChanged("Stop_Timer");
-
-                    //var interval = Observable.Interval(TimeSpan.FromSeconds(1));
-                    //IDisposable timer = interval.Subscribe(i =>
-                    //   { //System.Diagnostics.Debug.WriteLine(i);
-                    //       var counter = (int)i % 10 + 1;
-                    //       _timer = (int)i % MAX_COUNT;
-                    //       System.Diagnostics.Debug.WriteLine($"timer counter : {counter}");
-                    //       ViewModel.TimerTick2(counter);
-                    //       RunOnUiThread(() => ViewModel.TimerTick2(counter));
-                    //       this.RaisePropertyChanged("Timer");
-                    //       Debug.WriteLine($"Timer counter : {_timer}");
-                    //   });
-                    int MAX_COUNT = 10;
-                    Observable.Interval(TimeSpan.FromSeconds(1))
-                            .Take(MAX_COUNT)
-                            .Repeat()
-                            .Subscribe( value => 
-                        {
-                            var counter = MAX_COUNT - (int)value;
-                            RunOnUiThread(() => ViewModel.TimerTick2(counter));
-                        });
-
-                    
-
-                    //this.WhenAnyValue(z => z.Stop_Timer)
-                    //.Subscribe((z) =>
-                    //{
-                    //    timer.Dispose();
-                    //});
-                }
-
-            });
-    */
-            //RunOnUiThread(() => ViewModel.TimerTick2(counter));
-            /* v0.6 start a new game */
-
-            //btnStartNew.Click += delegate
-            //{
-            //    if (!Is_Game_Still_Running)
-            //    {
-            //        //ViewModel.Reset();
-            //        //RunApp();
-            //        btnStartNew.Visibility = ViewStates.Invisible;
-
-            //    }
-            //};
-
-            //this.WhenAnyValue(x => x.textViewScore.Text).Subscribe(_ => {
-
-            //    if (int.TryParse(textViewScore.Text, out int highestscore))
-            //    {
-            //        if (Current_Profile != null)
-            //        {
-            //            int scores = Current_Profile.Scores;
-            //            if (scores < highestscore)
-            //            {
-            //                Current_Profile.Scores = highestscore;
-            //                ProfileRepository.SaveProfile(Current_Profile);
-            //            }
-
-            //        }
-            //    }
-
-            //});
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-        private void CommentOut()
-        {
-
-            /* ####################################################################################### */
-            /* The following code may not be the correct way of doing things. 
-             * But just get it working and resolve it when I have a better understanding of ReactiveUI */
-
-            bool flag = true;
-            ThreadPool.QueueUserWorkItem(_ =>
-            {
-                while(flag)
-                {
-                    while (Is_Game_Still_Running)
-                    {
-                        Thread.Sleep(1000);
-                        RunOnUiThread(() => ViewModel.TimerTick());
-                    }
-
-                    /*v0.6 setup the trigger for winning and losing the game */
-
-                    if (Is_Game_Won)
-                    {
-                        RunOnUiThread(() =>
-                        {
-                            Toast.MakeText(this, "You have won !!!\nLet's guess another hidden word.", ToastLength.Short).Show();
-                            //Toast.MakeText(this, "Let's guess another hidden word.", ToastLength.Long).Show();
-                            ViewModel.Reset();
-                        });
-                        Is_Game_Still_Running = true;
-                        Thread.Sleep(2000);
-                    }
-                    else
-                    {
-                        RunOnUiThread(() =>
-                        {
-                            Toast.MakeText(this, "You did not guess the word!!!", ToastLength.Short).Show();
-                            Toast.MakeText(this, "The hiden word is " + ViewModel.hidden_word, ToastLength.Long).Show();
-                        });
-                        flag = false;
-                    }
-                }
-
-
-
-            });
 
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        private void RunApp()
-        {
-
-            /* ####################################################################################### */
-            /* The following code may not be the correct way of doing things. 
-             * But just get it working and resolve it when I have a better understanding of ReactiveUI */
-
-            ThreadPool.QueueUserWorkItem(_ =>
-            {
-                while (Is_Game_Still_Running)
-                {
-                    Thread.Sleep(1000);
-                    RunOnUiThread(() => ViewModel.TimerTick());
-                }
-
-                if (Is_Game_Won)
-                {
-                    RunOnUiThread(() =>
-                    {
-                        Toast.MakeText(this, "You have won !!!", ToastLength.Short).Show();
-                        Toast.MakeText(this, "Let's guess another hidden word.", ToastLength.Long).Show();
-                    });
-
-                    ViewModel.Reset();
-                    RunApp();
-                }
-                else
-                {
-                    RunOnUiThread(() =>
-                    {
-                        Toast.MakeText(this, "You did not guess the word!!!", ToastLength.Short).Show();
-                        Toast.MakeText(this, "The hiden word is " + ViewModel.hidden_word, ToastLength.Long).Show();
-                    });
-                }
-
-            });
-        }
-
-        /* v0.6 refactor code : method to intitalise model and reactive component */
-
 
     }
 }
