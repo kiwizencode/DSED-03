@@ -14,7 +14,6 @@ using Guess5.Lib.DataAccessObject;
 using Guess5.Lib.Model;
 
 using Guess5.Droid.ViewModel;
-using Guess5.Droid.Helper;
 
 namespace Guess5.Droid.Activities
 {
@@ -36,10 +35,32 @@ namespace Guess5.Droid.Activities
         }
         #endregion
 
+
+        /// <summary>
+        /// set the image of ImageView based on the input resource
+        /// 
+        /// </summary>
+        /// <param name="id">ImageView resource id</param>
+        /// <param name="resource">Image file name</param>
+        //private void SetImageView(int id, string resource)
+        private void SetImageView(ReactiveActivity activity, int id, string resource)
+        {
+            ImageView image = activity.FindViewById<ImageView>(id);
+
+            /* How to change the ImageView source dynamically from a string? (Xamarin Android) 
+             * https://stackoverflow.com/questions/39938391/how-to-change-the-imageview-source-dynamically-from-a-string-xamarin-android  */
+
+            int image_id = activity.Resources.GetIdentifier(resource, "drawable", activity.PackageName);
+            image.SetImageResource(image_id);
+
+            /* The following code will also work. */
+            //image.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
+        }
+
         /* load hangman image */
         private string Hangman_Image {
             get => string.Empty;
-            set => FontsHelper.SetImageView(this,Resource.Id.imageViewHangman, value);
+            set => SetImageView(this,Resource.Id.imageViewHangman, value);
         }
 
         /* ################################################################# */
@@ -83,31 +104,31 @@ namespace Guess5.Droid.Activities
         private string Slot01_Image
         {
             get => string.Empty;
-            set => FontsHelper.SetImageView(this, Resource.Id.ImageSlot01, value);
+            set => SetImageView(this, Resource.Id.ImageSlot01, value);
         }
 
         private string Slot02_Image
         {
             get => string.Empty;
-            set => FontsHelper.SetImageView(this, Resource.Id.ImageSlot02, value);
+            set => SetImageView(this, Resource.Id.ImageSlot02, value);
         }
 
         private string Slot03_Image
         {
             get => string.Empty;
-            set => FontsHelper.SetImageView(this, Resource.Id.ImageSlot03, value);
+            set => SetImageView(this, Resource.Id.ImageSlot03, value);
         }
 
         private string Slot04_Image
         {
             get => string.Empty;
-            set => FontsHelper.SetImageView(this, Resource.Id.ImageSlot04, value);
+            set => SetImageView(this, Resource.Id.ImageSlot04, value);
         }
 
         private string Slot05_Image
         {
             get => string.Empty;
-            set => FontsHelper.SetImageView(this, Resource.Id.ImageSlot05, value);
+            set => SetImageView(this, Resource.Id.ImageSlot05, value);
         }
         /* ==================================================================================================== */
 
@@ -125,25 +146,26 @@ namespace Guess5.Droid.Activities
             set => this.RaiseAndSetIfChanged(ref _is_running_flag, value);
         }
 
-        private bool _restart_timer_flag;
-        public bool Restart_Timer
-        {
-            get => _restart_timer_flag;
-            set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
-        }
+        //private bool _restart_timer_flag;
+        //public bool Restart_Timer
+        //{
+        //    get => _restart_timer_flag;
+        //    set => this.RaiseAndSetIfChanged(ref _restart_timer_flag, value);
+        //}
 
-        private bool _stop_flag;
-        public bool Stop_Timer
-        {
-            get => _stop_flag;
-            set => this.RaiseAndSetIfChanged(ref _stop_flag, value);
-        }
+        //private bool _stop_flag;
+        //public bool Stop_Timer
+        //{
+        //    get => _stop_flag;
+        //    set => this.RaiseAndSetIfChanged(ref _stop_flag, value);
+        //}
+        /* add check winning flag */
+        // public bool Is_Game_Won { get; set; }
 
         private int SelectButton { get; set; }
         public string Button_Text { get; set; }
         public string Button_Tag { get; set; }
-        /* add check winning flag */
-        public bool Is_Game_Won { get; set; }
+
 
         public ProfileModel Current_Profile { get; set; } = null;
 
@@ -188,10 +210,10 @@ namespace Guess5.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Is_Game_Still_Running, c => c.Is_Game_Still_Running);
 
             /* bind "is game still running" flag */
-            this.OneWayBind(ViewModel, x => x.Restart_Timer, c => c.Restart_Timer);
+            // this.OneWayBind(ViewModel, x => x.Restart_Timer, c => c.Restart_Timer);
 
             /* bind "is game won" flag */
-            this.OneWayBind(ViewModel, x => x.Is_Game_Won, c => c.Is_Game_Won);
+            //this.OneWayBind(ViewModel, x => x.Is_Game_Won, c => c.Is_Game_Won);
 
             /* Show the timer counter */
             this.OneWayBind(ViewModel, x => x.Timer, c => c.textViewTimer.Text);
@@ -322,32 +344,37 @@ namespace Guess5.Droid.Activities
         {
 
             this.WhenAnyValue(x => x.Is_Game_Still_Running)
-                .Select(value => Is_Game_Still_Running==true)
-                .Subscribe( (value) => {
+                .Select(flag => Is_Game_Still_Running==true)
+                .Subscribe( (flag) => {
                 // Debug
-                System.Diagnostics.Debug.WriteLine($"Is Game Running ? {value}");
+                System.Diagnostics.Debug.WriteLine($"Is Game Running ? {flag}");
 
-                if(!value)
-                {
-                    // Debug
-                    btnStartNew.Visibility = ViewStates.Invisible ;
-                }
-                //btnStartNew.Visibility = x ? ViewStates.Invisible : ViewStates.Visible;
-                //IDisposable timer;
-                //if (x)
+                btnStartNew.Visibility = flag ? ViewStates.Invisible : ViewStates.Visible;
+                //if(!value)
                 //{
-                //    var interval = Observable.Interval(TimeSpan.FromMilliseconds(1000));
-                //    timer = interval.Subscribe(
-                //        i => { System.Diagnostics.Debug.WriteLine(i); });
+                // Debug
+                //}
 
-                //    this.WhenAnyValue(z => z.Is_Game_Still_Running).Select(z => Is_Game_Still_Running == true).Subscribe(
-                //        (z) => { if (!z) timer.Dispose();  });
-
-                //}                
-
-            });
-
+                });
         }
 
+        protected override void OnResume()
+        {
+            base.OnResume();
+            this.ViewModel.Resume();
+        }
+
+        protected override void OnStop()
+        {
+            base.OnStop();
+            this.ViewModel.Stop();
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            this.ViewModel.Dispose();
+        }
     }
 }

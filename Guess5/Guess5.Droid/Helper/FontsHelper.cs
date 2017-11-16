@@ -39,27 +39,7 @@ namespace Guess5.Droid.Helper
             //Digital_Font = Typeface.CreateFromAsset(activity.Assets, "fonts/Digital-Dismay.otf");
         }
 
-        /// <summary>
-        /// set the image of ImageView based on the input resource
-        /// 
-        /// </summary>
-        /// <param name="id">ImageView resource id</param>
-        /// <param name="resource">Image file name</param>
-        //private void SetImageView(int id, string resource)
-        public static void SetImageView(ReactiveActivity activity, int id, string resource)
-        {
-            ImageView image = activity.FindViewById<ImageView>(id);
-
-            /* How to change the ImageView source dynamically from a string? (Xamarin Android) 
-             * https://stackoverflow.com/questions/39938391/how-to-change-the-imageview-source-dynamically-from-a-string-xamarin-android  */
-
-            int image_id = activity.Resources.GetIdentifier(resource, "drawable", activity.PackageName);
-            image.SetImageResource(image_id);
-
-            /* The following code will also work. */
-            //image.SetImageResource((int)typeof(Resource.Drawable).GetField(resource).GetValue(null));
-        }
-        public static void SetupButtonFont(Button btn)
+       public static void SetupButtonFont(Button btn)
         {
             btn.Typeface = Title_Font;
         }
