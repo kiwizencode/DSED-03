@@ -93,7 +93,6 @@
     <Compile Include="Activities\Activity_Game.cs" />
     <Compile Include="Activities\Activity_MainScreen.cs" />
     <Compile Include="Activities\Activity_Profile.cs" />
-    <Compile Include="Activities\MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModel\ViewModel_Game.cs" />
@@ -110,9 +109,6 @@
     <AndroidResource Include="Resources\layout\Layout_Game.axml" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\layout\Main.axml">
-      <SubType>Designer</SubType>
-    </AndroidResource>
     <AndroidResource Include="Resources\values\strings.xml" />
   </ItemGroup>
   <ItemGroup>
