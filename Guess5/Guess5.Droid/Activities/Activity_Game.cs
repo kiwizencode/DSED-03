@@ -35,6 +35,8 @@ namespace Guess5.Droid.Activities
         }
         #endregion
 
+        #region Declaration for Image Slot Display Implementation
+        
         /// <summary>
         /// set the image of ImageView based on the input resource
         /// 
@@ -61,38 +63,6 @@ namespace Guess5.Droid.Activities
             get => string.Empty;
             set => SetImageView(this,Resource.Id.imageViewHangman, value);
         }
-
-        /* ################################################################# */
-        /* Declare all GUI control variables into property     */
-
-        /* https://reactiveui.net/docs/handbook/data-binding/xamarin-android */
-
-        public Button btn01 { get; private set; }
-        public Button btn02 { get; private set; }
-        public Button btn03 { get; private set; }
-        public Button btn04 { get; private set; }
-        public Button btn05 { get; private set; }
-        public Button btn06 { get; private set; }
-        public Button btn07 { get; private set; }
-        public Button btn08 { get; private set; }
-        public Button btn09 { get; private set; }
-        public Button btn10 { get; private set; }
-        public Button btn11 { get; private set; }
-        public Button btn12 { get; private set; }
-        public Button btn13 { get; private set; }
-        public Button btn14 { get; private set; }
-        public Button btn15 { get; private set; }
-        public Button btnStartNew { get; private set; }
-        public Button btnPause { get; private set; }
-
-        public TextView textViewTitle { get; private set; }
-        public TextView textViewTimer { get; private set; }
-        public TextView textViewHighest { get; private set; }
-        public TextView textViewScore { get; private set; }
-        /* User Profile */
-        public TextView textViewProfile { get; private set; }
-
-        public ImageView imageViewHangman { get; private set; }
 
         /* ==================================================================================================== */
         /* Set the letter image for the 5 letter slot for the hidden word. 
@@ -130,6 +100,41 @@ namespace Guess5.Droid.Activities
             get => string.Empty;
             set => SetImageView(this, Resource.Id.ImageSlot05, value);
         }
+        #endregion
+
+        #region GUI Control Declaration
+        /* ################################################################# */
+        /* Use the instruction in the following URI to data-bind controls    */
+        /* https://reactiveui.net/docs/handbook/data-binding/xamarin-android */
+        /*                                                                   */
+        public Button btn01 { get; private set; }
+        public Button btn02 { get; private set; }
+        public Button btn03 { get; private set; }
+        public Button btn04 { get; private set; }
+        public Button btn05 { get; private set; }
+        public Button btn06 { get; private set; }
+        public Button btn07 { get; private set; }
+        public Button btn08 { get; private set; }
+        public Button btn09 { get; private set; }
+        public Button btn10 { get; private set; }
+        public Button btn11 { get; private set; }
+        public Button btn12 { get; private set; }
+        public Button btn13 { get; private set; }
+        public Button btn14 { get; private set; }
+        public Button btn15 { get; private set; }
+        public Button btnStartNew { get; private set; }
+        public Button btnPause { get; private set; }
+
+        public TextView textViewTitle { get; private set; }
+        public TextView textViewTimer { get; private set; }
+        public TextView textViewHighest { get; private set; }
+        public TextView textViewScore { get; private set; }
+        /* User Profile */
+        public TextView textViewProfile { get; private set; }
+
+        public ImageView imageViewHangman { get; private set; }
+#endregion
+
         /* ==================================================================================================== */
 
         /* For DEbugging */

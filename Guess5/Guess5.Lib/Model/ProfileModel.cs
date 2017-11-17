@@ -14,6 +14,7 @@ namespace Guess5.Lib.Model
         public string Name { get; set; }
         public int Scores { get; set; } = 0;
         public DateTime Timestamp { get; set; }
+        public bool Active { get; set; }
 
         public override string ToString() { return Name; }
     }

@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Reactive.Linq;
 using System.Reactive;
+using System.Reactive.Linq;
 using System.Diagnostics;  // used for debugging purpose
 
 using ReactiveUI;
@@ -37,7 +37,7 @@ namespace Guess5.Droid.ViewModel
         /// </summary>
         public string hidden_word { get; private set; }
 
-#region Define Slot Image Variables
+        #region Define Slot Image Variables
         /* ==== Declare variables to store hiddent letter image. I have called them Slot Image =================*/
         private string _slot01_Image = QuestionMarkImage;
         public string Slot01_Image {
@@ -72,7 +72,7 @@ namespace Guess5.Droid.ViewModel
         /* ==== End of Slot Image Declaration ===================================================================*/
         #endregion
 
-#region Define Buttons Variables
+        #region Define Buttons Variables
         /* ==== Declare variable to store letter for each button on the view/screen =============================*/
         /* There are total 15 buttons. Hence have to declare 15 variables to store letter for each button */
 
@@ -169,7 +169,7 @@ namespace Guess5.Droid.ViewModel
         /* ==== End of declaration of button letter variables ================================================ */
         #endregion
 
-#region Define Variables to retreive Button Number and Letter on the Button
+        #region Define Variables to retreive Button Number and Letter on the Button
         /* ======================================================================================================*/
 
         /* store the letter value on the button */
@@ -188,7 +188,7 @@ namespace Guess5.Droid.ViewModel
 
         #endregion
 
-#region Define Ticking Meachanism
+        #region Define Ticking Meachanism
 
         /* ===== Declare variable to store the Timer Counter value. ============================= */
         private static int MAX_TICK { get; set; } = 10;
@@ -203,6 +203,13 @@ namespace Guess5.Droid.ViewModel
                 if (int.TryParse(value, out int i))
                     this.RaiseAndSetIfChanged(ref _timer, i);
             }
+        }
+
+        private bool _timer_flag = false;
+        public bool Timer_Flag
+        {
+            get => _timer_flag;
+            set => this.RaiseAndSetIfChanged(ref _timer_flag, value);
         }
         /* ===== End of decaration for Timer Counter variable  =================================== */
         #endregion
@@ -250,12 +257,7 @@ namespace Guess5.Droid.ViewModel
 
         /* ==================================================================================================== */
 
-        private bool _timer_flag = false;
-        public bool Timer_Flag
-        {
-            get => _timer_flag;
-            set => this.RaiseAndSetIfChanged(ref _timer_flag, value);
-        }
+
         /* ======================================================= */
 
         private bool _game_on_flag = false;
