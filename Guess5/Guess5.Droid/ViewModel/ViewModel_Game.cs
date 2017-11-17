@@ -208,7 +208,7 @@ namespace Guess5.Droid.ViewModel
         #endregion
 
         private static int MAX_GUESS { get; set; } = 6;
-        private static int MAX_COUNT { get; set; } = 5;
+        private static int MAX_LETTER { get; set; } = 5;
 
         private int _hangman_count { get; set; } = MAX_GUESS;
 
@@ -233,8 +233,8 @@ namespace Guess5.Droid.ViewModel
         public string Score {
             get => _score.ToString();
             set {
-                if (int.TryParse(value, out int i))
-                    this.RaiseAndSetIfChanged(ref _score, i);
+                //if (int.TryParse(value, out int i))
+                //    this.RaiseAndSetIfChanged(ref _score, i);
             } // add this bit of code so that the Reactive UI data bind will work 
         }
 
@@ -243,8 +243,8 @@ namespace Guess5.Droid.ViewModel
         public string HighestScore  {
             get => _highestscore > 0 ? _highestscore.ToString() : "";
             set {
-                if (int.TryParse(value, out int i))
-                    this.RaiseAndSetIfChanged(ref _highestscore, i);
+                //if (int.TryParse(value, out int i))
+                //    this.RaiseAndSetIfChanged(ref _highestscore, i);
             } // add this bit of code so that the Reactive UI data bind will work
         }
 
@@ -258,16 +258,28 @@ namespace Guess5.Droid.ViewModel
         }
         /* ======================================================= */
 
-
+        private bool _game_on_flag = false;
+        /// <summary>
+        /// This variable has 2 purpose :
+        /// 1. true ==> a game has just started or
+        ///             the user has just won a game and about to start another one.
+        /// 2. false ==> a game has just ended or
+        ///              start of the game activity screen
+        /// </summary>
+        public bool Is_Game_On {
+            get => _game_on_flag;
+            set => this.RaiseAndSetIfChanged(ref _game_on_flag, value);
+        }
 
         public ReactiveCommand<Unit, Unit> commandStart;
+        public ReactiveCommand<Unit, Unit> commandPause;
 
-        private IDisposable timerCounterDisposable = null;
+        private IDisposable tcDisposable = null;
 
-
+#region The followin code take care of the timer when Game Activity is inactive or is finishing
         public void Resume()
         {
-            if (timerCounterDisposable != null)
+            if (tcDisposable != null)
             {
                 Timer_Flag = true;
                 //this.RaisePropertyChanged("timer_flag");
@@ -276,7 +288,7 @@ namespace Guess5.Droid.ViewModel
 
         public void Stop()
         {
-            if (timerCounterDisposable != null)
+            if (tcDisposable != null)
             {
                 Timer_Flag = false;
                 //this.RaisePropertyChanged("timer_flag");
@@ -285,16 +297,14 @@ namespace Guess5.Droid.ViewModel
 
         public void Dispose()
         {
-            if (timerCounterDisposable != null)
-                timerCounterDisposable.Dispose();
+            if (tcDisposable != null)
+                tcDisposable.Dispose();
         }
-
+#endregion
 
         public ViewModel_Game()
         {
-            GenerateHiddenWord();
-
-            ButtonLetterInitializer();
+            InitializeHiddenWord();
 
             //Is_Game_Still_Running = false;
 
@@ -302,21 +312,35 @@ namespace Guess5.Droid.ViewModel
 
             SetupObservable();
 
-            /* for debug purpose */
-            //hidden_word = "heels";
-            //ShowHiddenWord();
-            //SetTimer();
         }
 
+        private void InitializeHiddenWord()
+        {
+            InitializeImageSlot();
 
+            GenerateHiddenWord();
+
+            ButtonLetterInitializer();
+        }
+
+        private void InitializeImageSlot()
+        {
+            _slot01_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot01_Image");
+            _slot02_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot02_Image");
+            _slot03_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot03_Image");
+            _slot04_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot04_Image");
+            _slot05_Image = QuestionMarkImage;
+            this.RaisePropertyChanged("Slot05_Image");
+        }
 
         /// <summary>
         /// function that return a random 5 letters hidden words
         /// </summary>
-        private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord();
-            // Debug
-            Debug.WriteLine($"Hidden Word is {hidden_word}");
-        }
+        private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord(); }
 
         /// <summary>
         /// Initialize all the 15 letters buttons "keyboard" at the start of a new game.
@@ -355,117 +379,96 @@ namespace Guess5.Droid.ViewModel
              * http://dotnetpattern.com/csharp-action-delegate 
              */
 
-            // Debug
-            //Is_Game_Still_Running = true;
-
-            //void doStartButton()
-            //{
-            //    /* check whether any game is running*/
-            //    if (!Is_Game_Still_Running)
-            //    {
-            //        //Is_Game_Still_Running = true;
-            //    }
-            //    else
-            //    {
-            //        //Is_Game_Still_Running = false;
-  
-            //    }
-
-            //    //Restart_Timer = true;
-            //    //this.RaisePropertyChanged("Restart_Timer");
-
-            //    //// Debug
-            //    //Debug.WriteLine($"Is_Game_Still_Running {Is_Game_Still_Running}");
-            //    //Debug.WriteLine($"Restart_Timer {Restart_Timer}");
-            //}
-
-            Action doStartAction = new Action(startGame);
-            //commandStart = ReactiveCommand.Create(doStartAction);
-
-            //Action restartTimerAction = new Action(restartTimerCounter);
+            Action doStartAction = new Action(StartGame);
             commandStart = ReactiveCommand.Create(doStartAction);
+
+            Action doPauseAction = new Action(PauseGame);
+            commandPause = ReactiveCommand.Create(doPauseAction);
+        }
+
+        private void PauseGame()
+        {
+            Timer_Flag = !Timer_Flag;
         }
 
         /* ========= DEBUG ========================== */
-        
-        private void startGame()
-        {
-            Correct_Answer = 0;
-            HighestScore = "0";
-            Score = "0";
-            restartTimerCounter();
-        }
-            
-            
-        /* create a Action to test the timer counter */
 
-        private void restartTimerCounter()
+        private void StartGame()
         {
-            //RunOnUiThread(() => ViewModel.TimerTick2(counter));
-            /* Dispose if an obervable for the timer counter is running */
-            if (timerCounterDisposable != null)
+            /* 
+                Check Is_Game_On flag
+                    true ==> a game has just started or
+                                the user has just won a game and about to start another one.
+                    false ==> a game has just ended or start of the game activity screen
+             */
+            if (Is_Game_On) // ==> True
             {
-                timerCounterDisposable.Dispose();
+                _highestscore += _score;
+                this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
+
+                InitializeHiddenWord();
+            }
+            else
+            {
+                _highestscore = 0;
+                this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
             }
 
-            //_timer = MAX_COUNT;
-            //this.RaisePropertyChanged("Timer");
-            Timer_Flag = true;
+            _score = 0; // reset the current score for a new game
+            this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
 
-            //if (timerCounterDisposable != null)
-            //    _hangman_count = _hangman_count;
+            Correct_Answer = 0; // reset the Correct Answer counter
 
-            if (_hangman_count != MAX_GUESS) _hangman_count--;
+            _hangman_count = MAX_GUESS; // reset to display the hangman image from the very begining
 
-            /* 
-             https://social.msdn.microsoft.com/Forums/en-US/c4acaf34-3136-4206-a6f9-ef5afba74b2b/interval-with-immediate-start?forum=rx
-             */
+            Timer_Flag = true; // indicate timer to be running
 
-            timerCounterDisposable = Observable.Interval(TimeSpan.FromSeconds(1))
-                        .Take(MAX_TICK)
-                        .Distinct()
-                        //.Delay(TimeSpan.FromSeconds(1))
-                        .Repeat()
-                        .Subscribe(value =>
+            GenerateTimerSequence();  // Initiate the Observerable that start timer counter
+        }
+
+        /// <summary>
+        /// start a new timer counter
+        /// </summary>
+        private void GenerateTimerSequence()
+        {
+            tcDisposable = 
+                Observable.Interval(TimeSpan.FromSeconds(1))
+                    .Take(MAX_TICK)  // only generate MAX_TICK no of number                 
+                    .Distinct() // no repeat number
+                    .Repeat()   // keep repeat the sequnce
+                    .Subscribe(value =>
+                    {
+                        /*
+                            Check Timer_Flag 
+                            false ==> the game is not started yet or
+                                      when Game Activity is temperory inactive.
+                         */
+                        if (Timer_Flag) 
                         {
-                            if (Timer_Flag)
+                            CurrentActivity.RunOnUiThread(() =>
                             {
-                                CurrentActivity.RunOnUiThread(() =>
+                                var counter = MAX_TICK - (int)value;
+                                Timer = counter.ToString();
+                                // Debug 
+                                Debug.WriteLine($"Timer counter : {counter}");
+
+                                // Debug
+                                Debug.WriteLine($"Hidden Word is {hidden_word}");
+
+                                if (counter== MAX_TICK)
                                 {
-                                    var counter = MAX_TICK - (int)value;
-                                        //_timer = counter;
-                                        //this.RaisePropertyChanged("Timer");
-                                        Timer = counter.ToString();
-                                    Debug.WriteLine($"Timer counter : {_timer}");
+                                    // Debug
+                                    Debug.WriteLine($"Reach MAX_TICK ==> change hangman image.");
+                                    GetNextHangmanImage();
+                                }
 
-
-                                });
-                            }
-                        });
+                            });
+                        }
+                    });
         }
 
         private void SetupObservable()
         {
-            /* 
-                If the timer reach MAX_TICK, show the next hangman png
-             */
-            this.WhenAnyValue(x => x.Timer)
-                .Select(value => (Timer == MAX_TICK.ToString() && Timer_Flag))
-                .Subscribe((value) =>
-                {
-                    if(value)
-                    {
-                        //SetHangmanImage();
-                        Debug.WriteLine($"MAX TICK : {value}");
-                        GetNextHangmanImage();
-
-                        //if(_hangman_count != 0)
-                        //    Wrong_Answer++;
-                        //Debug.WriteLine($"Wrong Answer : {Wrong_Answer}");
-                    }
-                        
-                });
-
             /*
                 When the screen display the last image of hangman,
                 stop the timer, i.e dispose any current running observable.
@@ -475,17 +478,33 @@ namespace Guess5.Droid.ViewModel
                 .Select(value => (_hangman_count == MAX_GUESS))
                 .Subscribe((value) => 
                 {
-                    if(value && timerCounterDisposable != null)
+                    if(value && tcDisposable != null)
                     {
-                        timerCounterDisposable.Dispose();
-                        //Is_Game_Still_Running = false;
+                        tcDisposable.Dispose();
+                        Debug.WriteLine("Timer Counter is Disposed !!!");
                         Timer_Flag = false;
                         Debug.WriteLine("Stop Timer Counter");
+                        Is_Game_On = false;
                         Debug.WriteLine("Game Over !!!");
                     }
                 });
 
-            //throw new NotImplementedException();
+            /* 
+                check the correct guess
+             */
+            this.WhenAnyValue(x => x.Correct_Answer)
+                .Select(value => (Correct_Answer == MAX_LETTER))
+                .Subscribe((value) => {
+                    if (value && tcDisposable != null)
+                    {
+                        tcDisposable.Dispose();
+                        Debug.WriteLine("Timer Counter is Disposed !!!");
+                        Timer_Flag = false;
+                        Debug.WriteLine("Stop Timer Counter");
+                        Is_Game_On = true;
+                        Debug.WriteLine("Game Won !!!");
+                    }
+                });
 
             /*
                 If the user has click on a button, get letter from the button text,
@@ -494,7 +513,7 @@ namespace Guess5.Droid.ViewModel
                 else change the hangman image ==> increase the wrong guess count
              */
             this.WhenAny(x => x.Btn_Text  , _ => string.Empty)
-                .Subscribe( _ => {
+                .Subscribe( (flag) => {
                     /* get the letter on the button */
                     char letter = Btn_Text.ToLower()[0]; /* convert string to char */
 
@@ -508,46 +527,42 @@ namespace Guess5.Droid.ViewModel
 
                         /* add up the number of correct answer */
                         Correct_Answer += count;
-                        
+
                         /* Calculate the score and update to total score*/
                         int score = WordsHelper.GetScore(letter);
                         _score += (_timer + score) * count;
                         this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
 
-                        //timer_flag = false;
-                        //this.RaisePropertyChanged("timer_flag");
-                        restartTimerCounter();
+                        if (Correct_Answer != MAX_LETTER)
+                        {
+                            tcDisposable.Dispose();
+                            Debug.WriteLine("Timer Counter is Disposed !!!");
 
+                            //
+                            _hangman_count--;
+
+                            GenerateTimerSequence();
+                        }
                     }
                     else
                     {
-                        if(letter != '?')
+                        if (letter != '?')
                             GetNextHangmanImage();
                     }
-
                 });
 
-            /* 
-                check the correct guess
-             */
-            this.WhenAnyValue(x => x.Correct_Answer)
-                .Select(value =>(Correct_Answer == MAX_GUESS))
-                .Subscribe((value) => {
-                    if (value && timerCounterDisposable != null)
-                    {
-                        timerCounterDisposable.Dispose();
-                        //Is_Game_Still_Running = false;
-                        Timer_Flag = false;
-                        Debug.WriteLine("Stop Timer Counter");
-                        Debug.WriteLine("Game Won !!!");
-                        
-                        //this.RaisePropertyChanged("timer_flag");
 
-                        _highestscore += _score;
-                        this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
-                    }
-                });
 
+        }
+
+        /// <summary>
+        /// Get the next hangman image to be display onto (GUI) View 
+        /// </summary>
+        private void GetNextHangmanImage()
+        {
+            _hangman_count = ++_hangman_count % (MAX_GUESS + 1);
+            Hangman_Image = _hangman_count.ToString();
+            Debug.WriteLine($"Showing Hangman Image No [{_hangman_count}]");
         }
 
         /* 
@@ -567,7 +582,7 @@ namespace Guess5.Droid.ViewModel
                 if (hidden_word[i] == letter)
                 {
                     ShowHiddenWord(i + 1);
-                    Correct_Answer++;
+                    //Correct_Answer++;
                     count++;
                 }
             return count; 
@@ -589,13 +604,7 @@ namespace Guess5.Droid.ViewModel
                 case 5: Slot05_Image = getString(hidden_word[4]); break;
             }
         }
-        public void GetNextHangmanImage()
-        {
-            _hangman_count = ++_hangman_count % (MAX_GUESS+1);
-            Hangman_Image = _hangman_count.ToString();
-            //this.RaisePropertyChanged("Hangman_Image");
-            Debug.WriteLine($"Hangman Image {_hangman_count}");
-        }
+
 
     }
 }

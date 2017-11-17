@@ -182,7 +182,7 @@
             android:gravity="center_vertical">
             <Button
                 android:text="Start"
-                android:layout_width="60dp"
+                android:layout_width="65dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnStartNew"
                 android:gravity="center"
@@ -190,6 +190,17 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:typeface="serif"
                 android:textColor="#3E2723" />
+            <Button
+                android:text="Pause"
+                android:layout_width="65dp"
+                android:layout_height="wrap_content"
+                android:id="@+id/btnPause"
+                android:textAlignment="0"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#3E2723"
+                android:typeface="serif"
+                android:gravity="center"
+                android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>
 <!-- The following layout is to show the "guess" word -->

@@ -35,7 +35,6 @@ namespace Guess5.Droid.Activities
         }
         #endregion
 
-
         /// <summary>
         /// set the image of ImageView based on the input resource
         /// 
@@ -84,6 +83,7 @@ namespace Guess5.Droid.Activities
         public Button btn14 { get; private set; }
         public Button btn15 { get; private set; }
         public Button btnStartNew { get; private set; }
+        public Button btnPause { get; private set; }
 
         public TextView textViewTitle { get; private set; }
         public TextView textViewTimer { get; private set; }
@@ -157,7 +157,7 @@ namespace Guess5.Droid.Activities
 
             InitializeModel();
 
-            InitializeStream();
+            SetupObservable();
 
             /* https://developer.xamarin.com/recipes/android/fundamentals/activity/pass_data_between_activity/ */
 
@@ -230,6 +230,7 @@ namespace Guess5.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Btn15, c => c.btn15.Text);
 
             this.BindCommand(ViewModel, x => x.commandStart, c => c.btnStartNew, "Click");
+            this.BindCommand(ViewModel, x => x.commandPause, c => c.btnPause, "Click");
         }
 
         /* method to intitalise UI Controls */
@@ -315,24 +316,41 @@ namespace Guess5.Droid.Activities
             set => this.RaiseAndSetIfChanged(ref _timer_flag, value);
         }
 
-        private void InitializeStream()
+        private void SetupObservable()
         {
             this.WhenAnyValue(x => x.Timer_Flag)
                 .Select(flag => (Timer_Flag == true) )
                 .Subscribe( (flag) => {
                     // Debug
                     System.Diagnostics.Debug.WriteLine($"Is Timer ticking ? {flag}");
+
+                    //btnPause.Text = flag ? "Pause" : "Restart";
+
                     /* when the timer is ticking/running , make button invisiable so that user could not click again
                         until end of the game, which is the timer will be stop */
                     btnStartNew.Visibility = flag ? ViewStates.Invisible : ViewStates.Visible;
-                    //if(!value)
-                    //{
-                    // Debug
-                    //}
+                    //btnPause.Visibility = flag ? ViewStates.Visible : ViewStates.Invisible;
 
+                    //btnStartNew.Enabled = !flag;
+                    btn01.Enabled = flag;
+                    btn02.Enabled = flag;
+                    btn03.Enabled = flag;
+                    btn04.Enabled = flag;
+                    btn05.Enabled = flag;
+                    btn06.Enabled = flag;
+                    btn07.Enabled = flag;
+                    btn08.Enabled = flag;
+                    btn09.Enabled = flag;
+                    btn10.Enabled = flag;
+                    btn11.Enabled = flag;
+                    btn12.Enabled = flag;
+                    btn13.Enabled = flag;
+                    btn14.Enabled = flag;
+                    btn15.Enabled = flag;
                 });
         }
 
+#region following code deal with the situation where Game Acitivity goes into inactive mode and finishing mode
         protected override void OnResume()
         {
             base.OnResume();
@@ -348,8 +366,8 @@ namespace Guess5.Droid.Activities
         protected override void OnDestroy()
         {
             base.OnDestroy();
-
             this.ViewModel.Dispose();
         }
+#endregion
     }
 }

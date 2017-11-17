@@ -1454,26 +1454,26 @@ namespace Guess5.Droid
 		public partial class Id
 		{
 			
-			// aapt resource value: 0x7f080071
-			public const int CreateProfileLayout = 2131230833;
-			
-			// aapt resource value: 0x7f080057
-			public const int ImageSlot01 = 2131230807;
+			// aapt resource value: 0x7f080072
+			public const int CreateProfileLayout = 2131230834;
 			
 			// aapt resource value: 0x7f080058
-			public const int ImageSlot02 = 2131230808;
+			public const int ImageSlot01 = 2131230808;
 			
 			// aapt resource value: 0x7f080059
-			public const int ImageSlot03 = 2131230809;
+			public const int ImageSlot02 = 2131230809;
 			
 			// aapt resource value: 0x7f08005a
-			public const int ImageSlot04 = 2131230810;
+			public const int ImageSlot03 = 2131230810;
 			
 			// aapt resource value: 0x7f08005b
-			public const int ImageSlot05 = 2131230811;
+			public const int ImageSlot04 = 2131230811;
 			
-			// aapt resource value: 0x7f080075
-			public const int ListProfile = 2131230837;
+			// aapt resource value: 0x7f08005c
+			public const int ImageSlot05 = 2131230812;
+			
+			// aapt resource value: 0x7f080076
+			public const int ListProfile = 2131230838;
 			
 			// aapt resource value: 0x7f08004f
 			public const int TitleLayout = 2131230799;
@@ -1529,71 +1529,74 @@ namespace Guess5.Droid
 			// aapt resource value: 0x7f080013
 			public const int beginning = 2131230739;
 			
-			// aapt resource value: 0x7f08005c
-			public const int btn01 = 2131230812;
-			
 			// aapt resource value: 0x7f08005d
-			public const int btn02 = 2131230813;
+			public const int btn01 = 2131230813;
 			
 			// aapt resource value: 0x7f08005e
-			public const int btn03 = 2131230814;
+			public const int btn02 = 2131230814;
 			
 			// aapt resource value: 0x7f08005f
-			public const int btn04 = 2131230815;
+			public const int btn03 = 2131230815;
 			
 			// aapt resource value: 0x7f080060
-			public const int btn05 = 2131230816;
+			public const int btn04 = 2131230816;
 			
 			// aapt resource value: 0x7f080061
-			public const int btn06 = 2131230817;
+			public const int btn05 = 2131230817;
 			
 			// aapt resource value: 0x7f080062
-			public const int btn07 = 2131230818;
+			public const int btn06 = 2131230818;
 			
 			// aapt resource value: 0x7f080063
-			public const int btn08 = 2131230819;
+			public const int btn07 = 2131230819;
 			
 			// aapt resource value: 0x7f080064
-			public const int btn09 = 2131230820;
+			public const int btn08 = 2131230820;
 			
 			// aapt resource value: 0x7f080065
-			public const int btn10 = 2131230821;
+			public const int btn09 = 2131230821;
 			
 			// aapt resource value: 0x7f080066
-			public const int btn11 = 2131230822;
+			public const int btn10 = 2131230822;
 			
 			// aapt resource value: 0x7f080067
-			public const int btn12 = 2131230823;
+			public const int btn11 = 2131230823;
 			
 			// aapt resource value: 0x7f080068
-			public const int btn13 = 2131230824;
+			public const int btn12 = 2131230824;
 			
 			// aapt resource value: 0x7f080069
-			public const int btn14 = 2131230825;
+			public const int btn13 = 2131230825;
 			
 			// aapt resource value: 0x7f08006a
-			public const int btn15 = 2131230826;
+			public const int btn14 = 2131230826;
 			
-			// aapt resource value: 0x7f080074
-			public const int btnCancel = 2131230836;
+			// aapt resource value: 0x7f08006b
+			public const int btn15 = 2131230827;
 			
-			// aapt resource value: 0x7f080076
-			public const int btnCreate = 2131230838;
+			// aapt resource value: 0x7f080075
+			public const int btnCancel = 2131230837;
+			
+			// aapt resource value: 0x7f080077
+			public const int btnCreate = 2131230839;
+			
+			// aapt resource value: 0x7f080070
+			public const int btnCredits = 2131230832;
+			
+			// aapt resource value: 0x7f080057
+			public const int btnPause = 2131230807;
 			
 			// aapt resource value: 0x7f08006f
-			public const int btnCredits = 2131230831;
+			public const int btnProfile = 2131230831;
+			
+			// aapt resource value: 0x7f080074
+			public const int btnSave = 2131230836;
 			
 			// aapt resource value: 0x7f08006e
-			public const int btnProfile = 2131230830;
-			
-			// aapt resource value: 0x7f080073
-			public const int btnSave = 2131230835;
+			public const int btnScores = 2131230830;
 			
 			// aapt resource value: 0x7f08006d
-			public const int btnScores = 2131230829;
-			
-			// aapt resource value: 0x7f08006c
-			public const int btnStartGame = 2131230828;
+			public const int btnStartGame = 2131230829;
 			
 			// aapt resource value: 0x7f080056
 			public const int btnStartNew = 2131230806;
@@ -1631,8 +1634,8 @@ namespace Guess5.Droid
 			// aapt resource value: 0x7f08001c
 			public const int dropdown = 2131230748;
 			
-			// aapt resource value: 0x7f080072
-			public const int editTextProfile = 2131230834;
+			// aapt resource value: 0x7f080073
+			public const int editTextProfile = 2131230835;
 			
 			// aapt resource value: 0x7f080042
 			public const int edit_query = 2131230786;
@@ -1661,8 +1664,8 @@ namespace Guess5.Droid
 			// aapt resource value: 0x7f080028
 			public const int image = 2131230760;
 			
-			// aapt resource value: 0x7f08006b
-			public const int imageView1 = 2131230827;
+			// aapt resource value: 0x7f08006c
+			public const int imageView1 = 2131230828;
 			
 			// aapt resource value: 0x7f080055
 			public const int imageViewHangman = 2131230805;
@@ -1775,8 +1778,8 @@ namespace Guess5.Droid
 			// aapt resource value: 0x7f080051
 			public const int textViewHighest = 2131230801;
 			
-			// aapt resource value: 0x7f080070
-			public const int textViewMessage = 2131230832;
+			// aapt resource value: 0x7f080071
+			public const int textViewMessage = 2131230833;
 			
 			// aapt resource value: 0x7f080054
 			public const int textViewProfile = 2131230804;
