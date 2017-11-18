@@ -1,7 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;  // used for debugging purpose
 using System.Reactive;
 using System.Reactive.Linq;
-using System.Diagnostics;  // used for debugging purpose
 
 using ReactiveUI;
 
@@ -191,7 +192,7 @@ namespace Guess5.Droid.ViewModel
         #region Define Ticking Meachanism
 
         /* ===== Declare variable to store the Timer Counter value. ============================= */
-        private static int MAX_TICK { get; set; } = 10;
+        private static int MAX_TICK { get; set; } = 20;
         private int _timer;
         public string Timer
         {
@@ -278,6 +279,9 @@ namespace Guess5.Droid.ViewModel
 
         private IDisposable tcDisposable = null;
 
+        /* store the letter that user has guessed. s*/
+        private List<char> user_guess = null;
+
 #region The followin code take care of the timer when Game Activity is inactive or is finishing
         public void Resume()
         {
@@ -308,12 +312,17 @@ namespace Guess5.Droid.ViewModel
         {
             InitializeHiddenWord();
 
+            user_guess = new List<char>();
+
             //Is_Game_Still_Running = false;
+
+            //GenerateHiddenWord();
+
+            //ButtonLetterInitializer();
 
             InitializeReactiveCommand();
 
             SetupObservable();
-
         }
 
         private void InitializeHiddenWord()
@@ -384,14 +393,14 @@ namespace Guess5.Droid.ViewModel
             Action doStartAction = new Action(StartGame);
             commandStart = ReactiveCommand.Create(doStartAction);
 
-            Action doPauseAction = new Action(PauseGame);
-            commandPause = ReactiveCommand.Create(doPauseAction);
+            //Action doPauseAction = new Action(PauseGame);
+            //commandPause = ReactiveCommand.Create(doPauseAction);
         }
 
-        private void PauseGame()
-        {
-            Timer_Flag = !Timer_Flag;
-        }
+        //private void PauseGame()
+        //{
+        //    Timer_Flag = !Timer_Flag;
+        //}
 
         /* ========= DEBUG ========================== */
 
@@ -403,12 +412,11 @@ namespace Guess5.Droid.ViewModel
                                 the user has just won a game and about to start another one.
                     false ==> a game has just ended or start of the game activity screen
              */
+
             if (Is_Game_On) // ==> True
             {
                 _highestscore += _score;
                 this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
-
-                InitializeHiddenWord();
             }
             else
             {
@@ -421,9 +429,20 @@ namespace Guess5.Droid.ViewModel
 
             Correct_Answer = 0; // reset the Correct Answer counter
 
-            _hangman_count = MAX_GUESS; // reset to display the hangman image from the very begining
-
             Timer_Flag = true; // indicate timer to be running
+
+            if (user_guess.Count > 0) // start of Game Activity
+            {
+                /* The following code is add to refresh the hangman image */
+                _hangman_count = MAX_GUESS; // reset to display the hangman image from the very begining
+                GetNextHangmanImage();
+
+                InitializeHiddenWord();
+            }
+
+            _hangman_count = MAX_GUESS;
+
+            user_guess = new List<char>();
 
             GenerateTimerSequence();  // Initiate the Observerable that start timer counter
         }
@@ -514,43 +533,51 @@ namespace Guess5.Droid.ViewModel
                 if the letter is in hidden word, increase the correct guess count
                 else change the hangman image ==> increase the wrong guess count
              */
-            this.WhenAny(x => x.Btn_Text  , _ => string.Empty)
+            this.WhenAny(x => x.Btn_Text, _ => string.Empty)
+                .Select( flag => (Btn_Text.ToLower()[0] != '?'))
                 .Subscribe( (flag) => {
-                    /* get the letter on the button */
-                    char letter = Btn_Text.ToLower()[0]; /* convert string to char */
-
-                    /* Check whether the letter is in the hidden word
-                        *   return -1 if not found
-                        */
-                    if (hidden_word.LastIndexOf(letter) != -1)
+                    if(flag)
                     {
-                        /* Count the number of time the letter appear in the hidden words*/
-                        int count = CountLetter(letter);
+                        /* get the letter on the button */
+                        char letter = Btn_Text.ToLower()[0]; /* convert string to char */
 
-                        /* add up the number of correct answer */
-                        Correct_Answer += count;
+                        user_guess.Add(letter);
 
-                        /* Calculate the score and update to total score*/
-                        int score = WordsHelper.GetScore(letter);
-                        _score += (_timer + score) * count;
-                        this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
-
-                        if (Correct_Answer != MAX_LETTER)
+                        /* Check whether the letter is in the hidden word
+                            *   return -1 if not found
+                            */
+                        if (hidden_word.LastIndexOf(letter) != -1)
                         {
-                            tcDisposable.Dispose();
-                            Debug.WriteLine("Timer Counter is Disposed !!!");
+                            /* Count the number of time the letter appear in the hidden words*/
+                            int count = CountLetter(letter);
 
-                            //
-                            _hangman_count--;
+                            /* add up the number of correct answer */
+                            Correct_Answer += count;
 
-                            GenerateTimerSequence();
+                            /* Calculate the score and update to total score*/
+                            int score = WordsHelper.GetScore(letter);
+                            _score += (_timer + score) * count;
+                            this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
+
+                            if (Correct_Answer != MAX_LETTER)
+                            {
+                                tcDisposable.Dispose();
+                                Debug.WriteLine("Timer Counter is Disposed !!!");
+
+                                //
+                                _hangman_count--;
+
+                                GenerateTimerSequence();
+                            }
+                        }
+                        else
+                        {
+                            if (letter != '?')
+                                GetNextHangmanImage();
                         }
                     }
-                    else
-                    {
-                        if (letter != '?')
-                            GetNextHangmanImage();
-                    }
+
+
                 });
 
 

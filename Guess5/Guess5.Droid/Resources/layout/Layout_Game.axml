@@ -76,7 +76,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FF5722"
+                    android:textColor="#BF360C"
                     android:gravity="right"
                     android:typeface="serif" />
                 <TextView
@@ -101,7 +101,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#FF5722"
+                    android:textColor="#BF360C"
                     android:gravity="right"
                     android:typeface="serif" />
                 <TextView
@@ -141,7 +141,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="#FF5722"
+                android:textColor="#BF360C"
                 android:layout_gravity="center"
                 android:typeface="serif" />
             <TextView

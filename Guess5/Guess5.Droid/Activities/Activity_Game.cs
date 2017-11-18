@@ -144,7 +144,7 @@ namespace Guess5.Droid.Activities
 
         private int SelectButton { get; set; }
         public string Button_Text { get; set; }
-        public string Button_Tag { get; set; }
+        public string Button_Tag { get; set; } 
 
 
         public ProfileModel Current_Profile { get; set; } = null;
