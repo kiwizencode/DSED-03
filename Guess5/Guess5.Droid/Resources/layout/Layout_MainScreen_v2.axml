@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/hangman_blank"
+    android:minWidth="25px"
+    android:minHeight="25px"
+    android:paddingRight="15dp"
+    android:paddingLeft="15dp"
+    android:paddingTop="15dp"
+    android:paddingBottom="15dp">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:id="@+id/TitleLayout"
+        android:background="@drawable/title_bar"
+        android:minWidth="25px"
+        android:minHeight="25px">
+        <TextView
+            android:text="Hangman Game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewTitle"
+            android:textColor="@android:color/black"
+            android:layout_gravity="center"
+            android:textSize="35dp"
+            android:paddingTop="5dp"
+            android:typeface="serif"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="5dp" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/profile_border"
+        android:layout_gravity="right">
+    <!-- https://material.io/guidelines/style/color.html#color-color-palette  -->
+        <TextView
+            android:text=" User Profile : "
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#FF5722"
+            android:layout_gravity="center"
+            android:typeface="serif" />
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/textViewProfile"
+            android:gravity="center"
+            android:textColor="#424242" />
+    </LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:visibility="gone"
+        android:id="@+id/imageView1" />
+    <Button
+        android:id="@+id/btnStartGame"
+        android:text="Start a New Game"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:textColor="#3E2723"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:typeface="serif" />
+    <Button
+        android:text="Highest Scores"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnScores"
+        android:textSize="28dp"
+        android:textColor="#3E2723"
+        android:typeface="serif"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone" />
+<!-- -->
+    <ListView
+        android:minWidth="25px"
+        android:minHeight="25px"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/listScore"
+        android:layout_weight="1"
+        android:visibility="visible" />
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/guess_five_v2"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        android:layout_weight="1"
+        android:id="@+id/imgHighFive" />
+    <Button
+        android:id="@+id/btnProfile"
+        android:text="Profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:textColor="#3E2723"
+        android:typeface="serif"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    <Button
+        android:id="@+id/btnCredits"
+        android:text="Credits"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="28dp"
+        android:textColor="#3E2723"
+        android:typeface="serif"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:visibility="gone" />
+    <TextView
+        android:text="Text"
+        android:id="@+id/textViewMessage"
+        android:textColor="@android:color/holo_blue_dark"
+        android:typeface="monospace"
+        android:gravity="center_horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:visibility="gone" />
+</LinearLayout>

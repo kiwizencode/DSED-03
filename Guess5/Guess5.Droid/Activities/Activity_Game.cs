@@ -146,10 +146,14 @@ namespace Guess5.Droid.Activities
         public string Button_Text { get; set; }
         public string Button_Tag { get; set; } 
 
-
         public ProfileModel Current_Profile { get; set; } = null;
 
-        private string profile_id = string.Empty;
+        private string _profileID = string.Empty;
+        public string ProfileID
+        {
+            get => _profileID;
+            set => this.RaiseAndSetIfChanged(ref _profileID, value);
+        }
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -166,14 +170,14 @@ namespace Guess5.Droid.Activities
 
             /* https://developer.xamarin.com/recipes/android/fundamentals/activity/pass_data_between_activity/ */
 
-            profile_id = Intent.GetStringExtra("Profile_ID") ?? string.Empty;
+            ProfileID = Intent.GetStringExtra("Profile_ID") ?? string.Empty;
 
-            if (profile_id != string.Empty)
-            {
-                int id = int.Parse(profile_id);
-                Current_Profile = ProfileRepository.GetProfile(id);
-                textViewProfile.Text = Current_Profile.Name;
-            }
+            //if (profile_id != string.Empty)
+            //{
+            //    int id = int.Parse(profile_id);
+            //    Current_Profile = ProfileRepository.GetProfile(id);
+            //    textViewProfile.Text = Current_Profile.Name;
+            //}
         }
 
 
@@ -183,7 +187,6 @@ namespace Guess5.Droid.Activities
         private void InitializeModel()
         {
             ViewModel = new ViewModel_Game();
-
             ViewModel.CurrentActivity = this;
 
             /* flag indicate whether the timer is ticking */
@@ -235,7 +238,10 @@ namespace Guess5.Droid.Activities
             this.OneWayBind(ViewModel, x => x.Btn15, c => c.btn15.Text);
 
             this.BindCommand(ViewModel, x => x.commandStart, c => c.btnStartNew, "Click");
-            this.BindCommand(ViewModel, x => x.commandPause, c => c.btnPause, "Click");
+            //this.BindCommand(ViewModel, x => x.commandPause, c => c.btnPause, "Click");
+
+            this.Bind(ViewModel, x => x.ProfileID, c => c.ProfileID);
+            this.OneWayBind(ViewModel, x => x.ProfileName, c => c.textViewProfile.Text);
         }
 
         /* method to intitalise UI Controls */

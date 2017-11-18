@@ -52,6 +52,15 @@ namespace Guess5.Droid.ViewModel
             set { }
         }
 
+        public ArrayAdapter<ScoreModel> Score_Array
+        {
+            get
+            {
+                ScoreModel[] items = ScoreRepository.GetProfiles().OrderBy(x => x.Name.ToLower()).ToArray();
+                return new ArrayAdapter<ScoreModel>(CurrentActivity, Android.Resource.Layout.SimpleListItem1, items);
+            }
+            set { }
+        }
 
         public ReactiveCommand<Unit, Unit> CommandSave;
         public ReactiveCommand<Unit, Unit> CommandItemClicked;

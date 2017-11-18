@@ -7,6 +7,8 @@ using System.Reactive.Linq;
 using ReactiveUI;
 
 using Guess5.Lib.Helper;
+using Guess5.Lib.DataAccessObject;
+using Guess5.Lib.Model;
 
 namespace Guess5.Droid.ViewModel
 {
@@ -27,11 +29,11 @@ namespace Guess5.Droid.ViewModel
         /// This is part of the hangman image png filenames.
         /// The naming convention for the png file is "hangman_0n.png" where n is a number
         /// </summary>
-        private static string HangmanImage { get; set; } = "hangman";
+        private static string HangmanFile { get; set; } = "hangman";
         /// <summary>
         /// This is the name of the question mark png file name
         /// </summary>
-        private static string QuestionMarkImage { get; set; } = "question_mark";
+        private static string QuestionMarkFile { get; set; } = "question_mark";
 
         /// <summary>
         /// variable stores the hidden word.
@@ -40,31 +42,31 @@ namespace Guess5.Droid.ViewModel
 
         #region Define Slot Image Variables
         /* ==== Declare variables to store hiddent letter image. I have called them Slot Image =================*/
-        private string _slot01_Image = QuestionMarkImage;
+        private string _slot01_Image = QuestionMarkFile;
         public string Slot01_Image {
             get => _slot01_Image;
             set => this.RaiseAndSetIfChanged(ref _slot01_Image, LetterFile + value);
         }
 
-        private string _slot02_Image = QuestionMarkImage;
+        private string _slot02_Image = QuestionMarkFile;
         public string Slot02_Image {
             get => _slot02_Image;
             set => this.RaiseAndSetIfChanged(ref _slot02_Image, LetterFile + value);
         }
 
-        private string _slot03_Image = QuestionMarkImage;
+        private string _slot03_Image = QuestionMarkFile;
         public string Slot03_Image {
             get => _slot03_Image;
             set => this.RaiseAndSetIfChanged(ref _slot03_Image, LetterFile + value);
         }
 
-        private string _slot04_Image = QuestionMarkImage;
+        private string _slot04_Image = QuestionMarkFile;
         public string Slot04_Image {
             get => _slot04_Image;
             set => this.RaiseAndSetIfChanged(ref _slot04_Image, LetterFile + value);
         }
 
-        private string _slot05_Image = QuestionMarkImage;
+        private string _slot05_Image = QuestionMarkFile;
         public string Slot05_Image {
             get => _slot05_Image;
             set => this.RaiseAndSetIfChanged(ref _slot05_Image, LetterFile + value);
@@ -225,7 +227,7 @@ namespace Guess5.Droid.ViewModel
         public string Hangman_Image
         {
             get => _hangman_image;
-            set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanImage + value.PadLeft(2, '0'));
+            set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanFile + value.PadLeft(2, '0'));
         }
         
         /* Correct Answer */
@@ -261,7 +263,7 @@ namespace Guess5.Droid.ViewModel
 
         /* ======================================================= */
 
-        private bool _game_on_flag = false;
+
         /// <summary>
         /// This variable has 2 purpose :
         /// 1. true ==> a game has just started or
@@ -269,6 +271,7 @@ namespace Guess5.Droid.ViewModel
         /// 2. false ==> a game has just ended or
         ///              start of the game activity screen
         /// </summary>
+        private bool _game_on_flag = false;
         public bool Is_Game_On {
             get => _game_on_flag;
             set => this.RaiseAndSetIfChanged(ref _game_on_flag, value);
@@ -282,7 +285,21 @@ namespace Guess5.Droid.ViewModel
         /* store the letter that user has guessed. s*/
         private List<char> user_guess = null;
 
-#region The followin code take care of the timer when Game Activity is inactive or is finishing
+        private string _profileID = string.Empty;
+        public string ProfileID
+        {
+            get => _profileID;
+            set => this.RaiseAndSetIfChanged(ref _profileID, value);
+        }
+
+        private string _profileName;
+        public string ProfileName
+        {
+            get => _profileName;
+            set => this.RaiseAndSetIfChanged(ref _profileName, value);
+        }
+
+        #region The followin code take care of the timer when Game Activity is inactive or is finishing
         public void Resume()
         {
             if (tcDisposable != null)
@@ -336,15 +353,15 @@ namespace Guess5.Droid.ViewModel
 
         private void InitializeImageSlot()
         {
-            _slot01_Image = QuestionMarkImage;
+            _slot01_Image = QuestionMarkFile;
             this.RaisePropertyChanged("Slot01_Image");
-            _slot02_Image = QuestionMarkImage;
+            _slot02_Image = QuestionMarkFile;
             this.RaisePropertyChanged("Slot02_Image");
-            _slot03_Image = QuestionMarkImage;
+            _slot03_Image = QuestionMarkFile;
             this.RaisePropertyChanged("Slot03_Image");
-            _slot04_Image = QuestionMarkImage;
+            _slot04_Image = QuestionMarkFile;
             this.RaisePropertyChanged("Slot04_Image");
-            _slot05_Image = QuestionMarkImage;
+            _slot05_Image = QuestionMarkFile;
             this.RaisePropertyChanged("Slot05_Image");
         }
 
@@ -496,10 +513,10 @@ namespace Guess5.Droid.ViewModel
                 Also use this as the counter for number of wrong guess.
              */
             this.WhenAnyValue(x => x.Hangman_Image)
-                .Select(value => (_hangman_count == MAX_GUESS))
-                .Subscribe((value) => 
+                .Select(flag => (_hangman_count == MAX_GUESS))
+                .Subscribe((flag) => 
                 {
-                    if(value && tcDisposable != null)
+                    if(flag && tcDisposable != null)
                     {
                         tcDisposable.Dispose();
                         Debug.WriteLine("Timer Counter is Disposed !!!");
@@ -514,9 +531,9 @@ namespace Guess5.Droid.ViewModel
                 check the correct guess
              */
             this.WhenAnyValue(x => x.Correct_Answer)
-                .Select(value => (Correct_Answer == MAX_LETTER))
-                .Subscribe((value) => {
-                    if (value && tcDisposable != null)
+                .Select(flag => (Correct_Answer == MAX_LETTER))
+                .Subscribe((flag) => {
+                    if (flag & tcDisposable != null)
                     {
                         tcDisposable.Dispose();
                         Debug.WriteLine("Timer Counter is Disposed !!!");
@@ -572,15 +589,75 @@ namespace Guess5.Droid.ViewModel
                         }
                         else
                         {
-                            if (letter != '?')
-                                GetNextHangmanImage();
+                            //if (letter != '?')
+                            GetNextHangmanImage();
                         }
                     }
 
 
                 });
 
+            this.WhenAnyValue(x => x.ProfileID)
+                .Select(flag => (ProfileID.Trim() != string.Empty))
+                .Subscribe((flag) =>
+                {
+                    Debug.WriteLine($"Is profile present? {flag}");
+                    if (flag) // true when user has selected a profile
+                    {
+                        /* When the user has seleted a profile, set profile to 'active' */
+                        int id = int.Parse(ProfileID);
+                        ProfileModel profile = ProfileRepository.GetProfile(id);
+                        ProfileName = profile.Name;
+                        profile.Active = true;
+                        ProfileRepository.SaveProfile(profile);
 
+                        /* and the rest as 'inactive' */
+                        foreach (var p in ProfileRepository.GetProfiles())
+                        {
+                            if (p.ID != id && p.Active)
+                            {
+                                p.Active = false;
+                                ProfileRepository.SaveProfile(p);
+                            }
+                        }
+                    }
+                    /* 
+                        flag return false under following conditions:
+                        1. When the main activity first loaded, no active profile been selected
+                           solution => load active profile => the last profile that user used.
+                        2. When there is no profile (in the database).
+                           solution => create a 'Guest' profile and set the profile to be 'active'
+                     */
+                    else
+                    {
+                        //List<ProfileModel> profiles = ProfileRepository.GetProfiles();
+                        bool active_profile = false;
+                        foreach (var profile in ProfileRepository.GetProfiles())
+                        {
+                            if (profile.Active)
+                            {
+                                active_profile = true;
+                                ProfileID = profile.ID.ToString();
+                                ProfileName = profile.Name;
+                            }
+                        }
+                        if (!active_profile) // found active profile
+                        {
+                            /* Create a 'Guest 'Game Profile and set it to 'active' */
+                            ProfileModel profile = new ProfileModel();
+                            profile.Name = "Guest";
+
+                            DateTime theTime = DateTime.Now.ToLocalTime();
+                            profile.Timestamp = theTime;
+
+                            profile.Active = true;
+                            profile.ID = ProfileRepository.SaveProfile(profile);
+
+                            ProfileID = profile.ID.ToString();
+                            ProfileName = profile.Name;
+                        }
+                    }
+                });
 
         }
 

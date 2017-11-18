@@ -107,6 +107,7 @@
     <AndroidResource Include="Resources\layout\Layout_MainScreen.axml" />
     <AndroidResource Include="Resources\layout\Layout_Profile_v2.axml" />
     <AndroidResource Include="Resources\layout\Layout_Game.axml" />
+    <AndroidResource Include="Resources\layout\Layout_MainScreen_v2.axml" />
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\values\strings.xml" />

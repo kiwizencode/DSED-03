@@ -1,13 +1,16 @@
 ﻿using Android.App;
 using Android.Content;
 using Android.OS;
+using Android.Views;
 using Android.Widget;
+using static Android.Widget.AdapterView;
 
 using ReactiveUI;
 
 using Guess5.Lib.DataAccessObject;
 using Guess5.Lib.Model;
 using Guess5.Droid.ViewModel;
+
 
 namespace Guess5.Droid.Activities
 {
@@ -36,9 +39,11 @@ namespace Guess5.Droid.Activities
         public Button btnScores { get; private set; }
         public Button btnProfile { get; private set; }
         public Button btnCredits { get; private set; }
-
         public TextView textViewTitle { get; private set; }
         public TextView textViewProfile { get; private set; }
+        public ImageView imgHighFive { get; private set; }
+        public ListView listScore { get; private set; }
+        /* ################################################################# */
 
         private string _profileID = string.Empty;
         public string ProfileID {
@@ -51,11 +56,11 @@ namespace Guess5.Droid.Activities
             base.OnCreate(savedInstanceState);
 
             // Create your application here
-            SetContentView(Resource.Layout.Layout_MainScreen);
+            SetContentView(Resource.Layout.Layout_MainScreen_v2);
 
             InitializeModel();
 
-            InitializeButtonClickEvent();
+            InitializeGUIClickEvent();
 
         }
 
@@ -72,9 +77,10 @@ namespace Guess5.Droid.Activities
 
             this.Bind(ViewModel, x => x.ProfileID, c => c.ProfileID);
             this.OneWayBind(ViewModel, x => x.ProfileName, c => c.textViewProfile.Text);
+            this.OneWayBind(ViewModel, x => x.Score_Array, c => c.listScore.Adapter);
         }
 
-        private void InitializeButtonClickEvent()
+        private void InitializeGUIClickEvent()
         {
             Intent activity;
 
@@ -97,6 +103,20 @@ namespace Guess5.Droid.Activities
                 /* How to pass data back from activity without new intent */
                 /* https://stackoverflow.com/questions/44691611/xamarin-android-c-how-to-pass-data-back-from-activity-without-new-intent */
                 StartActivityForResult(activity, 0);
+            };
+
+
+            imgHighFive.Click += delegate
+            {
+                imgHighFive.Visibility = ViewStates.Gone;
+                listScore.Visibility = ViewStates.Visible;
+            };
+
+            listScore.ItemClick
+                 += delegate
+            {
+                imgHighFive.Visibility = ViewStates.Visible;
+                listScore.Visibility = ViewStates.Gone;
             };
         }
 
