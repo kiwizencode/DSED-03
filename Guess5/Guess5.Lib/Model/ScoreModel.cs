@@ -12,10 +12,14 @@ namespace Guess5.Lib.Model
         [PrimaryKey]
         public int ID { get ; set ; }
         public string Name { get; set; }
-        public int Scores { get; set; } = 0;
+        public int Score { get; set; } = 0;
 
         public override string ToString() {
-            return Name.PadRight(10-Name.Length,' ') + Scores  ;
+            string score = Score.ToString();
+            string text = (Name.Trim() == string.Empty) ? "" :
+                            score.PadLeft(10-score.Length,'0') + 
+                            Name.PadRight(10 - Name.Length, ' ') ;
+            return text;
         }
     }
 }

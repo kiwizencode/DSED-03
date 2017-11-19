@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;  // used for debugging purpose
+using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 
@@ -9,192 +10,35 @@ using ReactiveUI;
 using Guess5.Lib.Helper;
 using Guess5.Lib.DataAccessObject;
 using Guess5.Lib.Model;
+using System.Reactive.Subjects;
 
 namespace Guess5.Droid.ViewModel
 {
-    public class ViewModel_Game : ReactiveObject
+    /* Need to breakup ViewModel_Game class into seperate files
+     *   for easy readability
+     */
+    
+    /* Break up ViewModel_Game into 2 partial files :
+       1. all declarations related to GUI data-binding
+       2. all coding related to the game logic + reactive-related
+    */
+
+    /* This file will contains all all declarations related to GUI data-binding */
+
+    public partial class ViewModel_Game : ReactiveObject
     {
         /// <summary>
         /// point to the current Activity which is bind to this View Model
-        /// for updating android GUI purpose
+        /// for updating (android GUI) View purpose
         /// </summary>
         public ReactiveActivity CurrentActivity { get; set; }
 
-        /// <summary>
-        /// This is part of the alphabet letter png filenames.
-        /// The naming convention for the png file is "letter_?.png" where ? is the alphabet
-        /// </summary>
-        private static string LetterFile { get; set; } = "letter_";
-        /// <summary>
-        /// This is part of the hangman image png filenames.
-        /// The naming convention for the png file is "hangman_0n.png" where n is a number
-        /// </summary>
-        private static string HangmanFile { get; set; } = "hangman";
-        /// <summary>
-        /// This is the name of the question mark png file name
-        /// </summary>
-        private static string QuestionMarkFile { get; set; } = "question_mark";
+        /* list of the letters that user has guessed. */
+        //private List<char> user_guess = null;
 
-        /// <summary>
-        /// variable stores the hidden word.
-        /// </summary>
-        public string hidden_word { get; private set; }
-
-        #region Define Slot Image Variables
-        /* ==== Declare variables to store hiddent letter image. I have called them Slot Image =================*/
-        private string _slot01_Image = QuestionMarkFile;
-        public string Slot01_Image {
-            get => _slot01_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot01_Image, LetterFile + value);
-        }
-
-        private string _slot02_Image = QuestionMarkFile;
-        public string Slot02_Image {
-            get => _slot02_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot02_Image, LetterFile + value);
-        }
-
-        private string _slot03_Image = QuestionMarkFile;
-        public string Slot03_Image {
-            get => _slot03_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot03_Image, LetterFile + value);
-        }
-
-        private string _slot04_Image = QuestionMarkFile;
-        public string Slot04_Image {
-            get => _slot04_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot04_Image, LetterFile + value);
-        }
-
-        private string _slot05_Image = QuestionMarkFile;
-        public string Slot05_Image {
-            get => _slot05_Image;
-            set => this.RaiseAndSetIfChanged(ref _slot05_Image, LetterFile + value);
-        }
-
-        /* ==== End of Slot Image Declaration ===================================================================*/
-        #endregion
-
-        #region Define Buttons Variables
-        /* ==== Declare variable to store letter for each button on the view/screen =============================*/
-        /* There are total 15 buttons. Hence have to declare 15 variables to store letter for each button */
-
-        private string _btn01 = string.Empty;
-        public string Btn01 {
-            get => _btn01.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn01, value);
-        }
-
-        private string _btn02 = string.Empty;
-        public string Btn02 {
-            get => _btn02.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn02, value);
-        }
-
-        private string _btn03 = string.Empty;
-        public string Btn03 {
-            get => _btn03.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn03, value);
-        }
-
-        private string _btn04 = string.Empty;
-        public string Btn04 {
-            get => _btn04.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn04, value);
-        }
-
-        private string _btn05 = string.Empty;
-        public string Btn05 {
-            get => _btn05.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn05, value);
-        }
-
-        private string _btn06 = string.Empty;
-        public string Btn06 {
-            get => _btn06.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn06, value);
-        }
-
-        private string _btn07 = string.Empty;
-        public string Btn07 {
-            get => _btn07.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn07, value);
-        }
-
-        private string _btn08 = string.Empty;
-        public string Btn08 {
-            get => _btn08.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn08, value);
-        }
-
-        private string _btn09 = string.Empty;
-        public string Btn09 {
-            get => _btn09.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn09, value);
-        }
-
-        private string _btn10 = string.Empty;
-        public string Btn10 {
-            get => _btn10.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn10, value);
-        }
-
-        private string _btn11 = string.Empty;
-        public string Btn11 {
-            get => _btn11.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn11, value);
-        }
-
-        private string _btn12 = string.Empty;
-        public string Btn12 {
-            get => _btn12.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn12, value);
-        }
-
-        private string _btn13 = string.Empty;
-        public string Btn13 {
-            get => _btn13.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn13, value);
-        }
-
-        private string _btn14 = string.Empty;
-        public string Btn14 {
-            get => _btn14.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn14, value);
-        }
-
-        private string _btn15 = string.Empty;
-        public string Btn15 {
-            get => _btn15.ToUpper();
-            set => this.RaiseAndSetIfChanged(ref _btn15, value);
-        }
-
-        /* ==== End of declaration of button letter variables ================================================ */
-        #endregion
-
-        #region Define Variables to retreive Button Number and Letter on the Button
-        /* ======================================================================================================*/
-
-        /* store the letter value on the button */
-        private static string QuestionMark { get; set; } = "?";
-        private string _button_letter = QuestionMark;
-        public string Btn_Text
-        {
-            get => _button_letter;
-            set => this.RaiseAndSetIfChanged(ref _button_letter, value);
-        }
-
-        /* store the button number in 0n format (where n is a number) */
-        public string Btn_Tag { get; set; }
-
-        /* ====================================================================================================== */
-
-        #endregion
-
-        #region Define Ticking Meachanism
-
-        /* ===== Declare variable to store the Timer Counter value. ============================= */
+        #region Declaration of Timer data-binding variable
         private static int MAX_TICK { get; set; } = 20;
+
         private int _timer;
         public string Timer
         {
@@ -208,205 +52,141 @@ namespace Guess5.Droid.ViewModel
             }
         }
 
-        private bool _timer_flag = false;
-        public bool Timer_Flag
-        {
-            get => _timer_flag;
-            set => this.RaiseAndSetIfChanged(ref _timer_flag, value);
-        }
-        /* ===== End of decaration for Timer Counter variable  =================================== */
         #endregion
 
-        private static int MAX_GUESS { get; set; } = 6;
-        private static int MAX_LETTER { get; set; } = 5;
-
-        private int _hangman_count { get; set; } = MAX_GUESS;
-
-        /* ==== Declare variable to store hangman image  ========================================================*/
-        private string _hangman_image = "hangman00"; // set the default image to load when activity start
-        public string Hangman_Image
+        public ViewModel_Game(ReactiveActivity activity)
         {
-            get => _hangman_image;
-            set => this.RaiseAndSetIfChanged(ref _hangman_image, HangmanFile + value.PadLeft(2, '0'));
-        }
-        
-        /* Correct Answer */
-        private int _correct_guess = 0;
-        public int Correct_Answer
-        {
-            get => _correct_guess;
-            set => this.RaiseAndSetIfChanged(ref _correct_guess, value);
-        }
+            /* point to the Acitivity class*/
+            this.CurrentActivity = activity;
 
-        /* Current Score */
-        private int _score;
-        public string Score {
-            get => _score.ToString();
-            set {
-                //if (int.TryParse(value, out int i))
-                //    this.RaiseAndSetIfChanged(ref _score, i);
-            } // add this bit of code so that the Reactive UI data bind will work 
-        }
+            /* (F1) Set Game Play Status to false before GUI update */
+            StartGamePlay(false);
 
-        /* Highest Score */
-        private int _highestscore = 0;
-        public string HighestScore  {
-            get => _highestscore > 0 ? _highestscore.ToString() : "";
-            set {
-                //if (int.TryParse(value, out int i))
-                //    this.RaiseAndSetIfChanged(ref _highestscore, i);
-            } // add this bit of code so that the Reactive UI data bind will work
-        }
+            /* (G1) Reset all GUI (View) components */
+            InstantiateNewGameGUI();
 
-        /* ==================================================================================================== */
+            /* (F1) Set Update GUI Status to false */
+            //UpdateGUIStatus(false);
 
+            /* (G2) Setup Start Game Command */
+            SetupStartCommand();
 
-        /* ======================================================= */
-
-
-        /// <summary>
-        /// This variable has 2 purpose :
-        /// 1. true ==> a game has just started or
-        ///             the user has just won a game and about to start another one.
-        /// 2. false ==> a game has just ended or
-        ///              start of the game activity screen
-        /// </summary>
-        private bool _game_on_flag = false;
-        public bool Is_Game_On {
-            get => _game_on_flag;
-            set => this.RaiseAndSetIfChanged(ref _game_on_flag, value);
-        }
-
-        public ReactiveCommand<Unit, Unit> commandStart;
-        public ReactiveCommand<Unit, Unit> commandPause;
-
-        private IDisposable tcDisposable = null;
-
-        /* store the letter that user has guessed. s*/
-        private List<char> user_guess = null;
-
-        private string _profileID = string.Empty;
-        public string ProfileID
-        {
-            get => _profileID;
-            set => this.RaiseAndSetIfChanged(ref _profileID, value);
-        }
-
-        private string _profileName;
-        public string ProfileName
-        {
-            get => _profileName;
-            set => this.RaiseAndSetIfChanged(ref _profileName, value);
-        }
-
-        #region The followin code take care of the timer when Game Activity is inactive or is finishing
-        public void Resume()
-        {
-            if (tcDisposable != null)
-            {
-                Timer_Flag = true;
-                //this.RaisePropertyChanged("timer_flag");
-            }
-        }
-
-        public void Stop()
-        {
-            if (tcDisposable != null)
-            {
-                Timer_Flag = false;
-                //this.RaisePropertyChanged("timer_flag");
-            }
-        }
-
-        public void Dispose()
-        {
-            if (tcDisposable != null)
-                tcDisposable.Dispose();
-        }
-#endregion
-
-        public ViewModel_Game()
-        {
-            InitializeHiddenWord();
-
-            user_guess = new List<char>();
-
-            //Is_Game_Still_Running = false;
-
-            //GenerateHiddenWord();
-
-            //ButtonLetterInitializer();
-
-            InitializeReactiveCommand();
-
+            /* (Rx) Setup Observables */
             SetupObservable();
+
+            //SetupTableObservable();
         }
 
-        private void InitializeHiddenWord()
+        #region (G) Setup functions related to GUI (View) Display
+        #region (G1) Reset all GUI (View) components (for a new game)
+        /// <summary>
+        /// The following code will reset the GUI (View) components 
+        ///   for staring of a new games
+        /// </summary>
+        private void InstantiateNewGameGUI()
         {
-            InitializeImageSlot();
+            /* (G1.1) Reset ImageView in GUI (View) */
+            ResetImageView();
 
+            /* (G1.2) Generate a hidden word. */
             GenerateHiddenWord();
 
+            /* (G1.3) Update 15 buttons GUI (View) */
             ButtonLetterInitializer();
+
+            /* reset other GUI (view) components*/
+            Score = "0";
+            HighestScore = "0";
         }
 
-        private void InitializeImageSlot()
+        #region (G1.1) Reset ImageView in GUI (View)
+        /// <summary>
+        /// Reset all ViewImages that holds letters for the hidden word to a '?' image.
+        /// </summary>
+        private void ResetImageView()
         {
             _slot01_Image = QuestionMarkFile;
-            this.RaisePropertyChanged("Slot01_Image");
             _slot02_Image = QuestionMarkFile;
-            this.RaisePropertyChanged("Slot02_Image");
             _slot03_Image = QuestionMarkFile;
-            this.RaisePropertyChanged("Slot03_Image");
             _slot04_Image = QuestionMarkFile;
-            this.RaisePropertyChanged("Slot04_Image");
             _slot05_Image = QuestionMarkFile;
-            this.RaisePropertyChanged("Slot05_Image");
-        }
 
+            /* Refactor such a way => speed up the GUI updaing ??? */
+            CurrentActivity.RunOnUiThread(() => {
+                this.RaisePropertyChanged("Slot01_Image");
+                this.RaisePropertyChanged("Slot02_Image");
+                this.RaisePropertyChanged("Slot03_Image");
+                this.RaisePropertyChanged("Slot04_Image");
+                this.RaisePropertyChanged("Slot05_Image");
+            });
+        }
+        #endregion
+
+        #region (G1.2) Generate a hidden word.
         /// <summary>
-        /// function that return a random 5 letters hidden words
+        /// stores the hidden word, generated by WordsHelper.GetNextWord().
+        /// Please refer to Guess5.Lib.Helper.WordsHelper.cs for detail.
+        /// </summary>
+        private string hidden_word { get; set; }
+        /// <summary>
+        /// return a random 5-letters words and save the value to a variable called hidden_word
+        /// Please refer to Guess5.Lib.Helper.WordsHelper.cs for detail.
         /// </summary>
         private void GenerateHiddenWord() { hidden_word = WordsHelper.GetNextWord(); }
+        #endregion
 
+        #region (G1.3) Update 15 buttons GUI (View)
         /// <summary>
-        /// Initialize all the 15 letters buttons "keyboard" at the start of a new game.
-        /// It will contain
+        /// Initialize all image on the 15 buttons to show random letter image.
+        /// Letters from the hidden word will also be mixed in the 15 buttons' letter image.
         /// </summary>
         private void ButtonLetterInitializer()
         {
+            /* Use the Helper class, WordsHelper.GenerateRandomLetter function
+                 to generate a list with 15 random letters (in random sequence), 
+                 include letters from the hidden word mixed into it.*/
             string letter_list = WordsHelper.GenerateRandomLetter(hidden_word);
+
+            /* Iterate through the list and updates all 15 buttons individually
+                 with a letter from the list.*/
             for (int i = 0; i < 15; i++)
             {
                 string value = "" + letter_list[i];
-                switch (i + 1)
-                {
-                    case 1: Btn01 = value; break;
-                    case 2: Btn02 = value; break;
-                    case 3: Btn03 = value; break;
-                    case 4: Btn04 = value; break;
-                    case 5: Btn05 = value; break;
-                    case 6: Btn06 = value; break;
-                    case 7: Btn07 = value; break;
-                    case 8: Btn08 = value; break;
-                    case 9: Btn09 = value; break;
-                    case 10: Btn10 = value; break;
-                    case 11: Btn11 = value; break;
-                    case 12: Btn12 = value; break;
-                    case 13: Btn13 = value; break;
-                    case 14: Btn14 = value; break;
-                    case 15: Btn15 = value; break;
-                }
+
+                /* Refactor such a way => speed up the GUI updaing ??? */
+                CurrentActivity.RunOnUiThread(() => {
+                    switch (i + 1)
+                    {
+                        case 1: Btn01 = value; break;
+                        case 2: Btn02 = value; break;
+                        case 3: Btn03 = value; break;
+                        case 4: Btn04 = value; break;
+                        case 5: Btn05 = value; break;
+                        case 6: Btn06 = value; break;
+                        case 7: Btn07 = value; break;
+                        case 8: Btn08 = value; break;
+                        case 9: Btn09 = value; break;
+                        case 10: Btn10 = value; break;
+                        case 11: Btn11 = value; break;
+                        case 12: Btn12 = value; break;
+                        case 13: Btn13 = value; break;
+                        case 14: Btn14 = value; break;
+                        case 15: Btn15 = value; break;
+                    }
+                });
+
             }
         }
+        #endregion        
+        #endregion
 
-        private void InitializeReactiveCommand()
+        #region (G2) Setup Start Game Command
+        public ReactiveCommand<Unit, Unit> commandStart;
+        private void SetupStartCommand()
         {
-            /* 
-             * http://dotnetpattern.com/csharp-action-delegate 
-             */
-
+            /* How to implement Action class
+                http://dotnetpattern.com/csharp-action-delegate */
+            /* Create a Action for the function StartGame */
             Action doStartAction = new Action(StartGame);
             commandStart = ReactiveCommand.Create(doStartAction);
 
@@ -414,98 +194,162 @@ namespace Guess5.Droid.ViewModel
             //commandPause = ReactiveCommand.Create(doPauseAction);
         }
 
-        //private void PauseGame()
-        //{
-        //    Timer_Flag = !Timer_Flag;
-        //}
-
-        /* ========= DEBUG ========================== */
-
+        #region (G2.1) Start Game Function
+        /// <summary>
+        /// The function will be activated when user click the 'Start' button
+        /// </summary>
         private void StartGame()
         {
-            /* 
-                Check Is_Game_On flag
-                    true ==> a game has just started or
-                                the user has just won a game and about to start another one.
-                    false ==> a game has just ended or start of the game activity screen
-             */
+            /* Note that all GUI Initialization has been done by InstantiateNewGameGUI(),
+                  hence the following code will setup other related variable or function 
+                  in order to start a new game */
 
-            if (Is_Game_On) // ==> True
-            {
-                _highestscore += _score;
-                this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
-            }
-            else
-            {
-                _highestscore = 0;
-                this.RaisePropertyChanged("HighestScore"); /* Trigger Property Changed */
-            }
+            /* (G1) reset the hangman counter and display the starting hangmane image */
+            ChangeHangmanImage(0);
 
-            _score = 0; // reset the current score for a new game
-            this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
+            /* (Rx.1) Instantiate Time Counter Sequence */
+            InstantiateTimeCounter();
 
-            Correct_Answer = 0; // reset the Correct Answer counter
+            //user_guess = new List<char>();
+            HighestScore = Score;
 
-            Timer_Flag = true; // indicate timer to be running
-
-            if (user_guess.Count > 0) // start of Game Activity
-            {
-                /* The following code is add to refresh the hangman image */
-                _hangman_count = MAX_GUESS; // reset to display the hangman image from the very begining
-                GetNextHangmanImage();
-
-                InitializeHiddenWord();
-            }
-
-            _hangman_count = MAX_GUESS;
-
-            user_guess = new List<char>();
-
-            GenerateTimerSequence();  // Initiate the Observerable that start timer counter
+            /* (M0.1) Set Game Play Status to true ==> Game has started !!! */
+            StartGamePlay();
         }
+        #endregion
+        #endregion
 
+        #region (G3) Change Hangman Image on GUI (View)
         /// <summary>
-        /// start a new timer counter
+        /// Change hangman image to be display onto (GUI) View 
         /// </summary>
-        private void GenerateTimerSequence()
+        private void ChangeHangmanImage(int index = -1)
         {
-            tcDisposable = 
-                Observable.Interval(TimeSpan.FromSeconds(1))
-                    .Take(MAX_TICK)  // only generate MAX_TICK no of number                 
-                    .Distinct() // no repeat number
-                    .Repeat()   // keep repeat the sequnce
-                    .Subscribe(value =>
-                    {
-                        /*
-                            Check Timer_Flag 
-                            false ==> the game is not started yet or
-                                      when Game Activity is temperory inactive.
-                         */
-                        if (Timer_Flag) 
-                        {
-                            CurrentActivity.RunOnUiThread(() =>
-                            {
-                                var counter = MAX_TICK - (int)value;
-                                Timer = counter.ToString();
-                                // Debug 
-                                Debug.WriteLine($"Timer counter : {counter}");
+            /* Refactor such a way => speed up the GUI updaing ??? */
+            CurrentActivity.RunOnUiThread(() =>
+            {
+                if (index == -1) // by default, alway increment the hangman count
+                    _hangman_count++; //= ++_hangman_count % (MAX_GUESS + 1);
+                else
+                    _hangman_count = index; //set to user-define hangmane index
+                Hangman_Image = _hangman_count.ToString();
+            });
+            Debug.WriteLine($"Showing Hangman Image No [{_hangman_count}]");
+        }
+        #endregion
 
-                                // Debug
-                                Debug.WriteLine($"Hidden Word is {hidden_word}");
+        #region (G4) Show the letter on respective (GUI) ImageView (view)
+        /// <summary>
+        /// Display the letter onto GUI (view)
+        /// </summary>
+        /// <param name="i"></param>
+        private void ShowHiddenWord(int index)
+        {
+            string letter = hidden_word[index].ToString();
+            switch (index)
+            {
+                case 0: Slot01_Image = letter; break;
+                case 1: Slot02_Image = letter; break;
+                case 2: Slot03_Image = letter; break;
+                case 3: Slot04_Image = letter; break;
+                case 4: Slot05_Image = letter; break;
+            }
+        }
+        #endregion
+        #endregion
 
-                                if (counter== MAX_TICK)
-                                {
-                                    // Debug
-                                    Debug.WriteLine($"Reach MAX_TICK ==> change hangman image.");
-                                    GetNextHangmanImage();
-                                }
+        #region (F1) Function to enable/disable Game Play 
+        /// <summary>
+        /// When GUI (View) components, set flag to such that any update to GUI (view)
+        ///   will not trigger any logic operation behind the sence
+        /// </summary>
+        /// <param name="flag"></param>
+        private void StartGamePlay(bool flag = true)
+        {
+            Is_Game_On = flag;
+            Timer_Flag = flag;
+        }
+        #endregion
 
-                            });
-                        }
-                    });
+        #region (Rx) Setup Observables
+        private void SetupObservable()
+        {
+            /* (Rx.2) Trigger an observable when last hangman image is displayed. */
+            Last_Hangman_Image_Observable();
+
+            /* (Rx.3) Trigger an observable when user found all the letters in the hidden word. */
+            HiddenWord_Found_Observable();
+
+            /* (Rx.4) Trigger an observable when user click one of the 15 buttons. */
+            Check_User_Input_Observable();
+
         }
 
-        private void SetupObservable()
+        #region (Rx.1) Instantiate Time Counter Sequence
+        /* Define a variable to keep track whether timer counter has completed a round.
+           If true, the timer counter can update the hangman image on GUI (view) */
+        private bool after_first_round = false;
+        /// <summary>
+        /// Instantiate a new timer counter
+        /// </summary>
+        private void InstantiateTimeCounter()
+        {
+            after_first_round = false; // set flag to false
+
+            /* Create a sequence, generate an number every 1 second 
+                from a range set by MAX_TICK and repeat the sequence. */
+
+            timerDisposable = Observable
+                .Interval(TimeSpan.FromSeconds(1)) // every 1 second
+                .Take(MAX_TICK) // only generate MAX_TICK no of number 
+                .Distinct()     // must be unique number
+                .Repeat()       // keep repeat the sequence
+                .Subscribe(value =>  
+                {
+                    /* Add a check for Timer_Flag due to following conditions :
+                       false ==> 1. The game is not started yet or when Game Activity is temperory inactive.
+                             ==> 2. Temporarily pause the timer until Timer_Flag is set to true again */
+                    if (Timer_Flag) // Only execute when Timer_Flag is true
+                    {
+                        /* Must run in UI Thread, or else will not work !!! */
+                        CurrentActivity.RunOnUiThread(() =>
+                        {
+                            int counter = MAX_TICK - (int)value;
+                            Timer = counter.ToString();
+
+                            // Debug 
+                            Debug.WriteLine($"Timer counter : {counter}");
+                            // Debug
+                            Debug.WriteLine($"Hidden Word is {hidden_word}");
+
+                            /* Let the timer counter do a complete turn before updating the hangman image */
+                            if (value == MAX_TICK - 1)
+                                after_first_round = true; // set flag to true
+
+                            /* If counter reach MAX_TICK, (after timer has gone through one round)
+                                  change the hangman image */
+                            if (counter == MAX_TICK && after_first_round)
+                            {
+                                // Debug
+                                Debug.WriteLine($"Reach MAX_TICK ==> change hangman image.");
+
+                                /* (G3) Change hangman image on GUI (View)*/
+                                // _hangman_count = 0; // reset the hangman counter
+                                ChangeHangmanImage();
+                            }
+
+                        });
+                    }
+                });
+        }
+        #endregion
+
+        #region (Rx.2) Game Lose. Trigger an observable when last hangman image is displayed. 
+        /// <summary>
+        /// Trigger an Observable when last hangman image is displayed.
+        /// Stop the timer counter.
+        /// </summary>
+        private void Last_Hangman_Image_Observable()
         {
             /*
                 When the screen display the last image of hangman,
@@ -514,89 +358,164 @@ namespace Guess5.Droid.ViewModel
              */
             this.WhenAnyValue(x => x.Hangman_Image)
                 .Select(flag => (_hangman_count == MAX_GUESS))
-                .Subscribe((flag) => 
+                .Subscribe((flag) =>
                 {
-                    if(flag && tcDisposable != null)
+                    if (flag && timerDisposable != null)
                     {
-                        tcDisposable.Dispose();
+                        timerDisposable.Dispose();
                         Debug.WriteLine("Timer Counter is Disposed !!!");
-                        Timer_Flag = false;
+                        StartGamePlay(false);
+                        //Timer_Flag = false;
+                        //Is_Game_On = false;
                         Debug.WriteLine("Stop Timer Counter");
-                        Is_Game_On = false;
                         Debug.WriteLine("Game Over !!!");
+
+                        /* update user highest score */
+                        int total = _score + _highestscore;
+                        HighestScore = total.ToString();
+
+                        /* reset the score, start a brand new game. */
+                        Score = "0"; 
                     }
                 });
+        }
+        #endregion
 
-            /* 
-                check the correct guess
-             */
+        #region (Rx.3) Game Won. Trigger an observable when user found all the letters in the hidden word.
+        /// <summary>
+        /// trigger an observable when user found all the letters in the hidden word,
+        /// </summary>
+        private void HiddenWord_Found_Observable()
+        {
             this.WhenAnyValue(x => x.Correct_Answer)
                 .Select(flag => (Correct_Answer == MAX_LETTER))
-                .Subscribe((flag) => {
-                    if (flag & tcDisposable != null)
+                .Subscribe((flag) =>
+                {
+                    if (flag & timerDisposable != null)
                     {
-                        tcDisposable.Dispose();
+                        timerDisposable.Dispose();
                         Debug.WriteLine("Timer Counter is Disposed !!!");
-                        Timer_Flag = false;
+                        StartGamePlay(false);
+                        //Timer_Flag = false;
+                        //Is_Game_On = false;
                         Debug.WriteLine("Stop Timer Counter");
-                        Is_Game_On = true;
                         Debug.WriteLine("Game Won !!!");
+
+                        /* update user highest score */
+                        int total = _score + _highestscore;
+                        HighestScore = total.ToString();
+
+                        /* set score equal to highest score.
+                           ==> ready to start anoher new game. */
+                        Score = total.ToString();
                     }
                 });
+        }
+        #endregion
 
-            /*
-                If the user has click on a button, get letter from the button text,
+        #region (Rx.4) Trigger an observable when user click one of the 15 buttons.
+        private void Check_User_Input_Observable()
+        {
+            /*  If the user has click on a button, get letter from the button text,
                 check against the hidden word. 
                 if the letter is in hidden word, increase the correct guess count
-                else change the hangman image ==> increase the wrong guess count
-             */
+                else change the hangman image ==> increase the wrong guess count */
+
             this.WhenAny(x => x.Btn_Text, _ => string.Empty)
-                .Select( flag => (Btn_Text.ToLower()[0] != '?'))
-                .Subscribe( (flag) => {
-                    if(flag)
+                .Select(flag => (Btn_Text.ToLower()[0] != '?'))
+                .Subscribe((flag) =>
+                {
+                    if (flag)
                     {
-                        /* get the letter on the button */
+                        /* Get the letter on the button. Always convert to lower-case */
                         char letter = Btn_Text.ToLower()[0]; /* convert string to char */
 
-                        user_guess.Add(letter);
+                        //user_guess.Add(letter);
 
-                        /* Check whether the letter is in the hidden word
-                            *   return -1 if not found
-                            */
+                        /* Check whether the letter is one of the letters in the hidden word
+                             return -1 if not found  */
                         if (hidden_word.LastIndexOf(letter) != -1)
                         {
-                            /* Count the number of time the letter appear in the hidden words*/
+                            /* (Rx.4.1) Count the number of time the letter appears in the hidden word. */
                             int count = CountLetter(letter);
 
                             /* add up the number of correct answer */
                             Correct_Answer += count;
 
-                            /* Calculate the score and update to total score*/
+                            /* Calculate the 'score' for the letter and add it to user total score*/
                             int score = WordsHelper.GetScore(letter);
-                            _score += (_timer + score) * count;
-                            this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
+                            int total = _score + (_timer + score) * count;
+                            //this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
+                            Score = total.ToString();
 
+                            /* Update the correct answer counter.
+                               If the full (hidden) word is not found yet,
+                               restart the timer again. */
                             if (Correct_Answer != MAX_LETTER)
                             {
-                                tcDisposable.Dispose();
+                                /* Dispose Timer Counter Sequence
+                                   There should be only one Timer Counter Sequence running at any time. */
+                                timerDisposable.Dispose();
                                 Debug.WriteLine("Timer Counter is Disposed !!!");
 
-                                //
-                                _hangman_count--;
-
-                                GenerateTimerSequence();
+                                /* (Rx.1) re-Instantiate Time Counter Sequence */
+                                //_hangman_count--;
+                                InstantiateTimeCounter();
+                                Debug.WriteLine("Timer restarted !!!");
                             }
+                            else
+                            {
+                                /* */
+                                //total += _highestscore;
+                                //HighestScore = total.ToString();
+                            }
+
                         }
-                        else
+                        /* If the letter choosed is not in hidden word. ==> wrong guess !!
+                              display the next hangman image until the last hangman image is displayed, 
+                              the game will halt. 
+                              see (Rx.2) for detail. */
+                        else 
                         {
-                            //if (letter != '?')
-                            GetNextHangmanImage();
+                            /* (G3) Change the hangman image on GUI (view), */
+                            ChangeHangmanImage();
                         }
                     }
-
-
                 });
+        }
 
+        #region (Rx.4.1) Count the number of time the letter appears in the hidden word.
+        /// <summary>
+        /// return the number of time, the input charactor {letter} 
+        ///     appears in the {hidden_word}. 
+        ///     While do counting, also display the letter onto GUI (view)
+        /// return the count
+        /// </summary>
+        /// <param name="letter"></param>
+        /// <returns></returns>
+        int CountLetter(char letter)
+        {
+            int count = 0;
+            for (int i = 0; i < hidden_word.Length; i++)
+                if (hidden_word[i] == letter)
+                {
+                    /* (G4) Show the letter on respective (GUI) ImageView (view) */
+                    ShowHiddenWord(i);
+                    /* increment the number of timer the letter is found*/
+                    count++;
+                }
+            return count;
+        }
+        #endregion
+
+
+        #endregion
+
+        #endregion
+
+        private void SetupTableObservable()
+        {
+            /* Load the profile based on Profile ID */
             this.WhenAnyValue(x => x.ProfileID)
                 .Select(flag => (ProfileID.Trim() != string.Empty))
                 .Subscribe((flag) =>
@@ -658,58 +577,11 @@ namespace Guess5.Droid.ViewModel
                         }
                     }
                 });
-
         }
 
-        /// <summary>
-        /// Get the next hangman image to be display onto (GUI) View 
-        /// </summary>
-        private void GetNextHangmanImage()
-        {
-            _hangman_count = ++_hangman_count % (MAX_GUESS + 1);
-            Hangman_Image = _hangman_count.ToString();
-            Debug.WriteLine($"Showing Hangman Image No [{_hangman_count}]");
-        }
 
-        /* 
-            count the number of time, the letter appears in the hidden word.
-        */
-        /// <summary>
-        /// Count the number of time, the input charactor, letter, 
-        ///     appears in the string array, hidden_word
-        /// Return the count
-        /// </summary>
-        /// <param name="letter"></param>
-        /// <returns></returns>
-        int CountLetter(char letter)
-        {
-            int count = 0;
-            for (int i = 0; i < hidden_word.Length; i++)
-                if (hidden_word[i] == letter)
-                {
-                    ShowHiddenWord(i + 1);
-                    //Correct_Answer++;
-                    count++;
-                }
-            return count; 
-        }
 
-        /*
-            if the user guess the correct letter, show the correct letter in the correct position in image slot
-         */
-        private void ShowHiddenWord(int i)
-        {
-            string getString(char ch) => ch.ToString();
 
-            switch (i)
-            {
-                case 1: Slot01_Image = getString(hidden_word[0]); break;
-                case 2: Slot02_Image = getString(hidden_word[1]); break;
-                case 3: Slot03_Image = getString(hidden_word[2]); break;
-                case 4: Slot04_Image = getString(hidden_word[3]); break;
-                case 5: Slot05_Image = getString(hidden_word[4]); break;
-            }
-        }
 
 
     }

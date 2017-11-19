@@ -21,14 +21,6 @@ namespace Guess5.Droid.ViewModel
         /// </summary>
         public ReactiveActivity CurrentActivity { get; set; }
 
-        //private ProfileModel _profile;
-        //public ProfileModel Profile {
-        //    get => _profile;
-        //    set  {
-        //        this.RaiseAndSetIfChanged(ref _profile, value);
-        //    }
-        //}
-
         private string _profileID = string.Empty;
         public string ProfileID
         {
@@ -43,7 +35,6 @@ namespace Guess5.Droid.ViewModel
             set => this.RaiseAndSetIfChanged(ref _profileName, value);
         }
 
-        // private ArrayAdapter<ProfileModel> _profile_Array;
         public ArrayAdapter<ProfileModel> Profile_Array {
             get {
                 ProfileModel[] items = ProfileRepository.GetProfiles().OrderBy(x => x.Name.ToLower()).ToArray();
@@ -56,7 +47,7 @@ namespace Guess5.Droid.ViewModel
         {
             get
             {
-                ScoreModel[] items = ScoreRepository.GetProfiles().OrderBy(x => x.Name.ToLower()).ToArray();
+                ScoreModel[] items = ScoreRepository.GetProfiles().OrderBy(x => x.Score).ThenBy(x => x.Name.ToLower()).ToArray();
                 return new ArrayAdapter<ScoreModel>(CurrentActivity, Android.Resource.Layout.SimpleListItem1, items);
             }
             set { }
@@ -155,7 +146,7 @@ namespace Guess5.Droid.ViewModel
                         }
                         if (!active_profile) // found active profile
                         {
-                            /* Create a 'Guest 'Game Profile and set it to 'active' */
+                            /* Create a 'Guest' Game Profile and set it to 'active' */
                             ProfileModel profile = new ProfileModel();
                             profile.Name = "Guest";
 

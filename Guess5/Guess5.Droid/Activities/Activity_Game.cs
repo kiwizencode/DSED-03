@@ -186,8 +186,8 @@ namespace Guess5.Droid.Activities
         /// </summary>
         private void InitializeModel()
         {
-            ViewModel = new ViewModel_Game();
-            ViewModel.CurrentActivity = this;
+            ViewModel = new ViewModel_Game(this);
+            //ViewModel.CurrentActivity = this;
 
             /* flag indicate whether the timer is ticking */
             this.OneWayBind(ViewModel, x => x.Timer_Flag, c => c.Timer_Flag);
