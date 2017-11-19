@@ -1,48 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;  // used for debugging purpose
-using System.Linq;
-using System.Reactive;
-using System.Reactive.Linq;
-
-using ReactiveUI;
-
-using Guess5.Lib.Helper;
-using Guess5.Lib.DataAccessObject;
-using Guess5.Lib.Model;
+﻿using ReactiveUI;
 
 namespace Guess5.Droid.ViewModel
 {
     /* Break up ViewModel_Game into 2 partial files :
-       1. all declarations related to GUI data-binding
-       2. all coding related to the game logic + reactive-related
-    */
-
-    /* This file will contains all coding related to the game logic + reactive-related */
+       1. all coding related to the game logic + reactive-related
+       2. all declarations related to GUI data-binding  */
 
     public partial class ViewModel_Game : ReactiveObject
     {
-        #region Declaration of constant properties
-        /* Max. no of guesses allowed by the user in a game.
-         * This also correspondance to the number of hangman image to display 
-         *    when user makes the wrong guess.*/
-        private static int MAX_GUESS { get; set; } = 6;
-
-        /* No of letters in a words. 
-         * Even though I have fixed all words to be 5 letters.
-         * Should be easy to change the code to handle words with difference length */
-        private static int MAX_LETTER { get; set; } = 5;
-
-        #endregion
-
-
-        private bool _timer_flag = false;
-        public bool Timer_Flag
-        {
-            get => _timer_flag;
-            set => this.RaiseAndSetIfChanged(ref _timer_flag, value);
-        }
-
         /// <summary>
         /// This variable has 2 purpose :
         /// 1. true ==> a game has just started or
@@ -50,24 +15,13 @@ namespace Guess5.Droid.ViewModel
         /// 2. false ==> a game has just ended or
         ///              start of the game activity screen
         /// </summary>
-        private bool _game_on_flag = false;
-        public bool Is_Game_On
-        {
-            get => _game_on_flag;
-            set => this.RaiseAndSetIfChanged(ref _game_on_flag, value);
-        }
-
-
-
-
-        #region (S)upport Function
-
-
-
-        #endregion
-
-
-
+        
+        //private bool _game_on_flag = false;
+        //public bool Is_Game_On
+        //{
+        //    get => _game_on_flag;
+        //    set => this.RaiseAndSetIfChanged(ref _game_on_flag, value);
+        //}
 
 
         /// <summary>
@@ -84,8 +38,6 @@ namespace Guess5.Droid.ViewModel
         /// This is the name of the question mark png file name
         /// </summary>
         private static string QuestionMarkFile { get; set; } = "question_mark";
-
-
 
         #region Define Slot Image Variables
         /* ==== Declare variables to store hiddent letter image. I have called them Slot Image =================*/
@@ -266,99 +218,6 @@ namespace Guess5.Droid.ViewModel
         /* ====================================================================================================== */
 
         #endregion
-
-
-
-
-
-
-
-
-
-        /* Correct Answer */
-        private int _correct_guess = 0;
-        public int Correct_Answer
-        {
-            get => _correct_guess;
-            set => this.RaiseAndSetIfChanged(ref _correct_guess, value);
-        }
-
-        /* Current Score */
-        private int _score;
-        public string Score
-        {
-            get => _score.ToString();
-            set
-            {
-                if (int.TryParse(value, out int i))
-                    this.RaiseAndSetIfChanged(ref _score, i);
-            } // add this bit of code so that the Reactive UI data bind will work 
-        }
-
-        /* Highest Score */
-        private int _highestscore = 0;
-        public string HighestScore
-        {
-            get => _highestscore > 0 ? _highestscore.ToString() : "";
-            set
-            {
-                if (int.TryParse(value, out int i))
-                    this.RaiseAndSetIfChanged(ref _highestscore, i);
-            } // add this bit of code so that the Reactive UI data bind will work
-        }
-
-
-
-        
-        //public ReactiveCommand<Unit, Unit> commandPause;
-
-        private IDisposable timerDisposable = null;     // Timer Counter Disposable
-
-
-        #region variables related to User Profile
-        private string _profileID = string.Empty;
-        public string ProfileID
-        {
-            get => _profileID;
-            set => this.RaiseAndSetIfChanged(ref _profileID, value);
-        }
-
-        private string _profileName;
-        public string ProfileName
-        {
-            get => _profileName;
-            set => this.RaiseAndSetIfChanged(ref _profileName, value);
-        }
-
-        private static int MAX_TOP_SCORES { get; set; } = 3;
-        #endregion
-
-        #region The following code take care of the timer when Game Activity is inactive or is finishing
-        public void Resume()
-        {
-            if (timerDisposable != null)
-            {
-                Timer_Flag = true;
-                //this.RaisePropertyChanged("timer_flag");
-            }
-        }
-
-        public void Stop()
-        {
-            if (timerDisposable != null)
-            {
-                Timer_Flag = false;
-                //this.RaisePropertyChanged("timer_flag");
-            }
-        }
-
-        public void Dispose()
-        {
-            if (timerDisposable != null)
-                timerDisposable.Dispose();
-        }
-        #endregion
-
 
     }
 }

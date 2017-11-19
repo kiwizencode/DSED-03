@@ -10,20 +10,12 @@ using ReactiveUI;
 using Guess5.Lib.Helper;
 using Guess5.Lib.DataAccessObject;
 using Guess5.Lib.Model;
-using System.Reactive.Subjects;
 
 namespace Guess5.Droid.ViewModel
 {
-    /* Need to breakup ViewModel_Game class into seperate files
-     *   for easy readability
-     */
-    
     /* Break up ViewModel_Game into 2 partial files :
-       1. all declarations related to GUI data-binding
-       2. all coding related to the game logic + reactive-related
-    */
-
-    /* This file will contains all all declarations related to GUI data-binding */
+       1. all coding related to the game logic + reactive-related
+       2. all declarations related to GUI data-binding  */
 
     public partial class ViewModel_Game : ReactiveObject
     {
@@ -32,6 +24,74 @@ namespace Guess5.Droid.ViewModel
         /// for updating (android GUI) View purpose
         /// </summary>
         public ReactiveActivity CurrentActivity { get; set; }
+
+        /* Max. no of guesses allowed by the user in a game.
+         * This also correspondance to the number of hangman image to display 
+         *    when user makes the wrong guess.*/
+        private static int MAX_GUESS { get; set; } = 6;
+
+        /* No of letters in a words. 
+         * Even though I have fixed all words to be 5 letters.
+         * Should be easy to change the code to handle words with difference length */
+        private static int MAX_LETTER { get; set; } = 5;
+
+        #region Related Properties that keep track of Scores
+        /* Current Score */
+        private int _score = 0;
+        public string Score
+        {
+            get => _score.ToString();
+            set
+            {
+                if (int.TryParse(value, out int i))
+                    this.RaiseAndSetIfChanged(ref _score, i);
+            }
+        }
+
+        /* Highest Score */
+        private int _highestscore = 0;
+        public string HighestScore
+        {
+            get => _highestscore > 0 ? _highestscore.ToString() : "";
+            set
+            {
+                if (int.TryParse(value, out int i))
+                    this.RaiseAndSetIfChanged(ref _highestscore, i);
+            }
+        }
+
+        /* Correct Answer */
+        private int _correct_guess = 0;
+        public int Correct_Answer
+        {
+            get => _correct_guess;
+            set => this.RaiseAndSetIfChanged(ref _correct_guess, value);
+        }
+        #endregion
+
+        #region Timer related properties and functions
+        private bool _timer_flag = false;
+        public bool Timer_Flag
+        {
+            get => _timer_flag;
+            set => this.RaiseAndSetIfChanged(ref _timer_flag, value);
+        }
+
+        #region (A) The following code take care of the timer  when Game Activity is inactive or is finishing
+        public void Set_Timer_Flag(bool flag)
+        {
+            if (timerDisposable != null)
+            {
+                Timer_Flag = flag;
+            }
+        }
+
+        public void Dispose()
+        {
+            if (timerDisposable != null)
+                timerDisposable.Dispose();
+        }
+        #endregion
 
         /* list of the letters that user has guessed. */
         //private List<char> user_guess = null;
@@ -54,19 +114,28 @@ namespace Guess5.Droid.ViewModel
 
         #endregion
 
+        #region (F1) Function to enable/disable Game Play 
+        /// <summary>
+        /// When GUI (View) components, set flag to such that any update to GUI (view)
+        ///   will not trigger any logic operation behind the sence
+        /// </summary>
+        /// <param name="flag"></param>
+        private void StartGamePlay(bool flag = true)
+        {
+            //Is_Game_On = flag;
+            Timer_Flag = flag;
+        }
+        #endregion
+        #endregion
+
         public ViewModel_Game(ReactiveActivity activity)
         {
             /* point to the Acitivity class*/
             this.CurrentActivity = activity;
 
-            /* (F1) Set Game Play Status to false before GUI update */
-            StartGamePlay(false);
-
             /* (G1) Reset all GUI (View) components */
             InstantiateNewGameGUI();
-
-            /* (F1) Set Update GUI Status to false */
-            //UpdateGUIStatus(false);
+            HasGameGUI_Setup = true;
 
             /* (G2) Setup Start Game Command */
             SetupStartCommand();
@@ -74,17 +143,22 @@ namespace Guess5.Droid.ViewModel
             /* (Rx) Setup Observables */
             SetupObservable();
 
-            //SetupTableObservable();
+            /* (Rx.DB) Setup Observables related to database */
+            SetupDbTableObservable();
         }
 
         #region (G) Setup functions related to GUI (View) Display
         #region (G1) Reset all GUI (View) components (for a new game)
+        private bool HasGameGUI_Setup = false;
         /// <summary>
         /// The following code will reset the GUI (View) components 
         ///   for staring of a new games
         /// </summary>
         private void InstantiateNewGameGUI()
         {
+            /* (F1) Set Game Play Status to false before GUI update */
+            StartGamePlay(false);
+
             /* (G1.1) Reset ImageView in GUI (View) */
             ResetImageView();
 
@@ -95,8 +169,8 @@ namespace Guess5.Droid.ViewModel
             ButtonLetterInitializer();
 
             /* reset other GUI (view) components*/
-            Score = "0";
-            HighestScore = "0";
+            /* Score = "0"; // ==> start a brand new game */
+            //HighestScore = "0";
         }
 
         #region (G1.1) Reset ImageView in GUI (View)
@@ -200,11 +274,17 @@ namespace Guess5.Droid.ViewModel
         /// </summary>
         private void StartGame()
         {
+            /* Check whether the Game GUI has been setup  
+             * ==> user has won a game and is about to start another new game*/
+            if (HasGameGUI_Setup != true)
+                /* (G1) Reset all GUI (View) components (for a new game) */
+                InstantiateNewGameGUI();
+
             /* Note that all GUI Initialization has been done by InstantiateNewGameGUI(),
                   hence the following code will setup other related variable or function 
                   in order to start a new game */
 
-            /* (G1) reset the hangman counter and display the starting hangmane image */
+            /* (G3) reset the hangman counter and display the starting hangmane image */
             ChangeHangmanImage(0);
 
             /* (Rx.1) Instantiate Time Counter Sequence */
@@ -212,7 +292,8 @@ namespace Guess5.Droid.ViewModel
 
             //user_guess = new List<char>();
             HighestScore = Score;
-
+            Score = "0";
+            
             /* (M0.1) Set Game Play Status to true ==> Game has started !!! */
             StartGamePlay();
         }
@@ -229,7 +310,7 @@ namespace Guess5.Droid.ViewModel
             CurrentActivity.RunOnUiThread(() =>
             {
                 if (index == -1) // by default, alway increment the hangman count
-                    _hangman_count++; //= ++_hangman_count % (MAX_GUESS + 1);
+                    _hangman_count++; 
                 else
                     _hangman_count = index; //set to user-define hangmane index
                 Hangman_Image = _hangman_count.ToString();
@@ -258,19 +339,6 @@ namespace Guess5.Droid.ViewModel
         #endregion
         #endregion
 
-        #region (F1) Function to enable/disable Game Play 
-        /// <summary>
-        /// When GUI (View) components, set flag to such that any update to GUI (view)
-        ///   will not trigger any logic operation behind the sence
-        /// </summary>
-        /// <param name="flag"></param>
-        private void StartGamePlay(bool flag = true)
-        {
-            Is_Game_On = flag;
-            Timer_Flag = flag;
-        }
-        #endregion
-
         #region (Rx) Setup Observables
         private void SetupObservable()
         {
@@ -286,15 +354,21 @@ namespace Guess5.Droid.ViewModel
         }
 
         #region (Rx.1) Instantiate Time Counter Sequence
+        private IDisposable timerDisposable = null;     // Timer Counter Disposable
+
         /* Define a variable to keep track whether timer counter has completed a round.
            If true, the timer counter can update the hangman image on GUI (view) */
         private bool after_first_round = false;
+        
         /// <summary>
         /// Instantiate a new timer counter
         /// </summary>
         private void InstantiateTimeCounter()
         {
             after_first_round = false; // set flag to false
+
+            if(timerDisposable != null)
+                timerDisposable.Dispose();
 
             /* Create a sequence, generate an number every 1 second 
                 from a range set by MAX_TICK and repeat the sequence. */
@@ -327,7 +401,7 @@ namespace Guess5.Droid.ViewModel
                                 after_first_round = true; // set flag to true
 
                             /* If counter reach MAX_TICK, (after timer has gone through one round)
-                                  change the hangman image */
+                                    change the hangman image */
                             if (counter == MAX_TICK && after_first_round)
                             {
                                 // Debug
@@ -337,7 +411,7 @@ namespace Guess5.Droid.ViewModel
                                 // _hangman_count = 0; // reset the hangman counter
                                 ChangeHangmanImage();
                             }
-
+                       
                         });
                     }
                 });
@@ -375,11 +449,15 @@ namespace Guess5.Droid.ViewModel
                         HighestScore = total.ToString();
 
                         /* reset the score, start a brand new game. */
-                        Score = "0"; 
+                        Score = "0";
+                        HasGameGUI_Setup = false;
+                        Correct_Answer = 0;
                     }
                 });
         }
         #endregion
+        
+
 
         #region (Rx.3) Game Won. Trigger an observable when user found all the letters in the hidden word.
         /// <summary>
@@ -408,6 +486,8 @@ namespace Guess5.Droid.ViewModel
                         /* set score equal to highest score.
                            ==> ready to start anoher new game. */
                         Score = total.ToString();
+                        HasGameGUI_Setup = false;
+                        Correct_Answer = 0;
                     }
                 });
         }
@@ -439,14 +519,14 @@ namespace Guess5.Droid.ViewModel
                             /* (Rx.4.1) Count the number of time the letter appears in the hidden word. */
                             int count = CountLetter(letter);
 
-                            /* add up the number of correct answer */
-                            Correct_Answer += count;
-
                             /* Calculate the 'score' for the letter and add it to user total score*/
                             int score = WordsHelper.GetScore(letter);
                             int total = _score + (_timer + score) * count;
                             //this.RaisePropertyChanged("Score"); /* Trigger Property Changed */
                             Score = total.ToString();
+
+                            /* add up the number of correct answer */
+                            Correct_Answer += count;
 
                             /* Update the correct answer counter.
                                If the full (hidden) word is not found yet,
@@ -508,14 +588,31 @@ namespace Guess5.Droid.ViewModel
         }
         #endregion
 
-
         #endregion
 
         #endregion
 
-        private void SetupTableObservable()
+        #region (Rx.DB.property) Properties related to database
+        private string _profileID = string.Empty;
+        public string ProfileID
         {
-            /* Load the profile based on Profile ID */
+            get => _profileID;
+            set => this.RaiseAndSetIfChanged(ref _profileID, value);
+        }
+
+        private string _profileName;
+        public string ProfileName
+        {
+            get => _profileName;
+            set => this.RaiseAndSetIfChanged(ref _profileName, value);
+        }
+
+        private static int MAX_TOP_SCORES { get; set; } = 3;
+        #endregion
+
+        #region (Rx.DB) Setup Observables related to database
+        private void SetupDbTableObservable()
+        {
             this.WhenAnyValue(x => x.ProfileID)
                 .Select(flag => (ProfileID.Trim() != string.Empty))
                 .Subscribe((flag) =>
@@ -527,62 +624,10 @@ namespace Guess5.Droid.ViewModel
                         int id = int.Parse(ProfileID);
                         ProfileModel profile = ProfileRepository.GetProfile(id);
                         ProfileName = profile.Name;
-                        profile.Active = true;
-                        ProfileRepository.SaveProfile(profile);
-
-                        /* and the rest as 'inactive' */
-                        foreach (var p in ProfileRepository.GetProfiles())
-                        {
-                            if (p.ID != id && p.Active)
-                            {
-                                p.Active = false;
-                                ProfileRepository.SaveProfile(p);
-                            }
-                        }
                     }
-                    /* 
-                        flag return false under following conditions:
-                        1. When the main activity first loaded, no active profile been selected
-                           solution => load active profile => the last profile that user used.
-                        2. When there is no profile (in the database).
-                           solution => create a 'Guest' profile and set the profile to be 'active'
-                     */
-                    else
-                    {
-                        //List<ProfileModel> profiles = ProfileRepository.GetProfiles();
-                        bool active_profile = false;
-                        foreach (var profile in ProfileRepository.GetProfiles())
-                        {
-                            if (profile.Active)
-                            {
-                                active_profile = true;
-                                ProfileID = profile.ID.ToString();
-                                ProfileName = profile.Name;
-                            }
-                        }
-                        if (!active_profile) // found active profile
-                        {
-                            /* Create a 'Guest 'Game Profile and set it to 'active' */
-                            ProfileModel profile = new ProfileModel();
-                            profile.Name = "Guest";
 
-                            DateTime theTime = DateTime.Now.ToLocalTime();
-                            profile.Timestamp = theTime;
-
-                            profile.Active = true;
-                            profile.ID = ProfileRepository.SaveProfile(profile);
-
-                            ProfileID = profile.ID.ToString();
-                            ProfileName = profile.Name;
-                        }
-                    }
                 });
         }
-
-
-
-
-
-
+        #endregion
     }
 }

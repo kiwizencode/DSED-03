@@ -365,13 +365,19 @@ namespace Guess5.Droid.Activities
         protected override void OnResume()
         {
             base.OnResume();
-            this.ViewModel.Resume();
+            this.ViewModel.Set_Timer_Flag(true);
+        }
+
+        protected override void OnPause()
+        {
+            base.OnPause();
+            this.ViewModel.Set_Timer_Flag(false);
         }
 
         protected override void OnStop()
         {
             base.OnStop();
-            this.ViewModel.Stop();
+            this.ViewModel.Set_Timer_Flag(false);
         }
 
         protected override void OnDestroy()
