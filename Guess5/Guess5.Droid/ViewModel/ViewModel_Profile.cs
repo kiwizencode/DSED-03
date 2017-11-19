@@ -47,7 +47,8 @@ namespace Guess5.Droid.ViewModel
         {
             get
             {
-                ScoreModel[] items = ScoreRepository.GetProfiles().OrderBy(x => x.Score).ThenBy(x => x.Name.ToLower()).ToArray();
+                //ScoreModel[] items = ScoreRepository.GetProfiles().OrderBy(x => x.Score).ThenBy(x => x.Name.ToLower()).ToArray();
+                ScoreModel[] items = ScoreRepository.GetProfiles().OrderBy(x => x.ID).ToArray();
                 return new ArrayAdapter<ScoreModel>(CurrentActivity, Android.Resource.Layout.SimpleListItem1, items);
             }
             set { }
@@ -56,25 +57,45 @@ namespace Guess5.Droid.ViewModel
         public ReactiveCommand<Unit, Unit> CommandSave;
         public ReactiveCommand<Unit, Unit> CommandItemClicked;
 
-
         public ViewModel_Profile()
         {
-
-            /* 
-                http://dotnetpattern.com/csharp-action-delegate 
-             */
+            /* http://dotnetpattern.com/csharp-action-delegate */
 
             Action doCreateAction = new Action(CreateProfile);
             CommandSave = ReactiveCommand.Create(doCreateAction);
 
-
             Action doItemClickedAction = new Action(ItemClicked);
             CommandItemClicked = ReactiveCommand.Create(doItemClickedAction);
 
+            SetupScoreModel();
 
             SetupObservable(); 
         }
 
+        /* No of top scorers record to be held in the database. */
+        private static int MAX_TOP_SCORES { get; set; } = 3;
+        private void SetupScoreModel()
+        {
+            List<ScoreModel> score_chart = new List<ScoreModel>();
+            foreach (var score in ScoreRepository.GetProfiles().OrderBy(x => x.ID))
+                score_chart.Add(score);
+
+            if(score_chart.Count != MAX_TOP_SCORES)
+                for (int i = 0; i < MAX_TOP_SCORES; i++)
+                {
+                    /* Create Score Data */
+                    int id = CreateScoreModel();
+                    ScoreModel score = ScoreRepository.GetProfile(id);
+                    score_chart.Add(score);
+                }
+        }
+        private int CreateScoreModel()
+        {
+            //ScoreModel score = new ScoreModel();
+            //score.Name = "";
+            //score.Score = 0;
+            return ScoreRepository.SaveProfile(new ScoreModel());
+        }
         private void ItemClicked()
         {
             //Debug
@@ -163,6 +184,9 @@ namespace Guess5.Droid.ViewModel
                 });
         }
 
-
+        public void RefreshAdaptor()
+        {
+            this.RaisePropertyChanged("Score_Array");
+        }
     }
 }

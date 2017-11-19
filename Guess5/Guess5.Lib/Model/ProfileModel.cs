@@ -16,6 +16,13 @@ namespace Guess5.Lib.Model
         public DateTime Timestamp { get; set; }
         public bool Active { get; set; }
 
-        public override string ToString() { return Name; }
+        public override string ToString()
+        {
+            //return Name;
+            string score = Scores.ToString();
+            string text = Name + "".PadRight(10 - Name.Length, ' ') +
+                            "".PadLeft(10 - score.Length, '0') + score + " " ;
+            return text;
+        }
     }
 }

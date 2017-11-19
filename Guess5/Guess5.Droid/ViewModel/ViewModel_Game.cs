@@ -35,6 +35,9 @@ namespace Guess5.Droid.ViewModel
          * Should be easy to change the code to handle words with difference length */
         private static int MAX_LETTER { get; set; } = 5;
 
+        /* No of top scorers record to be held in the database. */
+        private static int MAX_TOP_SCORES { get; set; } = 3;
+
         #region Related Properties that keep track of Scores
         /* Current Score */
         private int _score = 0;
@@ -90,6 +93,12 @@ namespace Guess5.Droid.ViewModel
         {
             if (timerDisposable != null)
                 timerDisposable.Dispose();
+
+            UpdateTopScoresChart();
+
+            /* Before Game Activity closed, update Top Score Chart to the database. */
+            for (int i = 0; i < MAX_TOP_SCORES; i++)
+                ScoreRepository.SaveProfile(score_chart[i]);
         }
         #endregion
 
@@ -128,10 +137,15 @@ namespace Guess5.Droid.ViewModel
         #endregion
         #endregion
 
+        private List<ScoreModel> score_chart;
+
         public ViewModel_Game(ReactiveActivity activity)
         {
             /* point to the Acitivity class*/
             this.CurrentActivity = activity;
+            
+            /* Create a Top Scorers chart*/
+            RetreiveScoreChart();
 
             /* (G1) Reset all GUI (View) components */
             InstantiateNewGameGUI();
@@ -145,7 +159,78 @@ namespace Guess5.Droid.ViewModel
 
             /* (Rx.DB) Setup Observables related to database */
             SetupDbTableObservable();
+
         }
+        #region Functions related to Score Chart
+        /// <summary>
+        /// Creat a Top Scorers chart from database.
+        /// </summary>
+        private void RetreiveScoreChart()
+        {
+            /* When Game Activity is loaded
+               get a list/chart of Top Scorers */
+            score_chart = new List<ScoreModel>();
+
+            /* 1. Retreive from database */
+            foreach (var score in ScoreRepository.GetProfiles().OrderBy(x => x.ID))
+                score_chart.Add(score);
+
+        }
+
+        /// <summary>
+        /// get the user highest score and update the top score charts.
+        /// </summary>
+        private void UpdateTopScoresChart()
+        {
+            /* Check the 'active' profile and retreive last highest score */
+
+            int id = int.Parse(ProfileID);
+            ProfileModel profile = ProfileRepository.GetProfile(id);
+
+            ///*  If the current highest score is higher than the old score */
+            //if (profile.Scores < _highestscore)
+            //{
+            //    profile.Scores = _highestscore; // update profile score.
+            //    ProfileRepository.SaveProfile(profile);
+            //    /* => The user profile always store the user highest score */
+            //}
+
+            int i;
+            for (i = 0; i < score_chart.Count; i++)
+            {
+                ScoreModel top_score = score_chart[i];
+                if (top_score.Score < _highestscore)
+                {
+                    ScoreModel score = new ScoreModel();
+                    score.Name = profile.Name;
+                    score.Score = _highestscore;
+                    score_chart.Insert(i, score);
+                    break;
+                }
+            }
+
+            i = 0;
+            foreach (var score in ScoreRepository.GetProfiles().OrderBy(x => x.ID))
+            {
+                score_chart[i].ID = score.ID;
+                i++;
+            }
+        }
+
+        private void UpdateUserProfile()
+        {
+            int id = int.Parse(ProfileID);
+            ProfileModel profile = ProfileRepository.GetProfile(id);
+
+            /*  If the current highest score is higher than the old score */
+            if (profile.Scores < _highestscore)
+            {
+                profile.Scores = _highestscore; // update profile score.
+                ProfileRepository.SaveProfile(profile);
+                /* => The user profile always store the user highest score */
+            }
+        }
+        #endregion
 
         #region (G) Setup functions related to GUI (View) Display
         #region (G1) Reset all GUI (View) components (for a new game)
@@ -448,6 +533,15 @@ namespace Guess5.Droid.ViewModel
                         int total = _score + _highestscore;
                         HighestScore = total.ToString();
 
+                        /* Show the answer to the user */
+                        for (int i = 0; i < hidden_word.Length; i++)
+                            /* (G4) Show the letter on respective (GUI) ImageView (view) */
+                            ShowHiddenWord(i);
+
+                        /* Before starting a brand new game, update Top Scores Chart*/
+                        UpdateTopScoresChart();
+                        UpdateUserProfile();
+
                         /* reset the score, start a brand new game. */
                         Score = "0";
                         HasGameGUI_Setup = false;
@@ -456,8 +550,6 @@ namespace Guess5.Droid.ViewModel
                 });
         }
         #endregion
-        
-
 
         #region (Rx.3) Game Won. Trigger an observable when user found all the letters in the hidden word.
         /// <summary>
@@ -482,6 +574,9 @@ namespace Guess5.Droid.ViewModel
                         /* update user highest score */
                         int total = _score + _highestscore;
                         HighestScore = total.ToString();
+
+                        /* Before starting a brand new game, update Top Scores Chart*/
+                        UpdateUserProfile();
 
                         /* set score equal to highest score.
                            ==> ready to start anoher new game. */
@@ -607,11 +702,23 @@ namespace Guess5.Droid.ViewModel
             set => this.RaiseAndSetIfChanged(ref _profileName, value);
         }
 
-        private static int MAX_TOP_SCORES { get; set; } = 3;
+
         #endregion
 
         #region (Rx.DB) Setup Observables related to database
         private void SetupDbTableObservable()
+        {
+            /* (Rx.DB.1) Trigger an observables by Profile ID */
+            RetreiveProfileObservable();
+
+        }
+
+
+        #region (Rx.DB.1) Trigger an observables by Profile ID
+        /// <summary>
+        /// Retrieve Profile Information by a valide Profile ID, i,e not string.Empty.
+        /// </summary>
+        private void RetreiveProfileObservable()
         {
             this.WhenAnyValue(x => x.ProfileID)
                 .Select(flag => (ProfileID.Trim() != string.Empty))
@@ -625,9 +732,11 @@ namespace Guess5.Droid.ViewModel
                         ProfileModel profile = ProfileRepository.GetProfile(id);
                         ProfileName = profile.Name;
                     }
-
                 });
         }
+        #endregion
+
+
         #endregion
     }
 }

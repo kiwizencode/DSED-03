@@ -89,13 +89,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/listScore"
         android:layout_weight="1"
-        android:visibility="visible" />
+        android:visibility="gone" />
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/guess_five_v2"
         android:layout_gravity="center_horizontal"
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_weight="1"
         android:id="@+id/imgHighFive" />
     <Button

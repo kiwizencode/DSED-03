@@ -61,7 +61,6 @@ namespace Guess5.Droid.Activities
             InitializeModel();
 
             InitializeGUIClickEvent();
-
         }
 
         private void InitializeModel()
@@ -112,8 +111,7 @@ namespace Guess5.Droid.Activities
                 listScore.Visibility = ViewStates.Visible;
             };
 
-            listScore.ItemClick
-                 += delegate
+            listScore.ItemClick += delegate
             {
                 imgHighFive.Visibility = ViewStates.Visible;
                 listScore.Visibility = ViewStates.Gone;
@@ -131,5 +129,6 @@ namespace Guess5.Droid.Activities
                 ProfileID = data.GetStringExtra("Profile_ID");
             }
         }
+
     }
 }

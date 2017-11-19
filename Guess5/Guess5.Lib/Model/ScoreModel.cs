@@ -9,15 +9,15 @@ namespace Guess5.Lib.Model
     /// </summary
     public class ScoreModel : IModel
     {
-        [PrimaryKey]
-        public int ID { get ; set ; }
-        public string Name { get; set; }
+        [PrimaryKey, AutoIncrement]
+        public int ID { get; set; } = 0;
+        public string Name { get; set; } = string.Empty;
         public int Score { get; set; } = 0;
 
         public override string ToString() {
             string score = Score.ToString();
             string text = (Name.Trim() == string.Empty) ? "" :
-                            score.PadLeft(10-score.Length,'0') + 
+                            "".PadLeft(10-score.Length,'0') + score + " " +
                             Name.PadRight(10 - Name.Length, ' ') ;
             return text;
         }
