@@ -316,6 +316,25 @@ namespace Guess5.Droid.Activities
             this.WhenAnyValue(x => x.btn01.Text).Subscribe(_ => btn14.Visibility = ViewStates.Visible);
             this.WhenAnyValue(x => x.btn01.Text).Subscribe(_ => btn15.Visibility = ViewStates.Visible);
             /* ========================================================================================== */
+
+            /* try to fix an error where user click the start button, some of the 15 buttons will appear and some will not*/
+            this.btnStartNew.Click += delegate {
+                btn01.Visibility = ViewStates.Visible;
+                btn02.Visibility = ViewStates.Visible;
+                btn03.Visibility = ViewStates.Visible;
+                btn04.Visibility = ViewStates.Visible;
+                btn05.Visibility = ViewStates.Visible;
+                btn06.Visibility = ViewStates.Visible;
+                btn07.Visibility = ViewStates.Visible;
+                btn08.Visibility = ViewStates.Visible;
+                btn09.Visibility = ViewStates.Visible;
+                btn10.Visibility = ViewStates.Visible;
+                btn11.Visibility = ViewStates.Visible;
+                btn12.Visibility = ViewStates.Visible;
+                btn13.Visibility = ViewStates.Visible;
+                btn14.Visibility = ViewStates.Visible;
+                btn15.Visibility = ViewStates.Visible;
+            };
         }
 
         private bool _timer_flag = false;
@@ -328,8 +347,9 @@ namespace Guess5.Droid.Activities
         private void SetupObservable()
         {
             this.WhenAnyValue(x => x.Timer_Flag)
-                .Select(flag => (Timer_Flag == true) )
-                .Subscribe( (flag) => {
+                .Select(flag => (Timer_Flag == true))
+                .Subscribe((flag) =>
+                {
                     // Debug
                     System.Diagnostics.Debug.WriteLine($"Is Timer ticking ? {flag}");
 
@@ -341,22 +361,21 @@ namespace Guess5.Droid.Activities
                     //btnPause.Visibility = flag ? ViewStates.Visible : ViewStates.Invisible;
 
                     //btnStartNew.Enabled = !flag;
-                    btn01.Enabled = flag;
-                    btn02.Enabled = flag;
-                    btn03.Enabled = flag;
-                    btn04.Enabled = flag;
-                    btn05.Enabled = flag;
-                    btn06.Enabled = flag;
-                    btn07.Enabled = flag;
-                    btn08.Enabled = flag;
-                    btn09.Enabled = flag;
-                    btn10.Enabled = flag;
-                    btn11.Enabled = flag;
-                    btn12.Enabled = flag;
-                    btn13.Enabled = flag;
-                    btn14.Enabled = flag;
-                    btn15.Enabled = flag;
-
+                    //btn01.Enabled = flag;
+                    //btn02.Enabled = flag;
+                    //btn03.Enabled = flag;
+                    //btn04.Enabled = flag;
+                    //btn05.Enabled = flag;
+                    //btn06.Enabled = flag;
+                    //btn07.Enabled = flag;
+                    //btn08.Enabled = flag;
+                    //btn09.Enabled = flag;
+                    //btn10.Enabled = flag;
+                    //btn11.Enabled = flag;
+                    //btn12.Enabled = flag;
+                    //btn13.Enabled = flag;
+                    //btn14.Enabled = flag;
+                    //btn15.Enabled = flag;
 
                     LinerLayout01.Visibility = flag ? ViewStates.Visible : ViewStates.Invisible;
                     LinerLayout02.Visibility = flag ? ViewStates.Visible : ViewStates.Invisible;
@@ -364,7 +383,7 @@ namespace Guess5.Droid.Activities
                 });
         }
 
-#region following code deal with the situation where Game Acitivity goes into inactive mode and finishing mode
+        #region following code deal with the situation where Game Acitivity goes into inactive mode and finishing mode
         protected override void OnResume()
         {
             base.OnResume();
