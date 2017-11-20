@@ -365,6 +365,9 @@ namespace Guess5.Droid.ViewModel
                 /* (G1) Reset all GUI (View) components (for a new game) */
                 InstantiateNewGameGUI();
 
+            /* (M0.1) Set Game Play Status to true ==> Game has started !!! */
+            StartGamePlay();
+
             /* Note that all GUI Initialization has been done by InstantiateNewGameGUI(),
                   hence the following code will setup other related variable or function 
                   in order to start a new game */
@@ -379,8 +382,7 @@ namespace Guess5.Droid.ViewModel
             HighestScore = Score;
             Score = "0";
             
-            /* (M0.1) Set Game Play Status to true ==> Game has started !!! */
-            StartGamePlay();
+
         }
         #endregion
         #endregion

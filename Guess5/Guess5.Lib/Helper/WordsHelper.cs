@@ -12,7 +12,7 @@ namespace Guess5.Lib.Helper
 {
     public class WordsHelper
     {
-        private readonly string _filename = "5letters.txt";
+        private readonly string _filename = "5letters_v2.txt";
         
         protected static WordsHelper _self;
         protected static List<string> _list;

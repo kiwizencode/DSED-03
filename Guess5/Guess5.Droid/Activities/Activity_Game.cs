@@ -125,6 +125,10 @@ namespace Guess5.Droid.Activities
         public Button btnStartNew { get; private set; }
         public Button btnPause { get; private set; }
 
+        public LinearLayout LinerLayout01 { get; private set; }
+        public LinearLayout LinerLayout02 { get; private set; }
+        public LinearLayout LinerLayout03 { get; private set; }
+
         public TextView textViewTitle { get; private set; }
         public TextView textViewTimer { get; private set; }
         public TextView textViewHighest { get; private set; }
@@ -172,12 +176,6 @@ namespace Guess5.Droid.Activities
 
             ProfileID = Intent.GetStringExtra("Profile_ID") ?? string.Empty;
 
-            //if (profile_id != string.Empty)
-            //{
-            //    int id = int.Parse(profile_id);
-            //    Current_Profile = ProfileRepository.GetProfile(id);
-            //    textViewProfile.Text = Current_Profile.Name;
-            //}
         }
 
 
@@ -358,6 +356,11 @@ namespace Guess5.Droid.Activities
                     btn13.Enabled = flag;
                     btn14.Enabled = flag;
                     btn15.Enabled = flag;
+
+
+                    LinerLayout01.Visibility = flag ? ViewStates.Visible : ViewStates.Invisible;
+                    LinerLayout02.Visibility = flag ? ViewStates.Visible : ViewStates.Invisible;
+                    LinerLayout03.Visibility = flag ? ViewStates.Visible : ViewStates.Invisible;
                 });
         }
 

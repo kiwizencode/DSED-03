@@ -20,4 +20,7 @@
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)5letters.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)5letters_v2.txt" />
+  </ItemGroup>
 </Project>
